@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabf15692758cda43b3356c54bca8907, type: 3}
+  m_Name: HitSpark
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Presentation.ParticleEffectAsset
+  prefab: {fileID: 7872608020876040438, guid: 5106f0eac42d3cc458b4cd94bc761c02, type: 3}
+  scale: 1
