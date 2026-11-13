@@ -798,6 +798,16 @@ namespace Endfield.Controller
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""ToggleCharacterPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""33f82244-bfce-4bac-be18-d1b8996fc3aa"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -820,6 +830,17 @@ namespace Endfield.Controller
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CaptureCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bd6c230-e9fe-459d-9559-00568ddbfa8e"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ToggleCharacterPanel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -910,6 +931,7 @@ namespace Endfield.Controller
             m_Control = asset.FindActionMap("Control", throwIfNotFound: true);
             m_Control_ReleaseCursor = m_Control.FindAction("ReleaseCursor", throwIfNotFound: true);
             m_Control_CaptureCursor = m_Control.FindAction("CaptureCursor", throwIfNotFound: true);
+            m_Control_ToggleCharacterPanel = m_Control.FindAction("ToggleCharacterPanel", throwIfNotFound: true);
         }
 
         ~@EndfieldInputActions()
@@ -1307,6 +1329,7 @@ namespace Endfield.Controller
         private List<IControlActions> m_ControlActionsCallbackInterfaces = new List<IControlActions>();
         private readonly InputAction m_Control_ReleaseCursor;
         private readonly InputAction m_Control_CaptureCursor;
+        private readonly InputAction m_Control_ToggleCharacterPanel;
         /// <summary>
         /// Provides access to input actions defined in input action map "Control".
         /// </summary>
@@ -1326,6 +1349,10 @@ namespace Endfield.Controller
             /// Provides access to the underlying input action "Control/CaptureCursor".
             /// </summary>
             public InputAction @CaptureCursor => m_Wrapper.m_Control_CaptureCursor;
+            /// <summary>
+            /// Provides access to the underlying input action "Control/ToggleCharacterPanel".
+            /// </summary>
+            public InputAction @ToggleCharacterPanel => m_Wrapper.m_Control_ToggleCharacterPanel;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1358,6 +1385,9 @@ namespace Endfield.Controller
                 @CaptureCursor.started += instance.OnCaptureCursor;
                 @CaptureCursor.performed += instance.OnCaptureCursor;
                 @CaptureCursor.canceled += instance.OnCaptureCursor;
+                @ToggleCharacterPanel.started += instance.OnToggleCharacterPanel;
+                @ToggleCharacterPanel.performed += instance.OnToggleCharacterPanel;
+                @ToggleCharacterPanel.canceled += instance.OnToggleCharacterPanel;
             }
 
             /// <summary>
@@ -1375,6 +1405,9 @@ namespace Endfield.Controller
                 @CaptureCursor.started -= instance.OnCaptureCursor;
                 @CaptureCursor.performed -= instance.OnCaptureCursor;
                 @CaptureCursor.canceled -= instance.OnCaptureCursor;
+                @ToggleCharacterPanel.started -= instance.OnToggleCharacterPanel;
+                @ToggleCharacterPanel.performed -= instance.OnToggleCharacterPanel;
+                @ToggleCharacterPanel.canceled -= instance.OnToggleCharacterPanel;
             }
 
             /// <summary>
@@ -1601,6 +1634,13 @@ namespace Endfield.Controller
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnCaptureCursor(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ToggleCharacterPanel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnToggleCharacterPanel(InputAction.CallbackContext context);
         }
     }
 }

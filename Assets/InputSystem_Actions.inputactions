@@ -710,6 +710,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ToggleCharacterPanel",
+                    "type": "Button",
+                    "id": "33f82244-bfce-4bac-be18-d1b8996fc3aa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -732,6 +742,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "CaptureCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bd6c230-e9fe-459d-9559-00568ddbfa8e",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleCharacterPanel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

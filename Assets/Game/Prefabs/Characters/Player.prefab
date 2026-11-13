@@ -10363,6 +10363,7 @@ GameObject:
   - component: {fileID: 3703040467870482939}
   - component: {fileID: 7968226629972698502}
   - component: {fileID: 8696081495354921485}
+  - component: {fileID: 4484287480183583612}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -10448,6 +10449,19 @@ MonoBehaviour:
   runSpeed: 5
   walkReferenceSpeed: 1.31
   runReferenceSpeed: 5.29
+--- !u!114 &4484287480183583612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411704634758067685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71c65f2096323849ad4e7c7baf3c7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Character.Combatant
+  characterAsset: {fileID: 11400000, guid: 27ce8c4dec22adb42bf1901c50ff2bd0, type: 2}
 --- !u!1 &4416842176885873691
 GameObject:
   m_ObjectHideFlags: 0
