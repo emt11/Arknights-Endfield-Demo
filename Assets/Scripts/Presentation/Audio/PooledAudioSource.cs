@@ -16,10 +16,7 @@ namespace Endfield.Presentation
             source.ignoreListenerPause = false;
         }
 
-        protected override void OnRent()
-        {
-            started = false;
-        }
+        protected override void OnRent() => started = false;
 
         public PoolHandle Play(AudioClip clip, float volume = 1f, float pitch = 1f, bool loop = false)
         {

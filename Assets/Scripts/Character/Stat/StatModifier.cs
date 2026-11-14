@@ -1,6 +1,10 @@
 namespace Endfield.Character
 {
-    public enum ModifierOperation { Flat, PercentAdd }
+    public enum ModifierOperation
+    {
+        Flat,
+        PercentAdd
+    }
 
     public sealed class StatModifier
     {

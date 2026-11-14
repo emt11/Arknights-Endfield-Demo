@@ -2,7 +2,12 @@ using System;
 
 namespace Endfield.Character
 {
-    public enum StatId { Attack, MaxHP, Defense }
+    public enum StatId
+    {
+        Attack,
+        MaxHP,
+        Defense
+    }
 
     public readonly struct StatChange
     {
@@ -27,6 +32,7 @@ namespace Endfield.Character
         public float Attack => attack.Value;
         public float MaxHP => maxHP.Value;
         public float Defense => defense.Value;
+
         public event Action<StatChange> Changed;
 
         public CharacterStats(float attack, float maxHP, float defense)
@@ -44,16 +50,22 @@ namespace Endfield.Character
         {
             switch (stat)
             {
-                case StatId.Attack: return attack;
-                case StatId.MaxHP: return maxHP;
-                case StatId.Defense: return defense;
-                default: throw new ArgumentOutOfRangeException(nameof(stat));
+                case StatId.Attack:
+                    return attack;
+                case StatId.MaxHP:
+                    return maxHP;
+                case StatId.Defense:
+                    return defense;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(stat));
             }
         }
 
         public float GetBaseValue(StatId stat) => GetStat(stat).BaseValue;
+
         public float GetValue(StatId stat) => GetStat(stat).Value;
 
-        private void NotifyChange(StatId stat, float previous, float current) => Changed?.Invoke(new StatChange(stat, previous, current));
+        private void NotifyChange(StatId stat, float previous, float current) =>
+            Changed?.Invoke(new StatChange(stat, previous, current));
     }
 }

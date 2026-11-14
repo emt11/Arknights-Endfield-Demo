@@ -18,7 +18,8 @@ namespace Endfield.Pooling
         public int RentedCount => rented.Count;
         public int InactiveCount => items.CountInactive;
 
-        public PrefabPool(PooledObject prefab, Transform activeRoot, Transform inactiveRoot, int prewarmCount, int maxRetained)
+        public PrefabPool(PooledObject prefab, Transform activeRoot, Transform inactiveRoot,
+            int prewarmCount, int maxRetained)
         {
             this.prefab = prefab;
             this.activeRoot = activeRoot;
@@ -33,9 +34,15 @@ namespace Endfield.Pooling
                 defaultCapacity: Mathf.Max(1, prewarmCount),
                 maxSize: maxRetained);
 
+            Prewarm(prewarmCount);
+        }
+
+        private void Prewarm(int prewarmCount)
+        {
             var warmup = new PooledObject[prewarmCount];
             for (int i = 0; i < warmup.Length; i++)
                 warmup[i] = items.Get();
+
             for (int i = 0; i < warmup.Length; i++)
                 items.Release(warmup[i]);
         }
@@ -82,6 +89,7 @@ namespace Endfield.Pooling
             IsDisposed = true;
             foreach (PooledObject item in rented)
                 DestroyItem(item);
+
             rented.Clear();
             items.Clear();
         }

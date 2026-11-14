@@ -12,9 +12,9 @@ namespace Endfield.Controller
         [SerializeField, Min(0.01f)] private float runSpeed = 5f;
         [SerializeField, Min(0.01f)] private float walkReferenceSpeed = 2f;
         [SerializeField, Min(0.01f)] private float runReferenceSpeed = 5f;
-        private static readonly int MoveAmountHash = Animator.StringToHash("MoveAmount");
-        private static readonly int TurnAngleHash = Animator.StringToHash("TurnAngle");
-        private static readonly int PlaybackRateHash = Animator.StringToHash("PlaybackRate");
+        private static readonly int moveAmountHash = Animator.StringToHash("MoveAmount");
+        private static readonly int turnAngleHash = Animator.StringToHash("TurnAngle");
+        private static readonly int playbackRateHash = Animator.StringToHash("PlaybackRate");
         private CharacterMotor motor;
         private LocomotionStateMachine stateMachine;
         private float targetSpeed;
@@ -49,20 +49,15 @@ namespace Endfield.Controller
         private void Update()
         {
             float deltaTime = Time.deltaTime;
-            if (deltaTime <= 0f) return;
-            // 1. 获取输入
+            if (deltaTime <= 0f)
+                return;
+
             GameplayInputFrame frame = inputManager.Frame;
-            // 2. 更新相机追踪物体的朝向
             cameraTarget.ApplyLook(frame.Look);
-            // 3. 计算角色相对旋转角度，这里设置了 TurnAngle
             CalculateInputDirection(frame.Move);
-            // 4. 切换状态，这里设置了 targetSpeed
             stateMachine.Tick(frame.Move.sqrMagnitude > 0f, frame.RunHeld);
-            // 5. 处理角色的旋转和位移
             motor.Tick(targetSpeed, TurnAngle, deltaTime);
-            // 6. 处理动画播放倍速
             SetupAnimator();
-            // 7. 同步相机追踪物体和角色的位置
             cameraTarget.SyncPosition();
         }
 
@@ -90,16 +85,16 @@ namespace Endfield.Controller
             }
             else
             {
-                float t = Mathf.InverseLerp(walkSpeed, runSpeed, speed);
-                MoveAmount = 1f + t;
-                float referenceSpeed = Mathf.Lerp(walkReferenceSpeed, runReferenceSpeed, t);
+                float runWeight = Mathf.InverseLerp(walkSpeed, runSpeed, speed);
+                MoveAmount = 1f + runWeight;
+                float referenceSpeed = Mathf.Lerp(walkReferenceSpeed, runReferenceSpeed, runWeight);
                 PlaybackRate = speed / referenceSpeed;
             }
 
             // 同一代码速度驱动混合与倍率，不再使用 SetFloat 的阻尼重载
-            animator.SetFloat(MoveAmountHash, MoveAmount);
-            animator.SetFloat(TurnAngleHash, TurnAngle);
-            animator.SetFloat(PlaybackRateHash, PlaybackRate);
+            animator.SetFloat(moveAmountHash, MoveAmount);
+            animator.SetFloat(turnAngleHash, TurnAngle);
+            animator.SetFloat(playbackRateHash, PlaybackRate);
         }
 
         private void OnDisable()
@@ -114,11 +109,12 @@ namespace Endfield.Controller
             targetSpeed = 0f;
             MoveAmount = 0f;
             PlaybackRate = 1f;
-            WorldMove = LocalMove = Vector3.zero;
+            WorldMove = Vector3.zero;
+            LocalMove = Vector3.zero;
             TurnAngle = 0f;
-            animator.SetFloat(MoveAmountHash, 0f);
-            animator.SetFloat(TurnAngleHash, 0f);
-            animator.SetFloat(PlaybackRateHash, 1f);
+            animator.SetFloat(moveAmountHash, 0f);
+            animator.SetFloat(turnAngleHash, 0f);
+            animator.SetFloat(playbackRateHash, 1f);
         }
 
         private void OnValidate()

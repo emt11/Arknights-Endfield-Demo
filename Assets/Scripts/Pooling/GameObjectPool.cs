@@ -21,6 +21,17 @@ namespace Endfield.Pooling
 
         private void Awake()
         {
+            ValidateEntries();
+
+            Transform activeRoot = CreateRoot("Active", true);
+            Transform inactiveRoot = CreateRoot("Inactive", false);
+            foreach (Entry entry in entries)
+                pools.Add(entry.prefab, new PrefabPool(entry.prefab, activeRoot, inactiveRoot,
+                    entry.prewarmCount, entry.maxRetained));
+        }
+
+        private void ValidateEntries()
+        {
             var seen = new HashSet<PooledObject>();
             foreach (Entry entry in entries)
             {
@@ -30,23 +41,15 @@ namespace Endfield.Pooling
                     !seen.Add(entry.prefab))
                     throw new InvalidOperationException("Pool entries need unique prefab root components");
 
-                if (entry.maxRetained < 1 || entry.prewarmCount < 0 ||
-                    entry.prewarmCount > entry.maxRetained)
+                bool invalidCapacity = entry.maxRetained < 1 || entry.prewarmCount < 0 ||
+                    entry.prewarmCount > entry.maxRetained;
+                if (invalidCapacity)
                     throw new InvalidOperationException("Pool capacity requires 0 <= prewarm <= maxRetained");
-            }
-
-            Transform activeRoot = CreateRoot("Active", true);
-            Transform inactiveRoot = CreateRoot("Inactive", false);
-            foreach (Entry entry in entries)
-            {
-                pools.Add(entry.prefab, new PrefabPool(entry.prefab, activeRoot, inactiveRoot, entry.prewarmCount, entry.maxRetained));
             }
         }
 
         public T Rent<T>(T prefab, Vector3 position, Quaternion rotation) where T : PooledObject
-        {
-            return (T)GetPool(prefab).Rent(position, rotation);
-        }
+            => (T)GetPool(prefab).Rent(position, rotation);
 
         public void ReturnAll()
         {
@@ -81,6 +84,7 @@ namespace Endfield.Pooling
         {
             foreach (PrefabPool pool in pools.Values)
                 pool.Dispose();
+
             pools.Clear();
         }
     }

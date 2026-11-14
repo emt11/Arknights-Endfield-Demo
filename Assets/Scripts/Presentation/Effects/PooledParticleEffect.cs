@@ -18,7 +18,7 @@ namespace Endfield.Presentation
             trails = GetComponentsInChildren<TrailRenderer>(true);
             foreach (ParticleSystem system in allSystems)
             {
-                var main = system.main;
+                ParticleSystem.MainModule main = system.main;
                 main.playOnAwake = false;
                 main.stopAction = ParticleSystemStopAction.None;
                 main.useUnscaledTime = false;
@@ -29,13 +29,7 @@ namespace Endfield.Presentation
                 trail.autodestruct = false;
         }
 
-        protected override void OnRent()
-        {
-            started = false;
-            followsTarget = false;
-            followTarget = null;
-            ClearPlayback();
-        }
+        protected override void OnRent() => ResetPlayback();
 
         public PoolHandle Play(Transform follow = null)
         {
@@ -47,6 +41,7 @@ namespace Endfield.Presentation
             PoolHandle handle = Activate();
             foreach (ParticleSystem system in startSystems)
                 system.Play(false);
+
             started = true;
             return handle;
         }
@@ -79,18 +74,17 @@ namespace Endfield.Presentation
             transform.SetPositionAndRotation(followTarget.position, followTarget.rotation);
         }
 
-        protected override void OnReturn()
+        protected override void OnReturn() => ResetPlayback();
+
+        private void ResetPlayback()
         {
             started = false;
             followsTarget = false;
             followTarget = null;
-            ClearPlayback();
-        }
 
-        private void ClearPlayback()
-        {
             foreach (ParticleSystem system in allSystems)
                 system.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
+
             foreach (TrailRenderer trail in trails)
                 trail.Clear();
         }

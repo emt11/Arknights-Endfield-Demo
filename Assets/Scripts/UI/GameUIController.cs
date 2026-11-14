@@ -15,17 +15,15 @@ namespace Endfield.UI
         private CharacterStats boundStats;
         private bool started;
 
-        private void Awake()
-        {
-            statsPanel.SetVisible(false);
-        }
+        private void Awake() => statsPanel.SetVisible(false);
 
         private void OnEnable()
         {
             inputManager.CharacterPanelToggleRequested += TogglePanel;
             inputManager.CharacterPanelCloseRequested += ClosePanel;
             statsPanel.CloseButton.onClick.AddListener(ClosePanel);
-            if (started) BindTarget();
+            if (started)
+                BindTarget();
         }
 
         private void Start()
@@ -42,25 +40,28 @@ namespace Endfield.UI
             boundHealth.Changed += OnHealthChanged;
             boundStats.Changed += OnStatsChanged;
             healthHUD.Refresh(boundHealth.Current, boundHealth.Max);
-            if (statsPanel.IsOpen) RefreshPanel();
+            if (statsPanel.IsOpen)
+                RefreshPanel();
         }
 
         private void UnbindTarget()
         {
-            if (boundHealth != null) boundHealth.Changed -= OnHealthChanged;
-            if (boundStats != null) boundStats.Changed -= OnStatsChanged;
+            if (boundHealth != null)
+                boundHealth.Changed -= OnHealthChanged;
+
+            if (boundStats != null)
+                boundStats.Changed -= OnStatsChanged;
+
             boundHealth = null;
             boundStats = null;
         }
 
-        private void OnHealthChanged(HealthChange change)
-        {
-            healthHUD.Refresh(change.Current, change.Max);
-        }
+        private void OnHealthChanged(HealthChange change) => healthHUD.Refresh(change.Current, change.Max);
 
         private void OnStatsChanged(StatChange change)
         {
-            if (statsPanel.IsOpen) statsPanel.RefreshStats(boundStats);
+            if (statsPanel.IsOpen)
+                statsPanel.RefreshStats(boundStats);
         }
 
         private void RefreshPanel()

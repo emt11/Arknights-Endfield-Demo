@@ -11,6 +11,7 @@ namespace Endfield.Controller
         protected InputBase(InputAction action) => Action = action;
 
         public void Enable() => Action.Enable();
+
         public void Disable() => Action?.Disable();
 
         public void Dispose()

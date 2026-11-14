@@ -21,9 +21,6 @@ namespace Endfield.Character
             Health = new CharacterHealth(Stats);
         }
 
-        private void OnDestroy()
-        {
-            Health?.Dispose();
-        }
+        private void OnDestroy() => Health?.Dispose();
     }
 }

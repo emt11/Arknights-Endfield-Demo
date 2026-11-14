@@ -10,7 +10,9 @@ namespace Endfield.Controller
         [SerializeField] private float maxPitch = 70f;
         [SerializeField] private float initialPitch = 15f;
         private Transform follow;
-        private float yaw, pitch;
+        private float yaw;
+        private float pitch;
+
         public Quaternion PlanarRotation => Quaternion.Euler(0f, yaw, 0f);
 
         public void Initialize(Transform player)
@@ -29,9 +31,6 @@ namespace Endfield.Controller
             transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
         }
 
-        public void SyncPosition()
-        {
-            transform.position = follow.position + Vector3.up * height;
-        }
+        public void SyncPosition() => transform.position = follow.position + Vector3.up * height;
     }
 }

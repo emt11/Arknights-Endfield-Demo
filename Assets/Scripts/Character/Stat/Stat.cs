@@ -11,6 +11,7 @@ namespace Endfield.Character
         public float Minimum { get; }
         public float Value => CalculateValue();
         public int ModifierCount => modifiers.Count;
+
         public event Action<float, float> Changed;
 
         public Stat(float baseValue, float minimum)
@@ -21,7 +22,9 @@ namespace Endfield.Character
 
         public StatModifier AddModifier(ModifierOperation operation, float value, object source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
             if (operation != ModifierOperation.Flat && operation != ModifierOperation.PercentAdd)
                 throw new ArgumentOutOfRangeException(nameof(operation));
 
@@ -34,26 +37,30 @@ namespace Endfield.Character
 
         public bool RemoveModifier(StatModifier modifier)
         {
-            if (modifier == null) return false;
+            if (modifier == null)
+                return false;
+
             float previous = Value;
-            if (!modifiers.Remove(modifier)) return false;
+            if (!modifiers.Remove(modifier))
+                return false;
+
             NotifyChange(previous);
             return true;
         }
 
         private float CalculateValue()
         {
-            float flat = 0f;
-            float percent = 0f;
+            float flatTotal = 0f;
+            float percentTotal = 0f;
             foreach (StatModifier modifier in modifiers)
             {
                 if (modifier.Operation == ModifierOperation.Flat)
-                    flat += modifier.Value;
+                    flatTotal += modifier.Value;
                 else
-                    percent += modifier.Value;
+                    percentTotal += modifier.Value;
             }
 
-            float value = Math.Max(0f, BaseValue + flat) * Math.Max(0f, 1f + percent);
+            float value = Math.Max(0f, BaseValue + flatTotal) * Math.Max(0f, 1f + percentTotal);
             return Math.Max(Minimum, value);
         }
 

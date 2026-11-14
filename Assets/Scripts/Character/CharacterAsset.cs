@@ -21,5 +21,5 @@ namespace Endfield.Character
             maxHP = Mathf.Max(1f, maxHP);
             defense = Mathf.Max(0f, defense);
         }
-    }    
+    }
 }

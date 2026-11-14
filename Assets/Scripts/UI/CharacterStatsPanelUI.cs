@@ -18,10 +18,7 @@ namespace Endfield.UI
 
         public void SetVisible(bool visible) => gameObject.SetActive(visible);
 
-        public void SetCharacterName(string characterName)
-        {
-            characterNameText.text = characterName;
-        }
+        public void SetCharacterName(string characterName) => characterNameText.text = characterName;
 
         public void RefreshStats(CharacterStats stats)
         {
@@ -35,7 +32,8 @@ namespace Endfield.UI
             float value = stats.GetValue(id);
             float bonus = Mathf.Round((value - stats.GetBaseValue(id)) * 10f) / 10f;
             string text = value.ToString("0.#");
-            if (bonus == 0f) return text;
+            if (bonus == 0f)
+                return text;
 
             string color = bonus > 0f ? "#208A55" : "#C44343";
             string change = bonus.ToString("+0.#;-0.#;0");

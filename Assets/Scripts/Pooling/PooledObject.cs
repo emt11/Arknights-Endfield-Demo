@@ -39,10 +39,8 @@ namespace Endfield.Pooling
             return Handle;
         }
 
-        internal bool Matches(ulong expectedVersion)
-        {
-            return IsRented && version == expectedVersion && owner != null && !owner.IsDisposed;
-        }
+        internal bool Matches(ulong expectedVersion) =>
+            IsRented && version == expectedVersion && owner != null && !owner.IsDisposed;
 
         internal void Return(ulong expectedVersion)
         {
@@ -70,8 +68,17 @@ namespace Endfield.Pooling
         }
 
         protected void ReturnToPool() => Handle.Return();
-        protected virtual void OnCreated() { }
-        protected virtual void OnRent() { }
-        protected virtual void OnReturn() { }
+
+        protected virtual void OnCreated()
+        {
+        }
+
+        protected virtual void OnRent()
+        {
+        }
+
+        protected virtual void OnReturn()
+        {
+        }
     }
 }

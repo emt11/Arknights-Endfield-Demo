@@ -16,10 +16,8 @@ namespace Endfield.Presentation
         public float Volume => volume;
         public bool Loop => loop;
 
-        public AudioClip GetRandomClip()
-        {
-            return clips.Length == 0 ? null : clips[UnityEngine.Random.Range(0, clips.Length)];
-        }
+        public AudioClip GetRandomClip() =>
+            clips.Length == 0 ? null : clips[UnityEngine.Random.Range(0, clips.Length)];
 
         public float GetRandomPitch() => UnityEngine.Random.Range(pitchRange.x, pitchRange.y);
 

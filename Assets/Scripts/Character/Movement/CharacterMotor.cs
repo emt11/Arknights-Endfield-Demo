@@ -28,54 +28,75 @@ namespace Endfield.Controller
 
         public void Tick(float targetSpeed, float turnAngleRadians, float deltaTime)
         {
-            if (deltaTime <= 0f || !controller.enabled) return;
-            float rate = targetSpeed > CurrentSpeed ? acceleration : deceleration;
-            CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, targetSpeed, rate * deltaTime);
+            if (deltaTime <= 0f || !controller.enabled)
+                return;
 
-            if (targetSpeed > 0f)
-            {
-                float currentYaw = transform.eulerAngles.y;
-                float targetYaw = currentYaw + turnAngleRadians * Mathf.Rad2Deg;
-                float yaw = Mathf.SmoothDampAngle(currentYaw, targetYaw, ref turnVelocity, turnSmoothTime, turnSpeed, deltaTime);
-                transform.rotation = Quaternion.Euler(0f, yaw, 0f);
-            }
-            else
-            {
-                // 松键后沿当前朝向减速，不保留转向惯性
-                turnVelocity = 0f;
-            }
+            float speedChangeRate = targetSpeed > CurrentSpeed ? acceleration : deceleration;
+            CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, targetSpeed, speedChangeRate * deltaTime);
+            UpdateRotation(targetSpeed, turnAngleRadians, deltaTime);
 
             Vector3 planarDelta = transform.forward * (CurrentSpeed * deltaTime);
             ApplyMovement(planarDelta, deltaTime);
         }
 
-        // 所有参数都是本帧位移；本方法不再次乘水平速度或 deltaTime
+        private void UpdateRotation(float targetSpeed, float turnAngleRadians, float deltaTime)
+        {
+            if (targetSpeed > 0f)
+            {
+                float currentYaw = transform.eulerAngles.y;
+                float targetYaw = currentYaw + turnAngleRadians * Mathf.Rad2Deg;
+                float nextYaw = Mathf.SmoothDampAngle(currentYaw, targetYaw, ref turnVelocity, turnSmoothTime, turnSpeed, deltaTime);
+                transform.rotation = Quaternion.Euler(0f, nextYaw, 0f);
+            }
+            else
+                // 松键后沿当前朝向减速，不保留转向惯性
+                turnVelocity = 0f;
+        }
+
+        // planarDelta 已是本帧水平位移，不再次乘速度或 deltaTime
         public void ApplyMovement(Vector3 planarDelta, float deltaTime)
         {
-            if (deltaTime <= 0f || !controller.enabled) return;
+            if (deltaTime <= 0f || !controller.enabled)
+                return;
+
             planarDelta.y = 0f;
             RequestedPlanarDelta = planarDelta;
-            // 处理垂直速度
+            UpdateVerticalSpeed(deltaTime);
+
+            Vector3 previousPosition = transform.position;
+            Vector3 displacement = planarDelta + Vector3.up * (verticalSpeed * deltaTime);
+            CollisionFlags flags = controller.Move(displacement);
+            UpdateCollisionState(flags);
+            RecordMovement(previousPosition, deltaTime);
+        }
+
+        private void UpdateVerticalSpeed(float deltaTime)
+        {
             if (controller.isGrounded && verticalSpeed < 0f)
                 verticalSpeed = groundStickSpeed;
             else
                 verticalSpeed += gravity * deltaTime;
+        }
 
-            Vector3 before = transform.position;
-            // 合并水平位移和垂直位移
-            Vector3 displacement = planarDelta + Vector3.up * (verticalSpeed * deltaTime);
-            CollisionFlags flags = controller.Move(displacement); // 移动
+        private void UpdateCollisionState(CollisionFlags flags)
+        {
             // 落地后，恢复较小的向下速度，避免持续累积下落速度
             IsGrounded = (flags & CollisionFlags.Below) != 0;
-            if (IsGrounded && verticalSpeed < 0f) verticalSpeed = groundStickSpeed;
-            // 向上运动撞到顶部时，清除向上速度
-            if ((flags & CollisionFlags.Above) != 0 && verticalSpeed > 0f) verticalSpeed = 0f;
+            if (IsGrounded && verticalSpeed < 0f)
+                verticalSpeed = groundStickSpeed;
 
-            // 记录实际位移和实际速度
-            Vector3 actual = transform.position - before;
-            actual.y = 0f;
-            ActualPlanarDelta = actual;
-            ActualSpeed = actual.magnitude / deltaTime;
+            // 向上运动撞到顶部时，清除向上速度
+            bool hitCeiling = (flags & CollisionFlags.Above) != 0 && verticalSpeed > 0f;
+            if (hitCeiling)
+                verticalSpeed = 0f;
+        }
+
+        private void RecordMovement(Vector3 previousPosition, float deltaTime)
+        {
+            Vector3 actualDelta = transform.position - previousPosition;
+            actualDelta.y = 0f;
+            ActualPlanarDelta = actualDelta;
+            ActualSpeed = actualDelta.magnitude / deltaTime;
         }
 
         public void ResetMotion()
@@ -84,7 +105,8 @@ namespace Endfield.Controller
             verticalSpeed = groundStickSpeed;
             turnVelocity = 0f;
             IsGrounded = false;
-            RequestedPlanarDelta = ActualPlanarDelta = Vector3.zero;
+            RequestedPlanarDelta = Vector3.zero;
+            ActualPlanarDelta = Vector3.zero;
             ActualSpeed = 0f;
         }
     }

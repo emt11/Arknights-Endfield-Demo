@@ -47,6 +47,12 @@ namespace Endfield.Controller
 
         private void Awake()
         {
+            InitializeInputs();
+            BindUIInput();
+        }
+
+        private void InitializeInputs()
+        {
             actions = new EndfieldInputActions();
             actions.bindingMask = InputBinding.MaskByGroup("Keyboard&Mouse");
             actions.Player.Run.wantsInitialStateCheck = true;
@@ -56,12 +62,22 @@ namespace Endfield.Controller
             releaseCursorInput = new ButtonInput(actions.Control.ReleaseCursor);
             captureCursorInput = new ButtonInput(actions.Control.CaptureCursor);
             toggleCharacterPanelInput = new ButtonInput(actions.Control.ToggleCharacterPanel);
-            gameplayInputs = new InputBase[] { moveInput, lookInput, runInput };
+            gameplayInputs = new InputBase[]
+            {
+                moveInput,
+                lookInput,
+                runInput
+            };
             controlInputs = new InputBase[]
             {
-                releaseCursorInput, captureCursorInput, toggleCharacterPanelInput
+                releaseCursorInput,
+                captureCursorInput,
+                toggleCharacterPanelInput
             };
+        }
 
+        private void BindUIInput()
+        {
             // 先解除编辑器配置，再绑定同一份运行时资产
             uiInputModule.enabled = false;
             uiInputModule.UnassignActions();
@@ -74,7 +90,9 @@ namespace Endfield.Controller
 
         private void OnEnable()
         {
-            foreach (InputBase input in controlInputs) input.Enable();
+            foreach (InputBase input in controlInputs)
+                input.Enable();
+
             uiInputModule.enabled = true;
             SetCaptured(false);
         }
@@ -82,7 +100,7 @@ namespace Endfield.Controller
         private void Update()
         {
             Frame = default;
-            if (!Application.isFocused) // Game 视图是否拥有焦点，即是否正在当前的游戏窗口而不是其他程序窗口
+            if (!Application.isFocused)
             {
                 SetCaptured(false);
                 return;
@@ -92,15 +110,16 @@ namespace Endfield.Controller
             if (releaseCursorInput.WasPressedThisFrame)
             {
                 if (characterPanelOpen)
-                    CharacterPanelCloseRequested?.Invoke(); // 通知 UI 关闭
+                    CharacterPanelCloseRequested?.Invoke();
                 else
                     SetCaptured(false);
+
                 return;
             }
 
             if (toggleCharacterPanelInput.WasPressedThisFrame)
             {
-                CharacterPanelToggleRequested?.Invoke(); // 通知 UI 开关
+                CharacterPanelToggleRequested?.Invoke();
                 return;
             }
 
@@ -116,7 +135,9 @@ namespace Endfield.Controller
 
             if (!GameplayCaptured)
             {
-                if (captureCursorInput.WasPressedThisFrame) SetCaptured(true);
+                if (captureCursorInput.WasPressedThisFrame)
+                    SetCaptured(true);
+
                 return;
             }
 
@@ -127,7 +148,9 @@ namespace Endfield.Controller
 
         public void SetCharacterPanelOpen(bool open)
         {
-            if (characterPanelOpen == open) return;
+            if (characterPanelOpen == open)
+                return;
+
             characterPanelOpen = open;
             suppressGameplayFrame = Time.frameCount;
 
@@ -138,7 +161,8 @@ namespace Endfield.Controller
             }
             else
             {
-                SetCaptured(restoreCaptureOnClose && Application.isFocused && isActiveAndEnabled);
+                bool canRestoreCapture = restoreCaptureOnClose && Application.isFocused && isActiveAndEnabled;
+                SetCaptured(canRestoreCapture);
                 restoreCaptureOnClose = false;
             }
         }
@@ -155,14 +179,18 @@ namespace Endfield.Controller
             Cursor.visible = !captured;
             foreach (InputBase input in gameplayInputs)
             {
-                if (captured) input.Enable();
-                else input.Disable();
+                if (captured)
+                    input.Enable();
+                else
+                    input.Disable();
             }
         }
 
         private void OnApplicationFocus(bool focused)
         {
-            if (focused) return;
+            if (focused)
+                return;
+
             restoreCaptureOnClose = false;
             SetCaptured(false);
         }
@@ -172,8 +200,11 @@ namespace Endfield.Controller
             CharacterPanelCloseRequested?.Invoke();
             SetCharacterPanelOpen(false);
             SetCaptured(false);
-            foreach (InputBase input in controlInputs) input.Disable();
-            if (uiInputModule != null) uiInputModule.enabled = false;
+            foreach (InputBase input in controlInputs)
+                input.Disable();
+
+            if (uiInputModule != null)
+                uiInputModule.enabled = false;
         }
 
         private void OnDestroy()
@@ -186,8 +217,12 @@ namespace Endfield.Controller
 
             Destroy(uiPointReference);
             Destroy(uiClickReference);
-            foreach (InputBase input in gameplayInputs) input.Dispose();
-            foreach (InputBase input in controlInputs) input.Dispose();
+            foreach (InputBase input in gameplayInputs)
+                input.Dispose();
+
+            foreach (InputBase input in controlInputs)
+                input.Dispose();
+
             actions.Dispose();
         }
     }

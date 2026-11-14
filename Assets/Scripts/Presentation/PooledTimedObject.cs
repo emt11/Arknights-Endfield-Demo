@@ -7,10 +7,7 @@ namespace Endfield.Presentation
     {
         private float remaining;
 
-        protected override void OnRent()
-        {
-            remaining = 0f;
-        }
+        protected override void OnRent() => remaining = 0f;
 
         public PoolHandle Show(float duration)
         {
@@ -31,9 +28,6 @@ namespace Endfield.Presentation
                 ReturnToPool();
         }
 
-        protected override void OnReturn()
-        {
-            remaining = 0f;
-        }
+        protected override void OnReturn() => remaining = 0f;
     }
 }
