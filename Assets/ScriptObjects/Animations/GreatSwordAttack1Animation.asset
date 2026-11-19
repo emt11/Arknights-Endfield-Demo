@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ca8555812431f489f02f8f464a97bf, type: 3}
+  m_Name: GreatSwordAttack1Animation
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.AnimationSystem.AnimationDefinition
+  clip: {fileID: -2343325215556362360, guid: 2ec8982f730dab742a947c11645d2a7c, type: 3}
+  playbackRate: 1.4
+  easeInDuration: 0.42000002
+  easeInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  easeOutDuration: 0.42000002
+  easeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.988148
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.0045203827
+      inSlope: -0.023107843
+      outSlope: -0.023107843
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3758389
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pointEvents:
+  - rid: 3230589838804124034
+  windowEvents:
+  - rid: 3230589838804124035
+  - rid: 3230589838804124036
+  - rid: 3230589838804124037
+  references:
+    version: 2
+    RefIds:
+    - rid: 3230589838804124034
+      type: {class: ComboAdvancePoint, ns: Endfield.Combat, asm: Assembly-CSharp}
+      data:
+        time: 1
+    - rid: 3230589838804124035
+      type: {class: MotionWarpWindow, ns: Endfield.Combat, asm: Assembly-CSharp}
+      data:
+        start: 0
+        end: 2.633333
+        warpTranslation: 1
+        warpRotation: 1
+        stopGap: 0.15
+        maxApproach: 2
+        maxExtension: 1
+        maxYawCorrection: 60
+        maxYawSpeed: 720
+        maxSpeed: 8
+        correction:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 3230589838804124036
+      type: {class: HitWindow, ns: Endfield.Combat, asm: Assembly-CSharp}
+      data:
+        start: 0.6
+        end: 0.89
+        group: 0
+        damageMultiplier: 0.8
+        hitboxIds: 00000000
+    - rid: 3230589838804124037
+      type: {class: CancelWindow, ns: Endfield.Combat, asm: Assembly-CSharp}
+      data:
+        start: 1.2
+        end: 4.54
+        categories: 3

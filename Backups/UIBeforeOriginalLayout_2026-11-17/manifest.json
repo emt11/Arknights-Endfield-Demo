@@ -1,0 +1,30 @@
+[
+  {
+    "path": "Assets/Scenes/CombatDemo.unity",
+    "sha256": "700ac118974969d7f45a64a4d44a78e165c79d30898d661871f52ea33a1bb477"
+  },
+  {
+    "path": "Assets/Tests/Scenes/CombatActionValidation.unity",
+    "sha256": "d5ecd9951f18bdd38fe4eafaf654066b1dc9b5eb19da2e24fd861f437ce69a33"
+  },
+  {
+    "path": "Assets/Tests/Scenes/CombatComboValidation.unity",
+    "sha256": "b318b7ada270408d4f5e59f72c7e7d99a22c70caf64bbce982a4b5bbd962f573"
+  },
+  {
+    "path": "Assets/Tests/Scenes/CombatEntryValidation.unity",
+    "sha256": "0dea4d9938e71e963a5e603ec037cbcd93e760dbf8a6b4e00d4616fc53abed22"
+  },
+  {
+    "path": "Assets/Tests/Scenes/CombatHitValidation.unity",
+    "sha256": "fb0001208f4f6ba274dfb742a244e030b4ca62b82d8602c806a7d66df5d181e2"
+  },
+  {
+    "path": "Assets/Tests/Scenes/CombatSceneValidation.unity",
+    "sha256": "cfbb565c37c7f86a3b3c31e8ef7250a67263beef581d991a8d854c36fa842b17"
+  },
+  {
+    "path": "Assets/Tests/Scenes/CombatWarpValidation.unity",
+    "sha256": "44fb42b05227674e5371f75e00fb9ca658f0eaf943ade79bac2f83bce42ee231"
+  }
+]

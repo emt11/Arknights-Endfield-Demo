@@ -1,0 +1,99 @@
+using Endfield.Pooling;
+using UnityEngine;
+
+namespace Endfield.Presentation
+{
+    public sealed class PooledParticleEffect : PooledObject
+    {
+        [SerializeField] private ParticleSystem[] startSystems;
+        private ParticleSystem[] allSystems;
+        private TrailRenderer[] trails;
+        private Transform followTarget;
+        private Vector3 followPosition;
+        private Quaternion followRotation;
+        private bool followsTarget;
+        private bool started;
+
+        protected override void OnCreated()
+        {
+            allSystems = GetComponentsInChildren<ParticleSystem>(true);
+            trails = GetComponentsInChildren<TrailRenderer>(true);
+            foreach (ParticleSystem system in allSystems)
+            {
+                ParticleSystem.MainModule main = system.main;
+                main.playOnAwake = false;
+                main.stopAction = ParticleSystemStopAction.None;
+                main.useUnscaledTime = false;
+                main.cullingMode = ParticleSystemCullingMode.AlwaysSimulate;
+            }
+
+            foreach (TrailRenderer trail in trails)
+                trail.autodestruct = false;
+        }
+
+        protected override void OnRent() => ResetPlayback();
+
+        public PoolHandle Play(Transform follow = null)
+        {
+            followTarget = follow;
+            followsTarget = follow != null;
+            if (followsTarget)
+            {
+                followPosition = follow.InverseTransformPoint(transform.position);
+                followRotation = Quaternion.Inverse(follow.rotation) * transform.rotation;
+            }
+
+            PoolHandle handle = Activate();
+            foreach (ParticleSystem system in startSystems)
+                system.Play(false);
+
+            started = true;
+            return handle;
+        }
+
+        private void Update()
+        {
+            if (!started)
+                return;
+
+            foreach (ParticleSystem system in allSystems)
+            {
+                if (system.IsAlive(false))
+                    return;
+            }
+
+            ReturnToPool();
+        }
+
+        private void LateUpdate()
+        {
+            if (!followsTarget)
+                return;
+
+            if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
+            {
+                ReturnToPool();
+                return;
+            }
+
+            transform.SetPositionAndRotation(followTarget.TransformPoint(followPosition), followTarget.rotation * followRotation);
+        }
+
+        protected override void OnReturn() => ResetPlayback();
+
+        private void ResetPlayback()
+        {
+            started = false;
+            followsTarget = false;
+            followTarget = null;
+            followPosition = Vector3.zero;
+            followRotation = Quaternion.identity;
+
+            foreach (ParticleSystem system in allSystems)
+                system.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            foreach (TrailRenderer trail in trails)
+                trail.Clear();
+        }
+    }
+}

@@ -1,0 +1,2797 @@
+[
+    {
+        "path":  ".gitignore",
+        "sha256":  "CD74D080FFD9CEF5B5578D349D26A947A409C6787F65250E2E5276CAE19C107B",
+        "bytes":  418
+    },
+    {
+        "path":  "AGENTS.md",
+        "sha256":  "CAAB63162AA21A5DBD4F0EF0E87E75CEB61919C97499C890636AE2C7E502F0C9",
+        "bytes":  6633
+    },
+    {
+        "path":  "Assets/Editor.meta",
+        "sha256":  "529129B825C515E43C66050DD32D21D134EECA11B1C9F3A2733FCC4CA1FBB5FA",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Editor/Combat.meta",
+        "sha256":  "5CCAFAA71EAFCA0AFCBEBF457110DD5313B5646466AD4491F48CCF5536B1600C",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionDefinitionEditor.cs",
+        "sha256":  "19DE1CB0F645982FEDB6728F583E56869BBD0D5BE43F203C2C2D2C5B05D09F90",
+        "bytes":  487
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionDefinitionEditor.cs.meta",
+        "sha256":  "B41646BD2C076B28DAFC5FC7DF5790EA13E9601ACCCA59136882AA71D76A9210",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionPreview.cs",
+        "sha256":  "E761B54AF6D02C8609ADFD3979E5E58CD2AF52021BEA391123FFD17F1F107E94",
+        "bytes":  5279
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionPreview.cs.meta",
+        "sha256":  "E35B9776340B4E857F0AFA412546649FAD3903924279487ED96441C623ED7CA3",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionTimelineView.cs",
+        "sha256":  "18FC660A0772899F2329567E5CC780682A7B1683C2D5D3E9740D22C5A71C28D3",
+        "bytes":  13997
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionTimelineView.cs.meta",
+        "sha256":  "B6753F129A9AD6561DA669314A88D5143632AD50B2773DCC5D2DAB13B44FDDFD",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionTimelineWindow.cs",
+        "sha256":  "D2D07416860202E118DAC30ECAC578AD85E77D77B3926314C5CD16872F96CAE2",
+        "bytes":  15450
+    },
+    {
+        "path":  "Assets/Editor/Combat/ActionTimelineWindow.cs.meta",
+        "sha256":  "A72EB5FD86512A96998B18A3C101F9641CD79EE6A52753649A70F40C90782345",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/CombatControlMigration.cs",
+        "sha256":  "E8E719E52800D0F1828676EC451A094F58C5F2FEED25734437DCD4D7F43C2744",
+        "bytes":  6008
+    },
+    {
+        "path":  "Assets/Editor/Combat/CombatControlMigration.cs.meta",
+        "sha256":  "D254270338C7419631782516D1E115D83863684E0ADB161B32DA7D5D59E8B41E",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/CombatDemoSetup.cs",
+        "sha256":  "97BE5CE6F20A8D6D04BD2BFC1B143323A35F53E8407F9C1CB4810AE2F9F2DBF1",
+        "bytes":  2549
+    },
+    {
+        "path":  "Assets/Editor/Combat/CombatDemoSetup.cs.meta",
+        "sha256":  "53D797B62E9CCC31C10285AAED0C5F0F0B6420B0F2FD66D2689B88BDB5E00023",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/RootMotionBaker.cs",
+        "sha256":  "B052AB9FD82ECDDDCD1F04C1F4581318F94787CFCA218D5A2AF9998EF78E2119",
+        "bytes":  3965
+    },
+    {
+        "path":  "Assets/Editor/Combat/RootMotionBaker.cs.meta",
+        "sha256":  "B09F7A1B23FCEDF4841A2F0AE9BA67F3E4E28F1A52CD0C277335546BB82EC9CE",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/RootMotionDefinitionEditor.cs",
+        "sha256":  "19DCC6B4F1C3B9D19A93495C98180F0181A2826275308A8DE056558888C7CF06",
+        "bytes":  1125
+    },
+    {
+        "path":  "Assets/Editor/Combat/RootMotionDefinitionEditor.cs.meta",
+        "sha256":  "B0D154E97B2FB535F8D3A622AE43BB3C26E173D3DBFEEE8F8EF101A2EE512C97",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Editor/Combat/TeamSkillSetup.cs",
+        "sha256":  "5A3B649FF0BB40BEC8549F457D7508E75B7773CDA0D20CD29532F2297BE2568A",
+        "bytes":  5561
+    },
+    {
+        "path":  "Assets/Editor/Combat/TeamSkillSetup.cs.meta",
+        "sha256":  "E2512908951AF00334E9487BFE52FABEDA08457502D93E357B2090616472200C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Game/Combat.meta",
+        "sha256":  "DD0E7B0109A451E823505869D5F91771B421D5C35722F0624056BD2C361D13A3",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions.meta",
+        "sha256":  "12C6E0D5BC325063CAB0A7873427E556D6B43604BE61E4839DA2E5A340BC4BBB",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/A_Combo.asset",
+        "sha256":  "00A5EE62F11A591205F14D17678AAB91539A1A8E8F9F267DD5C797E7693F7DB9",
+        "bytes":  1628
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/A_Combo.asset.meta",
+        "sha256":  "2387F556BBD1DF7D117C1B86E6E91CADD007B5F0B2305D5797DF48C1FD72F362",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/A_Ultimate.asset",
+        "sha256":  "CEF0B0FB442593983F9AD02478F4886DBB1097A5C9690F1495FDF3D8C87F71A9",
+        "bytes":  1664
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/A_Ultimate.asset.meta",
+        "sha256":  "D229830BC76DE82D530C1DAFC535FD7A8618A18A7DCD6210E29DBFEB2778BAD0",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/B_BattleSkill.asset",
+        "sha256":  "B1F5791B1638897CE3332015035422451E645FF45FE111CBB8C66321219DF8CF",
+        "bytes":  3108
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/B_BattleSkill.asset.meta",
+        "sha256":  "ADCCD125BBB4B1238F0F17E3C6D33B3C73C42262D5AB5998777687C2B948C6A2",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/B_Combo.asset",
+        "sha256":  "8E6F63A96C24797BFC75585E211349EC8B9D1D8AF69A81F6F2118B267E30AC42",
+        "bytes":  1628
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/B_Combo.asset.meta",
+        "sha256":  "9B9EC13EB61DA2A2C85785E87C649A5C4C61E7F758B676C5E06ADA1ECA9302E4",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/B_Ultimate.asset",
+        "sha256":  "23B9CE259AF4E0007D1F88F79F33328D44AC371C7409BAB25C9E2405650B8829",
+        "bytes":  2379
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/B_Ultimate.asset.meta",
+        "sha256":  "31A7E3321A4E3ECA12AB98D92D07FE075C326001388B7A470A554F13F81E2FB1",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/C_BattleSkill.asset",
+        "sha256":  "DA141DD7CC8B42328BC9FC8B08A946A9554C687016F489F8F4F1F29EC7C00648",
+        "bytes":  3108
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/C_BattleSkill.asset.meta",
+        "sha256":  "21D0321EA6CC2E02DCFB31283FD701238D202303A05B3B959B08FA2A1BC7D25E",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/C_Combo.asset",
+        "sha256":  "D9F8E297DD3B87083638F0A930DDA6997986F5CC144CDD3161EB11B56EB2EF30",
+        "bytes":  1628
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/C_Combo.asset.meta",
+        "sha256":  "51B5A454876C9840B4AB2B7C073D3FF17A87D64F01CFF592824DA75CEEE555FE",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/C_Ultimate.asset",
+        "sha256":  "985430F052E03A5B7EF7E0480C520E03D8E9A6925A9AC82C788386D1403F0144",
+        "bytes":  1664
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/C_Ultimate.asset.meta",
+        "sha256":  "BE38B00D68E285686233DB881F376E4142BEE4CA50CF9B314B74D30DC8F1890F",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/D_BattleSkill.asset",
+        "sha256":  "F5F66A7D6481B77F7139B37642D44EA9F7264DDD41FDB5419E2ABBC83634440C",
+        "bytes":  3108
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/D_BattleSkill.asset.meta",
+        "sha256":  "147BDE58EAAD9CCDBF4E1A5FF9F653E91C01464259CAA1DD0096D15682931919",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/D_Combo.asset",
+        "sha256":  "6D80834C599D7E139ADE4B22D226715AF147B4314E6CFF6D17FBE7633A76528B",
+        "bytes":  1628
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/D_Combo.asset.meta",
+        "sha256":  "080D0D89DE38F37CF150F235800F02D9B81558067F054299F2598027B0217DE0",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/D_Ultimate.asset",
+        "sha256":  "4594090245A96BA7D01CEF799E9511A34D083B4CFAE06104D5ACEF5C676B87EE",
+        "bytes":  1664
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/D_Ultimate.asset.meta",
+        "sha256":  "2A1F454EF366653A088C111F80577803D759BA36D1CE18AE6B8C8FC77C566C02",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/DebugBurning.asset",
+        "sha256":  "0C72DB0DBB6B9C4E5C586F0A8B30367689A047E2753D0C368C8FF61D70F134C4",
+        "bytes":  1683
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/DebugBurning.asset.meta",
+        "sha256":  "726C8CF56C3E84D0AADF8F778DB5996F87CB8D6B64CB5198A6E16C8651802F53",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/EliteArea.asset",
+        "sha256":  "5A6E1C645E5428961FB60D3AF239B00CA82B02009CA43901D6935C565AFA6CAE",
+        "bytes":  2452
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/EliteArea.asset.meta",
+        "sha256":  "BE8BE7D1F97137861B8ECA5C7F2FA6154CADF5E770EA64E941F8D84F46B5DAD0",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/ElitePhase.asset",
+        "sha256":  "9268B8B692778B8BECF001438257F0457DA09AF7449E0DA90D3A82689F9C6FAB",
+        "bytes":  1426
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/ElitePhase.asset.meta",
+        "sha256":  "1ACA5180A816A7D466DE0BA1C8D4AAC101D3CB5A2822B7346C6E5A07628A143D",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/EnemyMeleeAttack.asset",
+        "sha256":  "FEB601CAB3887E19BCD14576741E69D5438CFB3C9466D5204F0023D46449CDEE",
+        "bytes":  2175
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/EnemyMeleeAttack.asset.meta",
+        "sha256":  "D9B64B0A2D462DED9198F83F2024CF54A0725811755536BBDC651791DFF51D77",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/ExecutionVictim.asset",
+        "sha256":  "C5118C5FAFF39A558C740D2A3B73D1B47E6135004AE6714E2F88B1C5A3A6F856",
+        "bytes":  1331
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/ExecutionVictim.asset.meta",
+        "sha256":  "474EE7511406626BD4504C6F24A137342E37ED4D6A2B5C75B1EE087018F12520",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordAttack1.asset",
+        "sha256":  "0354A7FA570ED9D7D53160C40278D9E7DFD674BEDDBE12F908A291C3BC9A6DE0",
+        "bytes":  3475
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordAttack1.asset.meta",
+        "sha256":  "7379841FA0DAADFE50E163FF499BA7CA3ABDB0404E1CE3EADB35049405AC68A4",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordAttack2.asset",
+        "sha256":  "3B2AB51DDC9D3FC9FDA285D7AE9D0C937F0DD134B32A3891ADAB4813EFD04055",
+        "bytes":  4179
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordAttack2.asset.meta",
+        "sha256":  "C9C4BBCA34D71245FB477B781B4B78F9A74D664A36C5991DC5DA252D37F6245C",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordAttack3.asset",
+        "sha256":  "ED920E1CF5D28FDA4CD754A0E4DA37670A18C53D7DBD933BCC87454701055938",
+        "bytes":  4175
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordAttack3.asset.meta",
+        "sha256":  "E2604A95F827C39EB79779B49AFA6C8F9E3F732F9C2D4F134355930A4BAEF1B2",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordDodge.asset",
+        "sha256":  "E6514EE8CBCF60124B9548688E6F776EF3247137B073E92A4F4A501E7845C00F",
+        "bytes":  1521
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordDodge.asset.meta",
+        "sha256":  "804DDDC86F7D0E72D1811409558130848E1D9BC0F19049037B44ABA48E6CC90A",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordExecution.asset",
+        "sha256":  "3AEABEE63F0A0895D9DDFE5A22D19AAD8CE046CF35542F61C921D44C1702B418",
+        "bytes":  1645
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordExecution.asset.meta",
+        "sha256":  "7F62B8277DD8987F8073F6EA8FA83334E81401BD35766FAEE9F866D10BECC384",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordHitReaction.asset",
+        "sha256":  "7ED51447C8196F6466E0C063063C94F36E925470C44B8BFB5C72194595F88AB5",
+        "bytes":  1317
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordHitReaction.asset.meta",
+        "sha256":  "B0962366B1DD38BB298FE37862CB365F2C3C9D0D4E81B5C9269436B2B2B2BCDD",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordSkill.asset",
+        "sha256":  "C27372C1BCB503B090A0B0D942264C3037A9A60C8F488239B4C073F67F46DD56",
+        "bytes":  3640
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/GreatSwordSkill.asset.meta",
+        "sha256":  "7B42267C93F1C3C19079A86A04AE678184954E9087EFBEF7714632DB48C518BA",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/KnockdownReaction.asset",
+        "sha256":  "2EA05FB8B81B838109B04BD1A24E97D5118420F9DB557B65A3DC65086DD37B25",
+        "bytes":  1353
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/KnockdownReaction.asset.meta",
+        "sha256":  "0577DCC3C45663B12A7E1C9DC99FE7D54FCA56FD1FFF98B523BFE555306CD735",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/LaunchReaction.asset",
+        "sha256":  "D6E5643E927C80C2D61BE1D496684637D1122DC2C40A1E0860EAC6DFFF4726CE",
+        "bytes":  1352
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/LaunchReaction.asset.meta",
+        "sha256":  "9E7C8CDB12E363BA613A5F16DF9D3BAA74863F6DDB2B890146BB9D68BAE433A1",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/RangedAttack.asset",
+        "sha256":  "B1D20E22A85B116AA3048B430019F1A4463956DDC38C44E66E6274155CAE37EE",
+        "bytes":  2455
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/RangedAttack.asset.meta",
+        "sha256":  "9F9C4CE9E8ACB3EF78952701F1E4489D27A606B347CD331225FB6F7326A14D87",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/StaggerReaction.asset",
+        "sha256":  "6C9E9CF02B9C82B98A933DD065D748546F393D2CB62A52E4B15049959DA1F385",
+        "bytes":  1331
+    },
+    {
+        "path":  "Assets/Game/Combat/Actions/StaggerReaction.asset.meta",
+        "sha256":  "1F05E7049839790FA1B1FFB52625644E6B6E213AFECCAE66646273559D06E63A",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/AI.meta",
+        "sha256":  "C5096029DBC514F6E19D347E06393CD93F3B1CB189AEA470003EDFBB7A1BE2C1",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/CombatNavMesh.asset",
+        "sha256":  "D91B51F5D30BDD1516876EE4EAE8C28841747D0366EC5F8E0FC7358AA3DE05EE",
+        "bytes":  8232
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/CombatNavMesh.asset.meta",
+        "sha256":  "B0F5AF188FD5E17F9F5D398024DC2BDEFEB95D0CD09624BE82A40510F60366A4",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/EliteEnemy.asset",
+        "sha256":  "4E648A2E07DE7F42A797AE1A3C12AC66880820A27C794F98947D053BEB7934D0",
+        "bytes":  859
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/EliteEnemy.asset.meta",
+        "sha256":  "A1F905C18FBD7850F770BCC6FC0BBFD6BAE994D61568D3D506C51F2B36876197",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/MeleeEnemy.asset",
+        "sha256":  "1CE7B04A3F35448BF094249E4E5D31191D50BE182C0610C1B28DC3C54E73400D",
+        "bytes":  598
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/MeleeEnemy.asset.meta",
+        "sha256":  "E543FDF9E19D8C8DCF481759828D809BF3CC74DF3036D5E66695A8D49050300F",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/RangedEnemy.asset",
+        "sha256":  "6A41D941BAC676B225874EC8B4BB3210AAA8EC661C640DACDAAA8FCF5799B9C8",
+        "bytes":  748
+    },
+    {
+        "path":  "Assets/Game/Combat/AI/RangedEnemy.asset.meta",
+        "sha256":  "E506D0CF65F133ED2F58B275FDE6458BE8F70AF7A7D43B76A1B809B3AFE3A27A",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/ArcProjectile.mat",
+        "sha256":  "8EA94E9A37DF3CF0EAC669425267391D412D8B568D41A369CBAE114C20FBC2A8",
+        "bytes":  3822
+    },
+    {
+        "path":  "Assets/Game/Combat/ArcProjectile.mat.meta",
+        "sha256":  "583793569090E925847A14D8F9EFECBEE5E3394C02D62D1561CC316F0C323B70",
+        "bytes":  188
+    },
+    {
+        "path":  "Assets/Game/Combat/ArcProjectile.prefab",
+        "sha256":  "D5AB9CE353B15EE6B1375A17B802CC78CF3166652D9C013F212B0D0F83E962CE",
+        "bytes":  3107
+    },
+    {
+        "path":  "Assets/Game/Combat/ArcProjectile.prefab.meta",
+        "sha256":  "F7CA259308B4F6EB5696CA3AF3FC5CE43221F85DF351EEEFDFB0C2EEF229D5D2",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Combat/ArcProjectileDefinition.asset",
+        "sha256":  "2DB5158B42DA18BCE40BB478B7B686B5F6DBCD16364E314BF6DBCBEB7ED42185",
+        "bytes":  841
+    },
+    {
+        "path":  "Assets/Game/Combat/ArcProjectileDefinition.asset.meta",
+        "sha256":  "6BC74508E025059F545A70629A4D60E908B05502BBAE1B909D752D9A93116939",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/CombatAudio.prefab",
+        "sha256":  "8F292947ED8D00E083DB4DD99D45C1A7A9F246E8415464AA94C6408678EB8A66",
+        "bytes":  3509
+    },
+    {
+        "path":  "Assets/Game/Combat/CombatAudio.prefab.meta",
+        "sha256":  "9BA1974DB47C0BEF35394D84C89A8482A0373186F475D6E0B9CA6ED259B3A39F",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Combat/DamageNumber.prefab",
+        "sha256":  "4F6F03AE7850133DB99F1B5BBE52E55C056383291B44ADED21F8AD3BB626A927",
+        "bytes":  5668
+    },
+    {
+        "path":  "Assets/Game/Combat/DamageNumber.prefab.meta",
+        "sha256":  "EABD30226021E2FBAAAA24AF00E18FB91F52987E2E1E8838A4D96F7B493C8885",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Combat/Impact.wav",
+        "sha256":  "500429045D7E35FCF63CD05E4AC7C9BC07A7404F3EEE2FDC6F48EFB9B0B542F8",
+        "bytes":  7244
+    },
+    {
+        "path":  "Assets/Game/Combat/Impact.wav.meta",
+        "sha256":  "3CD9FCA24E2D752B855814A199CC7BF9931C3840D09FE0B7B36E6C395666C7D8",
+        "bytes":  485
+    },
+    {
+        "path":  "Assets/Game/Combat/ImpactAudioDefinition.asset",
+        "sha256":  "772D71105558CB9A80D0BDB19C65D2DEF81FA02A9516B996FE5AE90FB599869D",
+        "bytes":  689
+    },
+    {
+        "path":  "Assets/Game/Combat/ImpactAudioDefinition.asset.meta",
+        "sha256":  "264397CB4A5215E48C82B2857790F0F4C5F59660890C98B67953D620EA08B885",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/PulseArea.mat",
+        "sha256":  "A0BD913DA6F53F5D1281C910DA460DDAC341BF56435177A937F99280EB01C959",
+        "bytes":  3829
+    },
+    {
+        "path":  "Assets/Game/Combat/PulseArea.mat.meta",
+        "sha256":  "6CADB595B6C37E549D7539AFD988651615E5921E13BB8FF44FDAECD47FD3254E",
+        "bytes":  188
+    },
+    {
+        "path":  "Assets/Game/Combat/PulseArea.prefab",
+        "sha256":  "5583C69961EDAF54EA4E2ECE56594A75D0D22231E2D65A6C4FF8C67AB671A179",
+        "bytes":  3103
+    },
+    {
+        "path":  "Assets/Game/Combat/PulseArea.prefab.meta",
+        "sha256":  "2C3E273F7D4626E89730A289403FC8B59DEA570FFBAD9D3BD54237E5DC00BBF3",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Combat/PulseAreaDefinition.asset",
+        "sha256":  "A4234D9A328D949AFEAF6039CA123E24CE15275FC9454A5AE63BD545DC446B84",
+        "bytes":  838
+    },
+    {
+        "path":  "Assets/Game/Combat/PulseAreaDefinition.asset.meta",
+        "sha256":  "7E3CC007576D1EE17175F8D64DED01E9838562E6542BAA61FD0FDBC41FFEF95D",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion.meta",
+        "sha256":  "1549E36C50218CC99D7D9DE8BC0C55EACFCD30DB79EBF2CCF2FEC686691BEDCB",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordAttack1Root.asset",
+        "sha256":  "5991C2024731416F006D1EFAF16E1C26E030242CDAC34A164E4961CD37A43DC7",
+        "bytes":  24454
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordAttack1Root.asset.meta",
+        "sha256":  "8463F874834C00B53EAC0E6B06F3F3DFD33DAA9E97D8BAD7B06A744730D9F7CE",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordAttack2Root.asset",
+        "sha256":  "A484C63226AAACF5758934C1A747CC37203B9AA3D3A9347959E7E246E05C0A62",
+        "bytes":  22433
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordAttack2Root.asset.meta",
+        "sha256":  "5DE8ADA8C037A0C5626088125147B4DECC266BA8C7CC753D640906520B480BE9",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordAttack3Root.asset",
+        "sha256":  "F68EF1694D390A8F2E87896DFCE31B446A143BAA6DC2345A16410171CEB578C6",
+        "bytes":  31585
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordAttack3Root.asset.meta",
+        "sha256":  "897A7098F1F3355D33DA9A41B24AEC0606062C695AE7BAD67DEF5463EE315578",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordSkillRoot.asset",
+        "sha256":  "40B189E43EB4AE5BCFDE0FD900364D3C8CAFC07FE92684803001B8511AD5B7E4",
+        "bytes":  29020
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/GreatSwordSkillRoot.asset.meta",
+        "sha256":  "3FA61D8E1251FC1A649F1B04DFBB5A436682988C4DBDFBB77F04ED0683463AEB",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/PhoebeRootModel.prefab",
+        "sha256":  "3A1B20317BE6EBFAF3EA04F24AF1948DA12FD6DA24F75A8C57AC94FB0B345AE6",
+        "bytes":  683590
+    },
+    {
+        "path":  "Assets/Game/Combat/RootMotion/PhoebeRootModel.prefab.meta",
+        "sha256":  "5F9EE3A50E85BAD115457ACF1A40BD70BEA4F63C77CA3F085D4046E7B55750F3",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Combat/Rules.meta",
+        "sha256":  "B2D587A2AE987C3431139C870C18797D40AEA304A5F2B8E5AEFE15CB80544262",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/Rules/CombatRulesDefinition.asset",
+        "sha256":  "EC966DBA9670F5B7ADE531BDE95344863839CFA59FD15F87394942C89A83150D",
+        "bytes":  1239
+    },
+    {
+        "path":  "Assets/Game/Combat/Rules/CombatRulesDefinition.asset.meta",
+        "sha256":  "A03C4298AEB9ADA6DB43BAD82B0D3C95303823704E004E7888702AACAE627572",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Rules/ReactionRulesDefinition.asset",
+        "sha256":  "F88BC38393B49C06A1A32DEE78722E0852EE9B1B566E6EA31FDBD9A7FB54DFAF",
+        "bytes":  1239
+    },
+    {
+        "path":  "Assets/Game/Combat/Rules/ReactionRulesDefinition.asset.meta",
+        "sha256":  "4A3ADDC6A39C2E37B12AE0B2740C48F7238D4B60EA7AF138A7C7001C04F507FE",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills.meta",
+        "sha256":  "921CF465B44F02B5988A98530D47D3503A5E0E7DAA5354BDD811AD0B29D99503",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/A_Combo.asset",
+        "sha256":  "E572EAB0FB576FD3E379AA11CE1311AAB5AD2AF6E350244976405B61F4528067",
+        "bytes":  671
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/A_Combo.asset.meta",
+        "sha256":  "03227AA5A1D9DF91C267CA67328F260F1F96501C4790A0A89E2847480CF3EAD0",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/A_Ultimate.asset",
+        "sha256":  "1BC4303F2D3448A901258814EC273119EB9019FAC5B7B34DB158798D0D43FA20",
+        "bytes":  650
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/A_Ultimate.asset.meta",
+        "sha256":  "8FF3CC874DE4E5B3C58E69AAC42AFB9E39CBCB39F9887EA4900BCF3C8D2AB604",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/AssaultSkill.asset",
+        "sha256":  "53C094B20DB55155D15FA027C2E003F30F5DED41D9A72C13A3B1B64127BF246A",
+        "bytes":  646
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/AssaultSkill.asset.meta",
+        "sha256":  "37DCE6E8D27251D7A6F88605BE87DC9C4686FE7C3F59092E83C2EC92E9ADC8E4",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/B_BattleSkill.asset",
+        "sha256":  "700FAD9FF131C57E42B3330F9D6C288DAF2B124612145549EF692B98DCB25ABF",
+        "bytes":  653
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/B_BattleSkill.asset.meta",
+        "sha256":  "E08DD3A305DA172CA37076AA9514AA47994AA7146C8E556C650127763D464087",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/B_Combo.asset",
+        "sha256":  "F454246538CD22CE98EC00C7B82B0A2A1F190D0C18D73BF841701F3F8B336FBE",
+        "bytes":  671
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/B_Combo.asset.meta",
+        "sha256":  "03A91456C83273CF64391FB72B1D38FC6521FD0351FEE7E5D21AE3BFD8B76974",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/B_Ultimate.asset",
+        "sha256":  "61818155E0A42955CD2763387260BF06BBB7B07B671BE772E43613CEDBA88C34",
+        "bytes":  656
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/B_Ultimate.asset.meta",
+        "sha256":  "227DC3D4822A24506734E92EE6F704B859712E17236727E3DBBB95EA013DF60F",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/C_BattleSkill.asset",
+        "sha256":  "50D9897B95F0650D9086CBF9FB321EF365B03E74DDE05B24BE765CE0D4832554",
+        "bytes":  659
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/C_BattleSkill.asset.meta",
+        "sha256":  "6C65B780F708A0D88D0D2AF6125D57D2AC3B417D7FB4996761DF2C7A2928EEFC",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/C_Combo.asset",
+        "sha256":  "E60D10FA3B084B0442EA3AEED60FCDF5B16567FD29BBE451796D9E6A414ECC22",
+        "bytes":  671
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/C_Combo.asset.meta",
+        "sha256":  "5818B92265A43C7A74880525C659DFFCF27A937D103B011819D12A14BF824D9F",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/C_Ultimate.asset",
+        "sha256":  "5FBF1D21407BBD3ECFBB8D7F6F84CBA9670E649DD693C544AB8B2BA1EC7541E9",
+        "bytes":  656
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/C_Ultimate.asset.meta",
+        "sha256":  "156ABEFE827F8A555EEF220A2835E08E4C3369FA07FEFF44119E429B6CDEF0DA",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/D_BattleSkill.asset",
+        "sha256":  "E2ED2F5B4992B4063FEAA3996C851662976E1404F3CD23700A220D06133F8AE2",
+        "bytes":  659
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/D_BattleSkill.asset.meta",
+        "sha256":  "0760A632464DEFDEFD611C361A1B8257A31B1B32963CB07A8730FB7AF8550952",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/D_Combo.asset",
+        "sha256":  "B50A347C99581E62567C86907770961797F9CF5B663CB21A7E026E7AB668E167",
+        "bytes":  671
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/D_Combo.asset.meta",
+        "sha256":  "025CC3DFD062E0D4B0E3D8460B1987A0024348676D52EDA2F644E98D4EA53C10",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/D_Ultimate.asset",
+        "sha256":  "6911E5EFE3C83949CCE2EE74228326328D7D0DC93176DD85420D6C0542DE92D6",
+        "bytes":  656
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/D_Ultimate.asset.meta",
+        "sha256":  "9D7B935ECB8F732E23251AE00160765A44735BF3E1CBAA9616B0D173F105DF75",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/DebugBurningSkill.asset",
+        "sha256":  "BE1B4E65AACD107B764BEC0DB7DE4723649EACA23D6A6C1FA37211D49770C370",
+        "bytes":  663
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/DebugBurningSkill.asset.meta",
+        "sha256":  "941A2A39B86C69E97D330578A593BD046FA512A1ABE44838608DB7C95F57CD6E",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/EliteArea.asset",
+        "sha256":  "141E9F56EAE0BAD20AE6C1DE7C4D854AABF1C75E8E3B875FF5F911929E270A7B",
+        "bytes":  673
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/EliteArea.asset.meta",
+        "sha256":  "ED9B8A2C2C6A483D71DF7E0B2A64230051855E63F65FC1136B81FF097AF0B73C",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/EnemyMeleeSkill.asset",
+        "sha256":  "E321E505F22E15E3085B89C0C215197F888E20CA64C1073019A0B848C2228493",
+        "bytes":  595
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/EnemyMeleeSkill.asset.meta",
+        "sha256":  "3CC3C84A22D01500629A6C0E9A50C7058E888A696286DD4F25BAC737D0D7F0FB",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/RangedAttack.asset",
+        "sha256":  "6598ACE1E0E111BF022E21E817619D08D72D5157E30870F897A2A81E7FAE9840",
+        "bytes":  671
+    },
+    {
+        "path":  "Assets/Game/Combat/Skills/RangedAttack.asset.meta",
+        "sha256":  "5618C3F5EB419F248D890821F5551B59DF1DA88A143EE1754BE3983C1B43CC85",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses.meta",
+        "sha256":  "1C7FB701C37268B7E0126039DFF7FCA45B4082FAD7AD03BF35B033FE9E4E6DCA",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/ArmorShred.asset",
+        "sha256":  "2DF9494C637268D51665AB8FCB5356A52DBF4DC4FD70AFBDA116DD5470D4EE5C",
+        "bytes":  691
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/ArmorShred.asset.meta",
+        "sha256":  "08D27795595B4A0E26DB8E4A3597AC125CC92FF81925D70EBDF051FC3390EC04",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Burning.asset",
+        "sha256":  "9050ACD536D7570FBABE093CCAA7BD956D58CCAC6813F9C25F45F3D91AE04E2B",
+        "bytes":  575
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Burning.asset.meta",
+        "sha256":  "4D394661954645343DD0DB123172ADAA52DF2B7374C6AA4A70A59DCADB9E04D8",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Conductive.asset",
+        "sha256":  "C31534942B5B6512423A53EA50F75F1AB246716319086C49899CC7F4C584F404",
+        "bytes":  651
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Conductive.asset.meta",
+        "sha256":  "11F2C237B8D13A012B5D6BEFED2CB313272159378105CFB767818E2A6996FBD2",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Corrosion.asset",
+        "sha256":  "951487F3D36AD900F55B68C131295BB995109AF35A26BA8245EDD08A7DE06A5C",
+        "bytes":  690
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Corrosion.asset.meta",
+        "sha256":  "4D35249ACC9401826921705254F77B709AAFD482BB26754CA27277E00FDBE4ED",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Frozen.asset",
+        "sha256":  "1BE415CD492D95482B243AD131EB99FD9128E8660D80C186EA8A0B7E2DE7E980",
+        "bytes":  646
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/Frozen.asset.meta",
+        "sha256":  "1CF46B1E301DA9B77022F6B1DC318D18FE275CB0D930A5240E6B9AF36AFAFBAA",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/TeamShield.asset",
+        "sha256":  "8F8485239B87DE6FA1161F61DDCB787F148CD05DCE8C3B3523AFAC7264E30D20",
+        "bytes":  576
+    },
+    {
+        "path":  "Assets/Game/Combat/Statuses/TeamShield.asset.meta",
+        "sha256":  "98852C0E1C36F28215699BA2DE92587DE7B608C0124EDC9A83723CF361EDF7A4",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Combat/SwingAudioDefinition.asset",
+        "sha256":  "3E072E4289934CFEBDBB309CDA7AF00550C87437F7D39153FBEB951410DEEFBA",
+        "bytes":  686
+    },
+    {
+        "path":  "Assets/Game/Combat/SwingAudioDefinition.asset.meta",
+        "sha256":  "7D1D4B431F811DF17F195DC818C24DBA8E8899C036ED19E108AE25C41AB0265A",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters.meta",
+        "sha256":  "CD3259CD0DD9FF842DE6CB8717E534AEE40728AA368F5962979898CF82C0ED73",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/EliteEnemy.prefab",
+        "sha256":  "C25FD99447F18AD4B1D36E3EE5FA40C85638F5B657E9E415D4BA5847C022AE71",
+        "bytes":  693567
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/EliteEnemy.prefab.meta",
+        "sha256":  "20CA24B8772338F855DC6C9F7C7D6B7064D585C467B8E82E61B193F40E73664A",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MeleeEnemy.prefab",
+        "sha256":  "D4851546E2342EEF10A6DECD7D911B5162E6FB0F050DF41B42534D5485829B03",
+        "bytes":  693478
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MeleeEnemy.prefab.meta",
+        "sha256":  "428A8B0315B90B18C8D1E3E2B77E39361A37207305EDE0261AAE96C101158D3F",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MemberB.prefab",
+        "sha256":  "C6C9051784145E8AD78346FE608F0C0FB31232E7F0878E1D9509B53C55B809D1",
+        "bytes":  693437
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MemberB.prefab.meta",
+        "sha256":  "A0E0F4D7DC7E513ED2473DA65830586349E18A0BFF9530C63799C94E4336B686",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MemberC.prefab",
+        "sha256":  "C5E7ECED1E7E18F18A41C811A7CF18B917501DE36768D7CA393DBB21FDD297AC",
+        "bytes":  693437
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MemberC.prefab.meta",
+        "sha256":  "CBBBAB3AA335ACDA37BD0C88A26B22E3FFC9313F09C5F3F69DC987B53250262B",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MemberD.prefab",
+        "sha256":  "6490DBCF3F53442C7E4FA6F15CDB62CCD8DEB58B16551BFD6F064AF0490DB0B1",
+        "bytes":  693437
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/MemberD.prefab.meta",
+        "sha256":  "B6F952076CA1840A680A050A8025F9F28763029BDF3D339F0CFADD61DA018010",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/Player.prefab",
+        "sha256":  "C4AA250C4020D444ECBF80276F689212CE3CBFCF771FBEC5B936A3199DF63A9E",
+        "bytes":  692355
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/Player.prefab.meta",
+        "sha256":  "E1FB2D58DC409376B3FE4A1E6A2C2B48A0FFD85317A51A26420E5CF069156D49",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/RangedEnemy.prefab",
+        "sha256":  "47330268CA284A033CDD81581C8207DCB6D0DDE0D00C3446EA4B6379BC858622",
+        "bytes":  693495
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/RangedEnemy.prefab.meta",
+        "sha256":  "DACB8867D3F9911088B66F63B9FF5CEF1F377D20F2FC05772EC69D4620FF973E",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/TrainingDummy.prefab",
+        "sha256":  "357B6AE80D528E276EC6034015E7C0F8CE5B43CB557EF0FE3C8260D1C84F110E",
+        "bytes":  8652
+    },
+    {
+        "path":  "Assets/Game/Prefabs/Characters/TrainingDummy.prefab.meta",
+        "sha256":  "28280CD75412E53371F3A89302527BBD8E41352795696EA8CD43EA5D85B8F4EA",
+        "bytes":  154
+    },
+    {
+        "path":  "Assets/InputSystem_Actions.inputactions",
+        "sha256":  "0E784DCCA515992F521B69A040D80C0B9EDC730A3E7F565793506047319BB454",
+        "bytes":  52189
+    },
+    {
+        "path":  "Assets/InputSystem_Actions.inputactions.meta",
+        "sha256":  "2F9E783ABE852B1A0A097B1995596E6B7C4C9D39DF2B8921B4F26E30169D927E",
+        "bytes":  469
+    },
+    {
+        "path":  "Assets/Scenes/CombatDemo.unity",
+        "sha256":  "D5B7DD215554B64785E2A0EFA6DCF0EE34DDF4C12BD49B6A320DABF829484391",
+        "bytes":  1002823
+    },
+    {
+        "path":  "Assets/Scenes/CombatDemo.unity.meta",
+        "sha256":  "B5815A6B12AFAF810577BC89041C4CE46516C7CD6609693F8DB616F8E5584D80",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters.meta",
+        "sha256":  "5DC112C79EC998E112258F06F6B01C448884584AC9C490806C8DFCAB4F58B3F5",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/EliteEnemyCharacter.asset",
+        "sha256":  "45E1BD0A3F2516C5751E8FCA63BAA466337B6C07C5F4B6CCF071EC3413DA3833",
+        "bytes":  1985
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/EliteEnemyCharacter.asset.meta",
+        "sha256":  "4DD409D1DA7271BC9AB1F87E6D63148D39BBE4145D6F36BC19722E87D96E3DC8",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MeleeEnemyCharacter.asset",
+        "sha256":  "D9E416FC8366CF58F2892A03D081B93AC9FFBD84E9E85610FFC0216441220AE5",
+        "bytes":  1842
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MeleeEnemyCharacter.asset.meta",
+        "sha256":  "6EE1CD6DBAA7723126B94DED1DFA0F4AFA2B826FBFBA81DB015F81D27739817E",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MemberBCharacter.asset",
+        "sha256":  "EDC045221FD54F0062751EEDEE07E125C677D56D2B3CA9CC6F059A67118661CD",
+        "bytes":  2157
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MemberBCharacter.asset.meta",
+        "sha256":  "7F3E07BA6C2BC365AF75A1C1D782B0EEAD1C0094073A3624C7367EA456592EC9",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MemberCCharacter.asset",
+        "sha256":  "C952104F445D677AB17D60095B7DE2F9B8294EA3E440C45D53B7F02F3FC2E159",
+        "bytes":  2157
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MemberCCharacter.asset.meta",
+        "sha256":  "337E1D6BCD6C1499CB241AACC6202BC84BEAF48D7C0331AED77F8205F6662E04",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MemberDCharacter.asset",
+        "sha256":  "98183DF2EC5E491869CDCF5E80106729AB41A7C770CED06AB7B087B1DDE0A36F",
+        "bytes":  2157
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/MemberDCharacter.asset.meta",
+        "sha256":  "A64884F1871E13FFF9FBBEA8444450F65738A86754F2B3CB3D7ABB915B8DEFA4",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/PlayerCharacterAsset.asset",
+        "sha256":  "7B7297D317FD009A1DE901AD044067D36EF3752CD675FE06CA753B1124ADE1E0",
+        "bytes":  2161
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/PlayerCharacterAsset.asset.meta",
+        "sha256":  "00B1A9C19FFC8FDA792845751FD18111FC604089C13D797FDD0097C24139481B",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/RangedEnemyCharacter.asset",
+        "sha256":  "D6AA5FA3A70C996F3B05EC329D6E99764194E528FE80BBE3EDC18C4AA0C349E8",
+        "bytes":  1914
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/RangedEnemyCharacter.asset.meta",
+        "sha256":  "A97F312C3590C307236CD6778A6A915023637C88B06D583F9B3CD4ACD3C466C9",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/TrainingDummy.asset",
+        "sha256":  "22617CC79E57A5588458E2B689E6FF8E7FDDBD9375968BC3B8C017C9A307AF65",
+        "bytes":  1488
+    },
+    {
+        "path":  "Assets/ScriptObjects/Characters/TrainingDummy.asset.meta",
+        "sha256":  "3C70E1182F418C11A5942B9B538A36B80BCA070085BE4645BE44B4C3BAE08E9B",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Presentation.meta",
+        "sha256":  "0245D4D4AE9D7C8AE888F2574ECFCC245A496EE45903F2FB90FC7C92E3D6CDE7",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/ScriptObjects/Presentation/ChargeGlow.asset",
+        "sha256":  "F0BCBE660B18CAC1E4EE24CABE55E676C858A33A1AB20A2B4C21D709EF5F8821",
+        "bytes":  562
+    },
+    {
+        "path":  "Assets/ScriptObjects/Presentation/ChargeGlow.asset.meta",
+        "sha256":  "3E803B0865DE90E00C00136A7027A01E3D080458C38A8218955FD5796925F1E6",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/ScriptObjects/Presentation/HitSpark.asset",
+        "sha256":  "F97E98D22E9589E74456676A7208ECEB10CDEC2F6D3A5AA2D83B075F4EB47F39",
+        "bytes":  560
+    },
+    {
+        "path":  "Assets/ScriptObjects/Presentation/HitSpark.asset.meta",
+        "sha256":  "C760EA89E60E284F573E49FDC20A096761AB7843F4930081D9EB3199B11556C0",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Scripts.meta",
+        "sha256":  "78F13F17DF7BD3959D58A07C7184EECDEB9CD9BC4984987B6130442CDA78E895",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/AI.meta",
+        "sha256":  "C0F6723864381A80EEF14BDBA1DE938DBA457D02A6BE2A88A49F5E9D276B282B",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/AI/AIBlackboard.cs",
+        "sha256":  "D153B335854EDDD2D0FB4D3762FE528C009681D98AA2383E0FE90733677058FD",
+        "bytes":  311
+    },
+    {
+        "path":  "Assets/Scripts/AI/AIBlackboard.cs.meta",
+        "sha256":  "3884CBF6FC0844C26A0C2B734370F4EFDC19ABA1DAC64D2EFA7937AD744BBB35",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/AI/BehaviorTree.meta",
+        "sha256":  "5F5E33644E25895610FADBC24349655C9B8ED408062D51EA2D19E5B981F94A6B",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/AI/BehaviorTree/BehaviorNode.cs",
+        "sha256":  "A9E7C01B9658F228C663F3857BC99CA6516AE4ABA95055993893200CB905DDF0",
+        "bytes":  4405
+    },
+    {
+        "path":  "Assets/Scripts/AI/BehaviorTree/BehaviorNode.cs.meta",
+        "sha256":  "AC75CE159DD3FCFDC721D46FF2A123836AEF41CBE3C9D8A3111E6CF8D1B673D5",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/AI/CombatNavigation.cs",
+        "sha256":  "8675E4014919A9F16CAF265108E0D5299C5919013F19FEBA6B93C110900C554B",
+        "bytes":  2728
+    },
+    {
+        "path":  "Assets/Scripts/AI/CombatNavigation.cs.meta",
+        "sha256":  "2993C6196D975F2411EE77B9594FB71139104CB653A6DBCA6A24748745EB5421",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/AI/CompanionBrain.cs",
+        "sha256":  "02CDA827FB018F5C5648CB36368AF6362BFCFF67F5C8B58610D34E1C0798A846",
+        "bytes":  13855
+    },
+    {
+        "path":  "Assets/Scripts/AI/CompanionBrain.cs.meta",
+        "sha256":  "08E3681D98391D5227F2D1EC1208C7BAC027C234AF69978F759C89F593491CD5",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/AI/EnemyBrain.cs",
+        "sha256":  "AB2334BBEEAD79A605218F20CE188A7D553FF1B6ACF536A4366916025E1E738B",
+        "bytes":  13832
+    },
+    {
+        "path":  "Assets/Scripts/AI/EnemyBrain.cs.meta",
+        "sha256":  "3F6EBB8FE7AE766BC6D3CBAF0653C528FFE47484F8E9963AE98C1C5943BAC03D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/AI/EnemyDefinition.cs",
+        "sha256":  "458BA96857782DAA93E5B7D0A554C24740921F6809E74681CB389300F914CEE6",
+        "bytes":  786
+    },
+    {
+        "path":  "Assets/Scripts/AI/EnemyDefinition.cs.meta",
+        "sha256":  "C695887F34BC47F1F17893C3CFE03FE156B38050E0B11F5CF40A40139E4D5620",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Camera.meta",
+        "sha256":  "B1503E8CBFFE9C9BB2AC5656D49A503A098B88E94469AA0C2E3E56916413DDB8",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Camera/CustomThirdPersonCamera.cs",
+        "sha256":  "CDDF17182B71233CBD812A1C4610EA0B4AA3F3D1994A11E6EBFAB7D050869DE3",
+        "bytes":  3498
+    },
+    {
+        "path":  "Assets/Scripts/Camera/CustomThirdPersonCamera.cs.meta",
+        "sha256":  "BE8C9D28C8B1A477834EDEC23F4331DE3EC22E1D11ACAB152DD274AA979380DD",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Camera/PlayerCameraTarget.cs",
+        "sha256":  "585852B3E5EAE4D07EA64EFFBFCE13F96D178DE2AA973F405E9D8B1F8B039C76",
+        "bytes":  2427
+    },
+    {
+        "path":  "Assets/Scripts/Camera/PlayerCameraTarget.cs.meta",
+        "sha256":  "1F2D6A3DE86DF1F017DAE993775F09C3E597BEA4542CE5D5253967B301D1FDB2",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character.meta",
+        "sha256":  "DB9BCBDE10561ACDB0B6461F443D650F982EC563F44B0D201934E445DED6E72F",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Character/CharacterDefinition.cs",
+        "sha256":  "05908BB9BF37C4EEAEC1C8490DE49700A20B9EF21CAAC9E398F2652B218D89CC",
+        "bytes":  4826
+    },
+    {
+        "path":  "Assets/Scripts/Character/CharacterDefinition.cs.meta",
+        "sha256":  "809EDD150260C528301E5579EFAD33A2DDC64AEC0E1DB6F8F28C033128B397B4",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Combatant.cs",
+        "sha256":  "81C9CAFF0572038CF39477D91FB5CCAF6F728E3BBDF903513D78150E25D28C38",
+        "bytes":  3697
+    },
+    {
+        "path":  "Assets/Scripts/Character/Combatant.cs.meta",
+        "sha256":  "3C30ABC979EDCFDABA40D1D47838D5142EC5A49536C222C4902F136B5699288E",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Movement.meta",
+        "sha256":  "265AB5144D021EAEA58F954D07B2AD4D314E98070C0FD58FD4D22A05FF98002A",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Character/Movement/CharacterMotor.cs",
+        "sha256":  "D79C013F94C0936BAD16D8B4B7A2DAC1235790DAEBDC79D16D957EBD44982104",
+        "bytes":  6766
+    },
+    {
+        "path":  "Assets/Scripts/Character/Movement/CharacterMotor.cs.meta",
+        "sha256":  "2A1965ED3A24A321AC18EC25374C4DD7584C0FC2623ABCCE6C92E147C41329DF",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Movement/LocomotionStateMachine.cs",
+        "sha256":  "82281F885DCA15B2833A66ED300B4BF677DFBEC2D98873BA0AF95AD277129BD7",
+        "bytes":  2761
+    },
+    {
+        "path":  "Assets/Scripts/Character/Movement/LocomotionStateMachine.cs.meta",
+        "sha256":  "1243D7E0AD467A0E0B018CFB26AC0197C5FFD1403C61E18933ABE2185AA5CB53",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/PlayerController.cs",
+        "sha256":  "F1F5FBFB367975AE046F6E632A2B5059392297AF5B74B1713EFA40DC85F0ED47",
+        "bytes":  5445
+    },
+    {
+        "path":  "Assets/Scripts/Character/PlayerController.cs.meta",
+        "sha256":  "A24FE8B16B35F91D42EFE5F322028809ABFFFF181AB53D791AD5DD1AC536C185",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat.meta",
+        "sha256":  "C97099703A7AED9787491D5DE723576F88B4B7CA5896D1898AB2F54597B04DF6",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/CharacterHealth.cs",
+        "sha256":  "21430384003D35AD8DA5DDC479FD75B2BD3C3FA526553249893459165BF2B61A",
+        "bytes":  3141
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/CharacterHealth.cs.meta",
+        "sha256":  "C22658D26D9BEC5584071AA314FAA4234FC1D037CD62567C656A8047742B0DCC",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/CharacterStatRules.cs",
+        "sha256":  "1A360742E6BA6D0F16DBEDB16CB6DA5B4A0AC8A5A28AF2B7B66AE468442CDD22",
+        "bytes":  3884
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/CharacterStatRules.cs.meta",
+        "sha256":  "6FFB725FA5F6C4E246555BC4354EB40EB8FFD2889F8995B4BC854B9618D928A9",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/CharacterStats.cs",
+        "sha256":  "ECE3BFC92735422F989A90ECEE9AD1D23F596A7A418AD4134D6B24F5C07E8B2F",
+        "bytes":  4296
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/CharacterStats.cs.meta",
+        "sha256":  "5E98122928E322448D643DAC91F9CF41ACEDDDA7CAF3A6D064F9CFF471925ADB",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/Stat.cs",
+        "sha256":  "F4DA1FB4318AF3081BA31295626281A7CE482542AE90DA9BB4E4B6A8AAC7EAF4",
+        "bytes":  2742
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/Stat.cs.meta",
+        "sha256":  "796A9D294A14857A3F8221EF2E19F58FCDD373665D126E803729C14B77362A5F",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/StatModifier.cs",
+        "sha256":  "B15A32DA9DD76D5B9EB8F472E4C3EA9096FF48D28D96C1DA9EAC7C33C10F97F6",
+        "bytes":  509
+    },
+    {
+        "path":  "Assets/Scripts/Character/Stat/StatModifier.cs.meta",
+        "sha256":  "6A29F861B508BFB77792042BA96279EA722C92070E78983916949C65A9FFF011",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat.meta",
+        "sha256":  "2B7A9CC42E084F7904ED7001785743CDB480E63668BFCB0CF6C809346CF3077F",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions.meta",
+        "sha256":  "7D95D8E89B1F8FA93AACB5589F45CB0F3AB58A89BD9F867C251A50E2DBD33D91",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ActionController.cs",
+        "sha256":  "E200720BE03E77BBAEA085657CFEBDE582CB0A8C8E77738351ACF26B9735D2B2",
+        "bytes":  11510
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ActionController.cs.meta",
+        "sha256":  "1011046AA88B320E7EF8B9F77169596AACAD2633C8867B150115B1B97718DEAE",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ActionDefinition.cs",
+        "sha256":  "B543D52BA2E98CFFDD205A65BE03C591206AD30E96AC33E5724FC963B1C2AD7A",
+        "bytes":  10623
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ActionDefinition.cs.meta",
+        "sha256":  "715B120C18AA1FFB90400E28FB789A61B809A75CA731B8C9BB5560827007C600",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ActionRuntime.cs",
+        "sha256":  "D9773C1155DB418B7AA1931F6D23635086E8749CBF9E9E7B9DE298F1CA51D267",
+        "bytes":  2600
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ActionRuntime.cs.meta",
+        "sha256":  "16FDB45A21CC03BF2B290FDBC4FD00A8AD02D2CCF482861A936F8FCC376A6A56",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ComboController.cs",
+        "sha256":  "D8D317EDCA7747B8E2C1572D022A893B701AB5DAC360A379E0AB97CC8C258BE6",
+        "bytes":  2535
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Actions/ComboController.cs.meta",
+        "sha256":  "4CE2912F8034544A0FE78E010DD4EC9C644AE132A05279834CB0F1D393FBA8C2",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation.meta",
+        "sha256":  "0336A1BE444BD3A70F65C6574D56A2EC9595AF2D1057B99D96EC8BC43B935189",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/AnimationPlayer.cs",
+        "sha256":  "FB3A5480A23EF7056A49CB0236ACDD61C182C82DFCFEC07CA38BD878ABB43496",
+        "bytes":  6338
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/AnimationPlayer.cs.meta",
+        "sha256":  "78EDC1E8421C77284828CBB929FA000F1329D6ABB3A999805FA149E3E80DCA1C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/AnimatorRootMotion.cs",
+        "sha256":  "8A248355930D59F2F6422F13B4F12B3AE393154BEF23AC96541F445E6BD635C2",
+        "bytes":  693
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/AnimatorRootMotion.cs.meta",
+        "sha256":  "2D27C04CC98B1ED5B3F2F8818EA945BA3168EA7E228AA04F5054951C08855F38",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/MotionWarping.cs",
+        "sha256":  "0997580CD6D26EC2A2647493A93986528870A80549E28EE63C57829591941560",
+        "bytes":  10582
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/MotionWarping.cs.meta",
+        "sha256":  "A3FEA96A394209CAB1ED967CE71DEBCF415754A48BB87DE28F0FC4D69D55E340",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/RootMotionDefinition.cs",
+        "sha256":  "B79D431AE68666BBE69D440891D5C2D30CF6B4A764A58EB0A992181311E08650",
+        "bytes":  2363
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Animation/RootMotionDefinition.cs.meta",
+        "sha256":  "BB27D1052EB088FB7D91B7051AB97AD2962D77D910FC3AF5BF24BD2CC6EE7937",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/AttackCarrierDefinition.cs",
+        "sha256":  "EE5C0C3C7EF0E385823BC051641DAE5CA6C0B22A71212C4FF08DF2BD8FA7BF55",
+        "bytes":  987
+    },
+    {
+        "path":  "Assets/Scripts/Combat/AttackCarrierDefinition.cs.meta",
+        "sha256":  "5088BFD06EB3703BD6B47CC38172519637F1C5BEBC8DFDCE1EFC72B95E795F06",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CharacterResources.cs",
+        "sha256":  "F70B22A8A0C5A9FCC4482F8EC672EC58CDC7E3EF479E34688EC66E8A3E76EB8E",
+        "bytes":  2096
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CharacterResources.cs.meta",
+        "sha256":  "CE43D50E871893C45534A1B2CE43F63559668D0B3B2360C3D380DE9F1EA9A56A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatCarrier.cs",
+        "sha256":  "B4312D1622368E025026433CE782A56FEDB54EAEB4DE778B87E2035A2D538C2B",
+        "bytes":  8970
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatCarrier.cs.meta",
+        "sha256":  "6EE09A8A5290F8992E5D3406FE9F624EA764A1B31809403609E6D4C97AF1C42F",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatEncounter.cs",
+        "sha256":  "A0CFD4C6186E40B8FD6C77DF8B5A1AB9614535DAB487C22C13FCEB8DEC0F054B",
+        "bytes":  3507
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatEncounter.cs.meta",
+        "sha256":  "4ED86F95DFDB2437FF1362E4B3ACECF425B2EC02728F9CAA4E0F2B5E51F9D763",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatRulesDefinition.cs",
+        "sha256":  "A4BA12857FFF275292CCDEB69F66E3FC9D36C99BB4EEE83E79B256E3B17E2BC9",
+        "bytes":  1797
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatRulesDefinition.cs.meta",
+        "sha256":  "47268F36B8C171936224CBB91E100B54174A4E4DC3FFE3DF7ECA93F02447495A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatSimulation.cs",
+        "sha256":  "448D6F48B3EBBE5428E59976C88183BD4BA415C82AAB3036D31349998041BF78",
+        "bytes":  16900
+    },
+    {
+        "path":  "Assets/Scripts/Combat/CombatSimulation.cs.meta",
+        "sha256":  "6B69A48DCB599EC4EF049EE69261EE1F554AFE9F614666B56F109360BF148AFB",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/ComboSkillController.cs",
+        "sha256":  "36AE7F4A0501859D91EC697D268994BE7689DF5BDDD19670D0EDF686D4A1D950",
+        "bytes":  7279
+    },
+    {
+        "path":  "Assets/Scripts/Combat/ComboSkillController.cs.meta",
+        "sha256":  "2EEB88FF7033E7C5FE647B79722437639C5CEAFA333FFED1EB1B98AF5F2DE130",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/DodgeController.cs",
+        "sha256":  "C6EB9F84745CC25B0F29748B216A2AD0DC05382EB572AFC101814979C77EB52A",
+        "bytes":  1923
+    },
+    {
+        "path":  "Assets/Scripts/Combat/DodgeController.cs.meta",
+        "sha256":  "6C8D81E4B538D4E825D9D985193D7D327464019AA3FE58FDFACCB47DA0F859C4",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/ExecutionController.cs",
+        "sha256":  "A9A0636A603B640E2F15D123FF5FA39DD5A01581BDBE2E0F224721425BBBDB66",
+        "bytes":  5560
+    },
+    {
+        "path":  "Assets/Scripts/Combat/ExecutionController.cs.meta",
+        "sha256":  "ADA6986AB69E094D0574075E6A2CD7124854F4006370D4E17D2588615C98CEA3",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitDetection.meta",
+        "sha256":  "3B015ED1D8E147440FC4A2A052D30D976F81546F67BA2AF3A8778BBDAC55DB22",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitDetection/HitDetection.cs",
+        "sha256":  "0F02BEE3829BF2E9840898975F98112C3982FF6328FAA3129B004CAB2C40D800",
+        "bytes":  5632
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitDetection/HitDetection.cs.meta",
+        "sha256":  "BE90D058AB185A37C45EFBE666B897EE79A80011640C5CA6D91DFE8F5BC6430A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitDetection/Hurtbox.cs",
+        "sha256":  "29185EEC640D244BD193B2713CC8FCF15F32BA35A2BB77A7F3B0A29B0A5D44B9",
+        "bytes":  305
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitDetection/Hurtbox.cs.meta",
+        "sha256":  "E2950EA82D8E383F343024E75FBD4EF9127654956DD940341A60554035D5C0B8",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitReactionController.cs",
+        "sha256":  "61AB8F4EF1008DDE6CF18E184EAB3D0BFFE9E4C629AE9BE1460992DC0165FBE6",
+        "bytes":  3966
+    },
+    {
+        "path":  "Assets/Scripts/Combat/HitReactionController.cs.meta",
+        "sha256":  "5BC49DD0C04B804E552EB4D56BCB674E6C31000CCA240FA67C95C8C14008351E",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Input.meta",
+        "sha256":  "CD2C2A0D1DDE1A37DB223AD4268D410C6FC4DB9944F30D07FFD8DB849F86DBE8",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Input/CombatInputBuffer.cs",
+        "sha256":  "3C1CCAB86D45E5C519525699A70F5FEC74F267C24047EA6EB4D4DFB2A50E3543",
+        "bytes":  2055
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Input/CombatInputBuffer.cs.meta",
+        "sha256":  "7EB8FAB11C13FD1134CE624E95DFF3E5533C4D71CEB41AF24084F037F02BC49A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/ReactionRulesDefinition.cs",
+        "sha256":  "962FF26356F1434C6255D878BB5A600F5F4C2867465BE59F30714EA8FE8FB2D7",
+        "bytes":  1697
+    },
+    {
+        "path":  "Assets/Scripts/Combat/ReactionRulesDefinition.cs.meta",
+        "sha256":  "36340CE6022BBBF2C206FD0462067197A74B6E52F108E41F26B195B2DFFD622C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution.meta",
+        "sha256":  "3455DD4D520A260CEC6F0B29A428980A68F4B383491C5E67C64DF46EDAFA2D7C",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/AttackContext.cs",
+        "sha256":  "6DB974278D4D3870C0384AC64822BC62E56F5CC26700E822EA67EF4A82EDBF70",
+        "bytes":  4416
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/AttackContext.cs.meta",
+        "sha256":  "73927B15CC9EE4F324A85DD13F24F488992841287D76121CC302728CF6A6D67F",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/CombatResolver.cs",
+        "sha256":  "ADE0F6A5886179DD513FA48512D1BDCF6E668C2D87930CEB004711820F9B27B0",
+        "bytes":  11511
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/CombatResolver.cs.meta",
+        "sha256":  "02A2A7EB8B69E9C62B8424BC2D34A42D6E551DD77CCDB018ED32B0A89223DCBB",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/DamageSnapshot.cs",
+        "sha256":  "04FC6DD3E80A3CC2171B4E89145CE7FD41E466380B70207C57C14525A3648BEB",
+        "bytes":  2200
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/DamageSnapshot.cs.meta",
+        "sha256":  "E452164A85B25BF467254BECD6CA58C18FC1330AF73ED4B56D49FBC2F5D59317",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/ReactionResolver.cs",
+        "sha256":  "9E588FC623468C1221FDEB6439963CA8A4EE83FD135B4A40FB14AA82F81DB022",
+        "bytes":  5949
+    },
+    {
+        "path":  "Assets/Scripts/Combat/Resolution/ReactionResolver.cs.meta",
+        "sha256":  "1DD288D6FC0A7E1FBE594CDA5A015D12232465B86BAAE3FF2A10FD0FC5A49471",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/SkillController.cs",
+        "sha256":  "FD36A1DAAAD1BC779C43C6AB726B669CD21DC01CF857C61138F84CAE7FB67050",
+        "bytes":  5804
+    },
+    {
+        "path":  "Assets/Scripts/Combat/SkillController.cs.meta",
+        "sha256":  "B7EE77373B75080E55114EF6EBE36C63467A1CE205D71A6A0A36F21A974AF2B8",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/SkillDefinition.cs",
+        "sha256":  "3BC6876EAB4D6A24514748A4DC07E288CB13E8FD0C06C0A2B26795B9AB579F4B",
+        "bytes":  818
+    },
+    {
+        "path":  "Assets/Scripts/Combat/SkillDefinition.cs.meta",
+        "sha256":  "5A82A083E8D1E5A1DD0993F258AA5C4CDB9FDEABB91E634C892B2B969D48220B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/StaggerController.cs",
+        "sha256":  "E5F0612607387B0B190826C147A68CFEB059FD684E6F6960743B2AB562B5D22E",
+        "bytes":  3384
+    },
+    {
+        "path":  "Assets/Scripts/Combat/StaggerController.cs.meta",
+        "sha256":  "7A55CF0E9C4A1487F9B2277AB9165510CE0C33ABFA0DD1BA2AB40DBFD3FE6898",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/StatusController.cs",
+        "sha256":  "B749B06EB72DEF28A118A994839D4218245111C7C59AEFFAFCC8E68792D3F67F",
+        "bytes":  10109
+    },
+    {
+        "path":  "Assets/Scripts/Combat/StatusController.cs.meta",
+        "sha256":  "B9B3DAE687344D3C8EE6610D7D23CAEB56F04BEF3829F39FE1A2E81F23473A5F",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/StatusDefinition.cs",
+        "sha256":  "6B44FE9049148A5D8B32D8F5DA318E6A067FD5D4EAF5F0B056399D17FA53C41A",
+        "bytes":  1168
+    },
+    {
+        "path":  "Assets/Scripts/Combat/StatusDefinition.cs.meta",
+        "sha256":  "862862272FEE21F46836CB4447DB9C1F96DF3A851AAE6A5EC5944EDFD1C9FE01",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TargetingController.cs",
+        "sha256":  "4F9F67DCB2BAAC458DC4AF569E61A7A6E95374CD31B57A6C5BBC3F754623798C",
+        "bytes":  6280
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TargetingController.cs.meta",
+        "sha256":  "C68BC54181CED955FDB638F43D4B3A543E9F40DE12E9C998743985F5B399D7E8",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TeamCommand.cs",
+        "sha256":  "B4D0A0E6829398899D535C1F336332CD155DFC86F1C457ABACC86E740EF22A50",
+        "bytes":  705
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TeamCommand.cs.meta",
+        "sha256":  "A8F7FE4E35B4A75743F521408BC66F77BCF31B469942DE5ED891C871F6366A6E",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TeamController.cs",
+        "sha256":  "F7DD26646C89F55BCA54CF754CC5784F8C2106F4355D22EBA7D768B9DF2176B0",
+        "bytes":  11741
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TeamController.cs.meta",
+        "sha256":  "A35DB6B6DCCDC50056941F0C45EBBC01901DC68E04AA454A59F30C98B4E26D86",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TeamResources.cs",
+        "sha256":  "C8B861050F521FB0B5AFBED7896DA2D445F31A7A8C95A2D62D28226401A11D47",
+        "bytes":  2518
+    },
+    {
+        "path":  "Assets/Scripts/Combat/TeamResources.cs.meta",
+        "sha256":  "74E640D360BB0FBC843A5542BA7872B279DA15A81E750657D7664E3403D7717C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Input.meta",
+        "sha256":  "4D7C7F0C3B2E2C159CC2D099351874EEFFD78C6439A1B929AFD5F3AC0DFBF1D3",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Input/ButtonInput.cs",
+        "sha256":  "1C056CB52B8C018BB0537C811F6FDEBB552D64AE794521DA4A8E9E0826F4081D",
+        "bytes":  464
+    },
+    {
+        "path":  "Assets/Scripts/Input/ButtonInput.cs.meta",
+        "sha256":  "2D14E3BC8C03E7F7769FE0B38DD070B0A5C18CE564CDD10609B318CD63AD3DD8",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Input/GameInputManager.cs",
+        "sha256":  "B9268AE285A73FAFF4E7E93140A41A7F1F6F1E7F537E69FA923FDA9F33BCA842",
+        "bytes":  13829
+    },
+    {
+        "path":  "Assets/Scripts/Input/GameInputManager.cs.meta",
+        "sha256":  "E8F5E3CAE5BF3E4300FE8D6BDB6A25E10F338A56B26D85DA90FF15A470D3ACE1",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Input/Generated.meta",
+        "sha256":  "E0C74E5E9110F97423C730C2D7EABC393BEBF815733FFF703378B4652D9852F1",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Input/Generated/EndfieldInputActions.cs",
+        "sha256":  "4F4FE501494203DE9340793D51AE72CD8C28C3CC62CCF89DD0E1E1446DC681EA",
+        "bytes":  135671
+    },
+    {
+        "path":  "Assets/Scripts/Input/Generated/EndfieldInputActions.cs.meta",
+        "sha256":  "53B456C0161C2C9EA3B1673A53F90754EA02A92DF6C36323039134099D8CB7BF",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Input/InputBase.cs",
+        "sha256":  "14EEC260FC8259758F7D421FBF0D575267D4D9F5EE6C6115EF83BD260DDD9266",
+        "bytes":  541
+    },
+    {
+        "path":  "Assets/Scripts/Input/InputBase.cs.meta",
+        "sha256":  "25DB4725504D7CB7813568BD4E232616290E4F055ED9BBEC519192C7619A305B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Input/ValueInput.cs",
+        "sha256":  "23B029C41693CAE0291E3914635B42E15C9C289B4FB6D96E7C36A279F91A4708",
+        "bytes":  535
+    },
+    {
+        "path":  "Assets/Scripts/Input/ValueInput.cs.meta",
+        "sha256":  "761ACA94438BED2D553145F1D130B459E446CE5F12B0C126C6832526ADD39F22",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Pooling.meta",
+        "sha256":  "6E8CA9EDB666D2CBA0E2A73690C42F1932B5311BBCCB881EE16B10C3ADF6943F",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/GameObjectPool.cs",
+        "sha256":  "95D9BC81276960E38E5429B65F1D5C8D2A6B1199FCA2B7909171C69FCAB8C59C",
+        "bytes":  3126
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/GameObjectPool.cs.meta",
+        "sha256":  "1BF33A616D586457F91BC562C23EBB7039D0B3862C85B1DBC5F8901D7F70AC37",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/PooledObject.cs",
+        "sha256":  "E161BB2970FEB67FAD3E83A5235AABB0579BE60BBA211869C833D8AFB974BA88",
+        "bytes":  2339
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/PooledObject.cs.meta",
+        "sha256":  "B13CA1C3B3CC8B48A0D22F938A5B94E03AF80A54D9D6935F12D6621E7E53996D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/PoolHandle.cs",
+        "sha256":  "23CEB9E6A81AD1DF4EC3E17C3DC1E5E18FAC8F516BDF8641F49268F15BAB733C",
+        "bytes":  548
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/PoolHandle.cs.meta",
+        "sha256":  "18156FF1142D122D725B7ECD8AF5FA42C07884B8F805B5D9B4ED163700C16043",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/PrefabPool.cs",
+        "sha256":  "26AF0C2137545F691F1EE5DB65CBF03CF3CEB2ABA570D2CAF64E2CC79638268F",
+        "bytes":  3172
+    },
+    {
+        "path":  "Assets/Scripts/Pooling/PrefabPool.cs.meta",
+        "sha256":  "D1DB7BDD40B014135308D2FB2FD230BBAE2D198AEF638462E5EEA97374322EA1",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation.meta",
+        "sha256":  "844AF455095D514FD906F4F551667CED06E0301E42C479EBA9F02EA301B47B58",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Audio.meta",
+        "sha256":  "482CD7D4DE76A11023BEE9E2E3928D3E81BA47D44C723E9668848EB95E374B23",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Audio/AudioDefinition.cs",
+        "sha256":  "0E6DCF8BA87F405D5A30E348C701C110202CD7FA092AFC131724CCAC0948045D",
+        "bytes":  1109
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Audio/AudioDefinition.cs.meta",
+        "sha256":  "620DE0C33C43F36E4E7BC6F305B371BE0A5E6F0788CE59EE0B87FD62B7A3CF10",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Audio/PooledAudioSource.cs",
+        "sha256":  "F0655959EEF84C3F0386464ACACF085EB14C2BA1F04A246362FAC6DD25E6EF20",
+        "bytes":  1510
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Audio/PooledAudioSource.cs.meta",
+        "sha256":  "777C0411BDD12B961705D002C79DF12037D9B78615CB0E7D320FE5ABC1C5BA94",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/CombatFeedbackPlayer.cs",
+        "sha256":  "31A00E13B2342A8744057F34A135DDDF4BC048D8E0B817932689A7280C7AF932",
+        "bytes":  1379
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/CombatFeedbackPlayer.cs.meta",
+        "sha256":  "90CE131DAB787EE0349DBB005D18A714D43F31798944F903C3DF3985F4406720",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/CombatPresentation.cs",
+        "sha256":  "9BBDE746B76EB2759A1A1CA672FAD3484CC70392CDCEB1995443DEB1E53A6AAB",
+        "bytes":  7936
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/CombatPresentation.cs.meta",
+        "sha256":  "A5B2DD04C3B30CA4178777D83A685CDE658C8F068CF7C0CDFCA30EDADCAE156D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Effects.meta",
+        "sha256":  "5BF63196184171FEA2885C2B8BD504CC87EF8CAC42955B20D7DC172AB7820AB5",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Effects/ParticleEffectDefinition.cs",
+        "sha256":  "0AF7E9E615DD2C750323F2F578E5293B9944BEB7F0A5A068DFF103CB1343B3FF",
+        "bytes":  477
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Effects/ParticleEffectDefinition.cs.meta",
+        "sha256":  "1772F0BB4A6C66290E170208BE33FC92D6A2C58BC7527B155829881BC4E46CBC",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Effects/PooledParticleEffect.cs",
+        "sha256":  "B204B4E46063481640478E10C2DD3E7E2E8098940B64ED7981334F7CB1DF1943",
+        "bytes":  3057
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/Effects/PooledParticleEffect.cs.meta",
+        "sha256":  "AAD400CEBE31EDF4315FE20D2F2623FA740807C81A64DC8A98AB2D72D4DAA7EC",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/PooledDamageNumber.cs",
+        "sha256":  "886D764200208C5A5B0D85E674A81AF204C8276FEE51D99D3309B88C655ED7DB",
+        "bytes":  1288
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/PooledDamageNumber.cs.meta",
+        "sha256":  "D156280789A93B3569746193E0D7D4CF0E618BB27F6CC6272B7445F3139263AF",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/PooledTimedObject.cs",
+        "sha256":  "C7F89ED7FC0AE989FD05138AEEB0A1AD7859FB5B072DD8B5D39EA5B457B2AC2D",
+        "bytes":  721
+    },
+    {
+        "path":  "Assets/Scripts/Presentation/PooledTimedObject.cs.meta",
+        "sha256":  "9540691290B986EA7D82A2CB45F777BF594CC18B8F1B9B60036090F7B46F3A8C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/Test.meta",
+        "sha256":  "550008FA0D922FD5988D482323BA3E265F99EB60D188A6E119990DE5E2C2C175",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/UI.meta",
+        "sha256":  "590A4F2773F4F7781391285C872DEB31CFE7F2482458EB4EDE561AE2E38C3067",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Scripts/UI/CharacterStatsPanelUI.cs",
+        "sha256":  "2580AB3D3BA8FA353ADDDAABB884C032CBCC30346FB5923B7F8FE74A523FF3FD",
+        "bytes":  2884
+    },
+    {
+        "path":  "Assets/Scripts/UI/CharacterStatsPanelUI.cs.meta",
+        "sha256":  "ED47681C9F03990C8BC394D0927352A967665338774C28B2A94C6C921AD0076B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/UI/CombatHUD.cs",
+        "sha256":  "157D5406467FE3DB2AF8A4D3BE134ADD66B23164D32D2DBF778AB45247A92A85",
+        "bytes":  7422
+    },
+    {
+        "path":  "Assets/Scripts/UI/CombatHUD.cs.meta",
+        "sha256":  "011C086735FFA0B43159793A923EDC69CF12B4FB5491286ED634591AA6ACF72B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/UI/GameUIController.cs",
+        "sha256":  "2C018E65ACEF5017A4D360B33475FCD540C3286CEBEFB5415F38F921A87522E0",
+        "bytes":  3465
+    },
+    {
+        "path":  "Assets/Scripts/UI/GameUIController.cs.meta",
+        "sha256":  "6D9B70C6233D251C38650F5252D1C9799CC34E2179CB3BDCFEB92FBDF07E15EF",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Scripts/UI/HealthBarUI.cs",
+        "sha256":  "A2650CBF794E96528844E90FFD2A7597BE84D0A6590D170DD9C64276BE36AEB2",
+        "bytes":  458
+    },
+    {
+        "path":  "Assets/Scripts/UI/HealthBarUI.cs.meta",
+        "sha256":  "7E67DA24FCF08F6C7B87F1CB8C5943B1B0652143BD532D58F64A19471A352AAC",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests.meta",
+        "sha256":  "F89DAFEE46F92C4994B79A6CA73DEE492E36AA8B38D19C2D1A874EFD53BFD23F",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Tests/CooperationTargetDefinition.asset",
+        "sha256":  "C9F8FC9561BA3EDBF746230CB8FCC85B37756C4868D8129060A97A10C4D4DC91",
+        "bytes":  1503
+    },
+    {
+        "path":  "Assets/Tests/CooperationTargetDefinition.asset.meta",
+        "sha256":  "1D71CF701AB314CD2D298C8B5339E432795EBBE6A863C593DE26F6E68D1BF312",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Tests/Editor.meta",
+        "sha256":  "552E63F708B3DFB603077DC8AEE7406BB23D778497760A2F79AEC3B9A6C33E4B",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Tests/Editor/BehaviorTreeValidation.cs",
+        "sha256":  "4C030DB450DAB7729DB5D9689DBD909A3895C692BED51F69F20841F3B93C49B9",
+        "bytes":  3217
+    },
+    {
+        "path":  "Assets/Tests/Editor/BehaviorTreeValidation.cs.meta",
+        "sha256":  "2C7D73CD1D98C06D8AAAFEA0FC1061F2E17523148182339E7C244F307901C84A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatEntryBatch.cs",
+        "sha256":  "87D4333800CC48F343EB9ECF856F03CB53BE3901F5A20E32E641184932DFBD60",
+        "bytes":  14244
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatEntryBatch.cs.meta",
+        "sha256":  "C66184BAA5F094BFD31D15143F5084A7DB76D0815FC431553E7F257FC95B33AA",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatTimelineValidation.cs",
+        "sha256":  "E5FF8CDA57539964DA7E941F06809E842C2AC7D7F7F2960519E8A4703D2BE822",
+        "bytes":  6249
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatTimelineValidation.cs.meta",
+        "sha256":  "8DB5C0B0C286901B005BE503148D632C18172CEC16BD4257EA5CA17D96D5B543",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatValidationBatch.cs",
+        "sha256":  "884D55155FDE11369DDCE12E811D70315495463F5446BB470C8A85CBDC6582AC",
+        "bytes":  5491
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatValidationBatch.cs.meta",
+        "sha256":  "166285D4EF4D5C85DB57498F0DFF5C6E5A1CF61137B9AE69D1CD379F975B63BB",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatWarpEditorValidation.cs",
+        "sha256":  "BD25B070A73E3BC1B52BF7ABABA5B6E75FA296C23679E7A1204F8E25F5F0EDAA",
+        "bytes":  5521
+    },
+    {
+        "path":  "Assets/Tests/Editor/CombatWarpEditorValidation.cs.meta",
+        "sha256":  "49B9AFC0926AFB55AF8600347E98146393599B0FA9DA79893BBA6A774DE8831D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Editor/TimelineFixture.asset",
+        "sha256":  "AE6051AEE171D775F22C13174A79C6C0CAE4EF03434655240B91180C5FEF437A",
+        "bytes":  1067
+    },
+    {
+        "path":  "Assets/Tests/Editor/TimelineFixture.asset.meta",
+        "sha256":  "9A1322F50179368450871C6B0FBBA5690DB4CA04759B7B291768005CC4D9D58E",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Tests/ImmuneTargetDefinition.asset",
+        "sha256":  "8848FBCCA464EADF94B04A1551117E58B43C31BDA5AB19209B649AA9EFFED5FE",
+        "bytes":  1890
+    },
+    {
+        "path":  "Assets/Tests/ImmuneTargetDefinition.asset.meta",
+        "sha256":  "A1EBB3B1077913A801CD0199E5AA4EA5CC0ECFDDE5BCF2503297975564DA4738",
+        "bytes":  189
+    },
+    {
+        "path":  "Assets/Tests/Runtime.meta",
+        "sha256":  "79B78E80A68E3EC5DE0909F16951603F4E324D9BA53C9CDE0DE40258E091250E",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatActionProbe.cs",
+        "sha256":  "3773029521518041FCDF343EE114FD13810D0510F3A09B9AE745374CEF7AD449",
+        "bytes":  4343
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatActionProbe.cs.meta",
+        "sha256":  "61B4CC6020EA863D6E5F71AFFEA60E10E0289F1262D3959EE21EB66968ADB0CB",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatAnimationProbe.cs",
+        "sha256":  "C3A997CD715BAC44749C2074C7AB818549F6A3E65EAA6A5EADB17CFF29B7E2E7",
+        "bytes":  6892
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatAnimationProbe.cs.meta",
+        "sha256":  "4C2F22E6AC8C65CB72C7EB10B2D1242A069322C277068AB25C4A2D506973658C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatAreaRewardProbe.cs",
+        "sha256":  "15E6C3C0DF69A281423CE588447B542F00EAE3FB56FE5D82B26046E1045B2401",
+        "bytes":  3093
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatAreaRewardProbe.cs.meta",
+        "sha256":  "655C810C16C85DA198BC6CCC790CAF6D320B22C23F220F5F3D1816650A21B63C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatCarrierProbe.cs",
+        "sha256":  "BF221E081777102AD497224CAAD372A988F423FCCB8689DABDAEEA30A3975218",
+        "bytes":  10451
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatCarrierProbe.cs.meta",
+        "sha256":  "57D8F716D6AEDE7F0EFC541068C03AE12C919E876FDB47D05144B8201B705749",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatComboProbe.cs",
+        "sha256":  "B233C3FCD30D71625453969331D50B3C6B9B6D56C0797D5A0AC70C83B7CD74E0",
+        "bytes":  3367
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatComboProbe.cs.meta",
+        "sha256":  "96DD964CA44C4B14FAE441C6219E6AC062CAD1E46AA9D39CC2F9BDFDB387317E",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatCompanionProbe.cs",
+        "sha256":  "F50F8ADE0B00493BE365D01551E07539B2EE49C07875CAED6A05F6F93C26F6F8",
+        "bytes":  9817
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatCompanionProbe.cs.meta",
+        "sha256":  "0B9BC37C7C8B1CB325C768D244CB4BE689FB26092CC9DD0986B89CB6A284BD32",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatCooperationProbe.cs",
+        "sha256":  "55B0B5CF5563021A9F16A78CE1B2CE51845443A020139AA8CB86388BAF7240AF",
+        "bytes":  6484
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatCooperationProbe.cs.meta",
+        "sha256":  "A4EA4ECB4298B4AB87146BCBED6771DABB70EA98F236710A9271073A3622238E",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatDodgeInputProbe.cs",
+        "sha256":  "EB6AE31835A876790EB71407BC19E66890F3E5C388D1314B24204007F06434BD",
+        "bytes":  2986
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatDodgeInputProbe.cs.meta",
+        "sha256":  "5FBCF7B60102EF8D6C7070B63016EB8CAB5CEBF640F4B12B07F9451F71090737",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatDodgeProbe.cs",
+        "sha256":  "A03E8F40E1A19C2C84A3D4FD418E67DFC1AF15560475F724B5951976CB08BD45",
+        "bytes":  10454
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatDodgeProbe.cs.meta",
+        "sha256":  "DCFC36977772319177F09D25D5FF0B37F4C8F4755253C15215EA00C05534E65B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatDuelProbe.cs",
+        "sha256":  "07B38A877ADBE8BD572790D9333EE363E38C3A9766A79F11338A5416E6649C2F",
+        "bytes":  8611
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatDuelProbe.cs.meta",
+        "sha256":  "37487E40A6916E36FAE142EB50AD540877A149D8339971B89484187A99FAE518",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEncounterProbe.cs",
+        "sha256":  "4D73E9919DA063102898A6039CC7EE7394BA6E78FBC441A5EE5307B2047AB887",
+        "bytes":  7193
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEncounterProbe.cs.meta",
+        "sha256":  "1DD54A1870EB3C2E393B1CCE95B7587864C5877EF0527387432706E89FFBFC16",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEnemyProbe.cs",
+        "sha256":  "9C9208C6630865FA1F53C9210E7F6CAEE93F8F40A6038526396DB280E364C4E0",
+        "bytes":  6090
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEnemyProbe.cs.meta",
+        "sha256":  "11A590512B603986B8382444ACE80446F77438D01853FE1FA77D738070B536F1",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEnergyProbe.cs",
+        "sha256":  "3FFD99997065B27471C18CAE32F82B145E143269B806808ABF7989641FB6C2BA",
+        "bytes":  8469
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEnergyProbe.cs.meta",
+        "sha256":  "93ED6A080AB2CE95AA36DCC0BCAD23C7A37712CE3E4090A9B491AB5D97411F9A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEntryProbe.cs",
+        "sha256":  "872254D28EDF6A01B059AC6F410923E56FA8BABE3CA35A74D232196E19AB5BF7",
+        "bytes":  3507
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatEntryProbe.cs.meta",
+        "sha256":  "EEAE1A78674DA974174D74456F1291AA3F11E84ABC40607E748328CFB4FFB14C",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatFeedbackProbe.cs",
+        "sha256":  "42F8FF62AC7DD794263CF819DCD941D710BD6490D01F6B27EBDD23711D9DFB44",
+        "bytes":  6167
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatFeedbackProbe.cs.meta",
+        "sha256":  "4582FD686232E70621992136D34C5C9B8B63E5A5F89D9E58A73E1F4C5942993D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatHitProbe.cs",
+        "sha256":  "6CB9B3C4C23DD6E855C44C6BB27F46C0F0C8216017B5F999207014D4C71525BE",
+        "bytes":  7223
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatHitProbe.cs.meta",
+        "sha256":  "DBFFA47EB68BFE130E1AAE473298AFEA7475DCF3ED5033CB49BDD6057C3E945B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatOpportunityProbe.cs",
+        "sha256":  "C0078690E4AEEE463EE6AA0CC6DC976418F5CF5D0463E60F27C8BF84C436E15E",
+        "bytes":  8982
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatOpportunityProbe.cs.meta",
+        "sha256":  "D6578D7949C1454A12C2DE4677C27906DC2115F6DAB20433D4965FEAB20B1009",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatPlaythroughDriver.cs",
+        "sha256":  "F5917C80420AAC920B1404F1F0C029CB3060A56914E546E7BA05DC59DC70CF85",
+        "bytes":  15111
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatPlaythroughDriver.cs.meta",
+        "sha256":  "1766002413DB2FA45C5D0B00D6941489049CAD0DEE25BC22E3CDFBED8DD99B9A",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatReactionProbe.cs",
+        "sha256":  "51098F7FDB62271D98C76AC2D2A06F85E4E22D3A80F94259C9D95B9CEFD59158",
+        "bytes":  14021
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatReactionProbe.cs.meta",
+        "sha256":  "F96C961A509DE55C9D95E1E0E44E2F56C9D9645D06EF86134FAD3D7D100BEEAB",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSceneProbe.cs",
+        "sha256":  "3A035B1721319DFE50EA465F55B53D2670F24F14224783F7D5F58735FE42ABBA",
+        "bytes":  8171
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSceneProbe.cs.meta",
+        "sha256":  "8667BDDD9B6FAB70BF5F8693AB83799B868DBB744A231DAC91C7F213C109769D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSkillMovementProbe.cs",
+        "sha256":  "FDC3C0F56BC183935FE35E75821180B237529A0B69E6EBC8E435500BE2F95E7A",
+        "bytes":  4062
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSkillMovementProbe.cs.meta",
+        "sha256":  "6B7BCAEF57FA85D9875AAF99E152E3FEFB29AD77B9441B9474D2F97291DDBEF5",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSkillProbe.cs",
+        "sha256":  "AEA37F5BB6142514F29A0E4286C875AF83380DA05BDEA6A4CA1143848800259E",
+        "bytes":  5929
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSkillProbe.cs.meta",
+        "sha256":  "4D91FE1BF780CCCBC9A4EC8CC1D9B17A97413B96415AB2E492C45D86BA7DAAA8",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSquadProbe.cs",
+        "sha256":  "29E420AC197011DE106A939F46AB074658AD1E9C73056AC2554A1C0EE0A2A973",
+        "bytes":  7542
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatSquadProbe.cs.meta",
+        "sha256":  "318EF49748A2771CD1D1DD87C786261938234586D8F7C916D3940E323E191E36",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatStaggerProbe.cs",
+        "sha256":  "75E6FED1DCB4E9E0FF31A7ABBDCCF1142EDD5A3C059DA29B6CB40DBE176CAF10",
+        "bytes":  9976
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatStaggerProbe.cs.meta",
+        "sha256":  "6AEC757469DB2779E4C6BCEDA3A7660B8EBA0BC8D8D9AD2048929D3B0947553D",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatStatsProbe.cs",
+        "sha256":  "340DA1DD9314C11500EFF151D20C0CC04DD321ABCF5439B43059D1A37F910986",
+        "bytes":  6487
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatStatsProbe.cs.meta",
+        "sha256":  "2FEEDE421C16CB4ED9E718851EFAAFC9E24E0E6DA0EE200882246A901D5D443F",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatStatusProbe.cs",
+        "sha256":  "A1A6D315C9B5F4CE8515537634546115429A662E47A6917748007367E76608F9",
+        "bytes":  11618
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatStatusProbe.cs.meta",
+        "sha256":  "135FB043690BEEF8A4F942D4836E9AADDED5DA1AD213EA479CF2812E459ED22B",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatTeamInputProbe.cs",
+        "sha256":  "A850246F76D29D2AA4461691620DA875322753C6EF26030580B199986E06CA37",
+        "bytes":  4912
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatTeamInputProbe.cs.meta",
+        "sha256":  "A625187EB68C2400409865A093687D423F42FB31DEAFDB6A920788559C8A8F58",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatTeamProbe.cs",
+        "sha256":  "371CAE8EC83309E2214D679D62927AD6C17EF2E58CDF230158B8E957EAA9A657",
+        "bytes":  7158
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatTeamProbe.cs.meta",
+        "sha256":  "865E5F5FF3C58864A8570BE46D2B933A1FAD7D7A2008EA903BB5510A99FA35AE",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatWarpProbe.cs",
+        "sha256":  "EA37606B33A9B0750BC699C5050A037D3728524B2466DA729A2B4A6FB1B59484",
+        "bytes":  9100
+    },
+    {
+        "path":  "Assets/Tests/Runtime/CombatWarpProbe.cs.meta",
+        "sha256":  "13DFCFEE70431B1437CC58B253D894318ECAB7951E862D34FA766EEAF2CA8493",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Runtime/ProbeRootMotion.cs",
+        "sha256":  "68CE617E5FC7DBAB3C19B00DAB9500CD76FD86CABAB2E3571C37DD4D9DBAFE51",
+        "bytes":  550
+    },
+    {
+        "path":  "Assets/Tests/Runtime/ProbeRootMotion.cs.meta",
+        "sha256":  "5E938E95B78F9C279CFD931F829167BEB744D5A1CC68ED8FE78EB90BECFB4B88",
+        "bytes":  59
+    },
+    {
+        "path":  "Assets/Tests/Scenes.meta",
+        "sha256":  "267CD1E1C6853BA7DD06BE87AE75C7411BEE2F585BD97A00DDAC4E4819DBC4E0",
+        "bytes":  172
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatActionValidation.unity",
+        "sha256":  "C46F2D539B3CE151291D24E8C599CC1ED0F0F8B2CF442C3EDFCE0E07CF4E9081",
+        "bytes":  938642
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatActionValidation.unity.meta",
+        "sha256":  "6FF36CC78503DFE8F5984D5BC55665EC7E4FA6C208E8E3129A9D97D489BE899E",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatAnimationValidation.unity",
+        "sha256":  "708E226A6CD752ECB0B98D058905F0CD684E7E73D5E023FC173C3F635E2B86F9",
+        "bytes":  9755
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatAnimationValidation.unity.meta",
+        "sha256":  "FFA22714BAE72FE26A65BAD5A8A5B126C48E6784FCF039F90598A8BC594BC582",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatAreaRewardValidation.unity",
+        "sha256":  "D6051C82C21892BC9834F09F11E0B4BB315CD7C10BA605D02152FD8248E9146A",
+        "bytes":  1027435
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatAreaRewardValidation.unity.meta",
+        "sha256":  "70F4CF6CF90F3C3C737DE4D06EDBF60B6ACEAFB074FDC310FD10828EDD2FF9F2",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatCarrierValidation.unity",
+        "sha256":  "118F96B1719DE5F11716DC8CC72DD38D9B3E6F7941F51208F3F74E4A55404FF0",
+        "bytes":  994818
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatCarrierValidation.unity.meta",
+        "sha256":  "698B451F9BEBE040A2419F49AF2486C68EA0CC1DF867E31B49B7CFC438746A21",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatComboValidation.unity",
+        "sha256":  "FCBCEC228685EE3EF065ACE849B3D7F21F884A9848B60DDE38B1C74059219B90",
+        "bytes":  941540
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatComboValidation.unity.meta",
+        "sha256":  "FDC317B46CCE6F77EB10BD3462AF1B81BDE25417CB9D4773859231220BBEC719",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatCompanionValidation.unity",
+        "sha256":  "E13E4CB76C966CD5CFE0F311504D8042A66199FD590DE8072B647081AA891E46",
+        "bytes":  970146
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatCompanionValidation.unity.meta",
+        "sha256":  "E153BF2283FA265FB239A072E30F5DE7692EFF5A742B52006CE83B2D8DF386B3",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatCooperationValidation.unity",
+        "sha256":  "9686E9A891078F153992D0C11B35EDC955259B491FAEDDF4ED66D38D6CF267DF",
+        "bytes":  994764
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatCooperationValidation.unity.meta",
+        "sha256":  "724F4E51FA3B253596AD15A9ECCA8D8FEF7FE0918559255E19627CD52C60AC17",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatDodgeInputValidation.unity",
+        "sha256":  "C4202F346EA5C01C9F521B06FD3FE24BCD2F2D8C84D031449E64B56621EFBEEB",
+        "bytes":  959712
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatDodgeInputValidation.unity.meta",
+        "sha256":  "071140E1DE6596EFBE9358372562281E59B94B84829FAF119D00B0432D8FAE2B",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatDodgeValidation.unity",
+        "sha256":  "A2CF3476139C7D945FDD1125BDEF9FED8347693F47323C2B6901DE47FEF5C8D1",
+        "bytes":  959713
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatDodgeValidation.unity.meta",
+        "sha256":  "F71CC8A0E54FC8E69F7721CF77B68555EC806C2193BBADAEF0F6EB1834EE9040",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatDuelValidation.unity",
+        "sha256":  "2A5D40C12D1160906B410E68C7D847B259CEB0883C8520AF721A819D7F808AFB",
+        "bytes":  959719
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatDuelValidation.unity.meta",
+        "sha256":  "7E02D1CD74B9C8BCCFF1E5547B42CCE2A61619E31C34C01AE25090D6ED930967",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEncounterValidation.unity",
+        "sha256":  "5CCFD11FD0297CFEDB64221DDD4C6B6252423E9EFA87FBC6F07FFE48E1C5D4FB",
+        "bytes":  996511
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEncounterValidation.unity.meta",
+        "sha256":  "0DB396886D47AF321945BFE629C45872868B292FDA0A5EEF57A1E83220F41BA2",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEnemyValidation.unity",
+        "sha256":  "BB917705975B0A61EFE0D089425D93F2AECAFFA2984BFF9FC286ACCEB2D59A53",
+        "bytes":  959721
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEnemyValidation.unity.meta",
+        "sha256":  "37AF7CA0831352FEBC588A7E99BC8207805AF935476F5BED1C37937807CB3B41",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEnergyValidation.unity",
+        "sha256":  "C61D30A2B57CC2A9DA0E22A11C0705E4A8F6B552FDB98C2360A4F3BB7534AC5B",
+        "bytes":  970140
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEnergyValidation.unity.meta",
+        "sha256":  "D8708CD54375B677E4F6F9332D439600F5E69993F6BBDB102FDD68D5FE33364E",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEntryValidation.unity",
+        "sha256":  "5C62A0BF86293197AA847F078833B9E209AFE71D18AEF3D80DE69C3B84E4CB77",
+        "bytes":  938600
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatEntryValidation.unity.meta",
+        "sha256":  "23B668C502A23C82B18C8576D44D1FACC42122C55BC818C7416871CA35CB1C9A",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatFeedbackValidation.unity",
+        "sha256":  "004E35EB1FED85BA1C9264E3149DF565B03D040BF7BD81138AD157CF507DBF69",
+        "bytes":  1003616
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatFeedbackValidation.unity.meta",
+        "sha256":  "112F6EFA7B1F9D0CAA92D8505ECF94297DBC91A022A14AA2CB694612B0D53198",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatHitValidation.unity",
+        "sha256":  "A622187F201BB57648B98FE0057D5805A1F2021D3142D8B7DA35EE06DAA17DD3",
+        "bytes":  941542
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatHitValidation.unity.meta",
+        "sha256":  "AB1CDC8331C301752160E82D1B14D30EDF01DD28AF2B2F779CB36E38EC919462",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatOpportunityValidation.unity",
+        "sha256":  "C154FB280061E05347202AD955255ECCAADBBD76E2DEEB265F2DD907E3401010",
+        "bytes":  994547
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatOpportunityValidation.unity.meta",
+        "sha256":  "CD0FDBEE1883ACD89BCA6586A1457884D5802987969C6CDEB9C931EBAFD40B6C",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatPlaythroughValidation.unity",
+        "sha256":  "D77FA8B57134E38C53E440280884D8A4E01045C60685152B9782A98FF88F0610",
+        "bytes":  1003615
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatPlaythroughValidation.unity.meta",
+        "sha256":  "653E6F02278464B0D0653B7D7853ACA412640548C0F92EF7414FDA2DF5915728",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatReactionValidation.unity",
+        "sha256":  "CD833DD88CCF4C525D892B09BCF6A129792CF6E67DF5F54CCDE843AC34B43A1B",
+        "bytes":  997680
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatReactionValidation.unity.meta",
+        "sha256":  "8E530F4297077199A66F3200B627A925E52E750F9F533EDF2668584DD5F121DC",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSceneValidation.unity",
+        "sha256":  "9533DFEB0DF8EA096BAF4729EB91D3B18971444E8A73D8BA80111851F67EAC37",
+        "bytes":  941560
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSceneValidation.unity.meta",
+        "sha256":  "22778F2D06F95A4B4286F392BC9CD5AA687569A92F66D1E3C33DC75E4F7ECA23",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSkillMovementValidation.unity",
+        "sha256":  "ECB441E8452DDE9E3C0A6661A12B5A071143675D9A6667DA8E2463FD112A1618",
+        "bytes":  954994
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSkillMovementValidation.unity.meta",
+        "sha256":  "B2A0AE3C98F46CE62D68D8AF9A595F7E87AE06E01517E9EABDC97C7DACCD9A70",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSkillValidation.unity",
+        "sha256":  "DA659ABBD305E93F96CA1D8F54DAEAB97FBF622F82E05A7A39F021F9BD841A49",
+        "bytes":  954950
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSkillValidation.unity.meta",
+        "sha256":  "F993C45947BBD83C943CEBE9DC120DF2E8A1042C4EEF40C52B0CACD51EF8A0A2",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSquadValidation.unity",
+        "sha256":  "289D4BE33BAC25E79DB9B130863DED9AA11AA5C6BB4EB17FB832BEBFF050B34A",
+        "bytes":  994768
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatSquadValidation.unity.meta",
+        "sha256":  "C5F5F418B0333A42CC09E8CD30E0E91C17359E8243731AD4DC548EE4F4F62495",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStaggerCasterValidation.unity",
+        "sha256":  "72E22F816385E72849C5DB0108ED730987E0AD9B30D73D58108DEB84C00640E2",
+        "bytes":  959761
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStaggerCasterValidation.unity.meta",
+        "sha256":  "F622E35D870C3679674A32539EFBFD6C3AED0FA07F8A63DFCC0A49E685903D92",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStaggerValidation.unity",
+        "sha256":  "8A28301618446275B8888313910D98B7E4299B47B27670B341B7611650D8CC80",
+        "bytes":  959761
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStaggerValidation.unity.meta",
+        "sha256":  "C5E5EAF00637A2935A34EFCBCACE4F08F4834FCC4E25F6E716C3D4159FB2B553",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStatsValidation.unity",
+        "sha256":  "8C398D20775C07AA4FB5303F5455363A7DCC6E40185065EF845018986AFCA8DB",
+        "bytes":  945509
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStatsValidation.unity.meta",
+        "sha256":  "289066ABE16A724321CFE150EF9880E3C5E0C5B82893E6DBFF89F3157DD7CC7F",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStatusValidation.unity",
+        "sha256":  "648E20B8E243DCE21FFFF7187EFC0B1C0BBFCA20887E27BDA9D9FE4687171641",
+        "bytes":  994537
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatStatusValidation.unity.meta",
+        "sha256":  "9BB6BC193BA4D2CD190540E87E5CB309126B6F06D76CC1426DEECF6989A8A3FF",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatTeamInputValidation.unity",
+        "sha256":  "3D5F797C4231C1F531A3DE1E1C692AAECDAB02E20B402A8A4C6BA3E86E1503EF",
+        "bytes":  969670
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatTeamInputValidation.unity.meta",
+        "sha256":  "D3B50A6E749CE718D17CAAE32FF287542A32C19D3FD4D2AEEE4E915CA6FE4E64",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatTeamValidation.unity",
+        "sha256":  "6C6C3DBC42A70B13A20411BD828503EF17495CF3A02FDFAD36C29EAEE31A6505",
+        "bytes":  969496
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatTeamValidation.unity.meta",
+        "sha256":  "015828632162268407D2851D65C1C4D830EFC528393B0D59BE6D2472AE50EAD8",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatWarpValidation.unity",
+        "sha256":  "EBCBC9620185E14DAE3DE102A7357BD7D04F429BCB565657CFBB5C6885959953",
+        "bytes":  941559
+    },
+    {
+        "path":  "Assets/Tests/Scenes/CombatWarpValidation.unity.meta",
+        "sha256":  "E687D01C038C4E2FEB73476584CB790887DAD3757E8749CD5483D87E152BFA9E",
+        "bytes":  155
+    },
+    {
+        "path":  "Assets/Tests/TrainingTargetDefinition.asset",
+        "sha256":  "C0D7F961BF2EE5E4717EA381BADAA9123F1EC8C845C3BF9FBEAF8DDA0D3D419B",
+        "bytes":  1500
+    },
+    {
+        "path":  "Assets/Tests/TrainingTargetDefinition.asset.meta",
+        "sha256":  "42D75425457C1968A432B3815DF281E5CD26E46443E101FC9FDB83D1999A930A",
+        "bytes":  189
+    },
+    {
+        "path":  "Docs/image.png",
+        "sha256":  "D0EE05C6DB0505836972F04551F14A1E34CA9053E67F877EC2AD59054F6B64D2",
+        "bytes":  6626397
+    },
+    {
+        "path":  "Docs/image-1.png",
+        "sha256":  "064792D37458C00D6974A7B0E5D3F624B83D17B334C44332A2D05D671941F695",
+        "bytes":  6915339
+    },
+    {
+        "path":  "Docs/image-2.png",
+        "sha256":  "50CA1C4DFAC621B347DBF9B576121BD297F4DAC6FB982403BFAE1C2E3DAF161A",
+        "bytes":  3862572
+    },
+    {
+        "path":  "Docs/TODO.md",
+        "sha256":  "20AEF9ECA0F6702B816F56D7B545C0CE228B082068E6CD77DFB7D4987BCD05B8",
+        "bytes":  577
+    },
+    {
+        "path":  "Docs/仿终末地完整实现方案.md",
+        "sha256":  "1CAA4F515611DF3AF84AB0E75CE6B99926ED42B8641358B6DE6270F946BD4356",
+        "bytes":  125735
+    },
+    {
+        "path":  "Docs/项目阅读说明.md",
+        "sha256":  "3ED8A398CA40D7194B173F9EB83271405951A3DBF86A0504CDEA5D186C806901",
+        "bytes":  13214
+    },
+    {
+        "path":  "Docs/战斗系统完整实现文档.md",
+        "sha256":  "022861BA4203BB89B5DB1132B152B5649FF18A7303D5FF340D68DB65480584C0",
+        "bytes":  47184
+    },
+    {
+        "path":  "Packages/manifest.json",
+        "sha256":  "A9E1CA3E4FB4C066D6FFEEA34862490280A40AA87B1E88CFFDCB0C246233C1E0",
+        "bytes":  2153
+    },
+    {
+        "path":  "Packages/packages-lock.json",
+        "sha256":  "8D8D49A55EC59AB2B99EA378EB314DC19E33925E54B9739F4958ABD657DE32F0",
+        "bytes":  14171
+    },
+    {
+        "path":  "ProjectSettings/AudioManager.asset",
+        "sha256":  "AEEDEB3243F07B61DBBE854AA08B5EF6F0B5274DD9852AD9F6129DDE3E105A31",
+        "bytes":  413
+    },
+    {
+        "path":  "ProjectSettings/ClusterInputManager.asset",
+        "sha256":  "40E65DD214BF254955D2C8829CA8CE2130FD3510485560CE012E9A1DDD93E623",
+        "bytes":  114
+    },
+    {
+        "path":  "ProjectSettings/DynamicsManager.asset",
+        "sha256":  "70DFAD2A446CAAF747EA0FD045CBF9DE7A0EB64F75CFF0C34FE0859DF5911027",
+        "bytes":  1574
+    },
+    {
+        "path":  "ProjectSettings/EditorBuildSettings.asset",
+        "sha256":  "656CD6AE699CFCCBD22664BAAA1AB429C668FCA9729101FCE42EEF9C5B433315",
+        "bytes":  286
+    },
+    {
+        "path":  "ProjectSettings/EditorSettings.asset",
+        "sha256":  "32D6A9BE4C9AA9795A96BD951820A2D9BE1BFEFAB82ED05A5DB111AF0863938F",
+        "bytes":  1585
+    },
+    {
+        "path":  "ProjectSettings/GraphicsSettings.asset",
+        "sha256":  "6736F33DC62C35B0E7A88E275242080BC7A1D94C91154D18FCEB332B661A6BCE",
+        "bytes":  2615
+    },
+    {
+        "path":  "ProjectSettings/InputManager.asset",
+        "sha256":  "7A1BB836A1008D26D0860D143E9D9DF7CA41731D30A72901B518063819C62DF2",
+        "bytes":  9731
+    },
+    {
+        "path":  "ProjectSettings/MemorySettings.asset",
+        "sha256":  "1E8379A461B10AE09F3F696911088C16875D63E87ED5F2D95DF9E1892703F9FD",
+        "bytes":  1192
+    },
+    {
+        "path":  "ProjectSettings/MultiplayerManager.asset",
+        "sha256":  "ABA89FD1A1DDAD182727AD82727E536D27372E90328A8196DA2A4560398983DD",
+        "bytes":  157
+    },
+    {
+        "path":  "ProjectSettings/NavMeshAreas.asset",
+        "sha256":  "80106CFA7E6181A1928B142C075F3E510D527441E3D79BC83590E4AC91E7CD66",
+        "bytes":  1308
+    },
+    {
+        "path":  "ProjectSettings/PackageManagerSettings.asset",
+        "sha256":  "A7DABBA589ABE7FC2B45BD3D3FBA3FE9BE97043492703F716DA2D9131C13A807",
+        "bytes":  1003
+    },
+    {
+        "path":  "ProjectSettings/Physics2DSettings.asset",
+        "sha256":  "E3CBDBF0BE15244B7B67D2F07BDB8E8981911C11A8C7FE8035F5261272FEC658",
+        "bytes":  2028
+    },
+    {
+        "path":  "ProjectSettings/PresetManager.asset",
+        "sha256":  "29C125923FE6E29F90190D4FCE1C82D660E7051546E2C9D02908D18C9CF2436C",
+        "bytes":  146
+    },
+    {
+        "path":  "ProjectSettings/ProjectSettings.asset",
+        "sha256":  "4EE775B8E675DB4049BC818F43C2ADF04D55B939AAF0BBB32B270C36ED6EB1D6",
+        "bytes":  25620
+    },
+    {
+        "path":  "ProjectSettings/ProjectVersion.txt",
+        "sha256":  "91B35566B263574C8A513EFF3BBA6D5D313482D752D961077B47AB5B3FF14981",
+        "bytes":  85
+    },
+    {
+        "path":  "ProjectSettings/QualitySettings.asset",
+        "sha256":  "6814D6CC3EB850DD7D2A069A8B17BA9F7591DEBA8B1758A855978BD9C8627643",
+        "bytes":  3662
+    },
+    {
+        "path":  "ProjectSettings/SceneTemplateSettings.json",
+        "sha256":  "BB9098B3BFCDE78D93E264B96F7B77B5430E64E8C57A7AAD7F5A5D9C3945E16A",
+        "bytes":  3535
+    },
+    {
+        "path":  "ProjectSettings/ShaderGraphSettings.asset",
+        "sha256":  "CDBA1E5D65BCF6E3269D76ED3E60B6C21F98322002996642C9D74F1EB89F6B91",
+        "bytes":  556
+    },
+    {
+        "path":  "ProjectSettings/TagManager.asset",
+        "sha256":  "8F70CC5042597551E6C5A005ABE6A5FF00D1A9F46B7F25E28DB38FE9B8D5F62D",
+        "bytes":  561
+    },
+    {
+        "path":  "ProjectSettings/TimeManager.asset",
+        "sha256":  "1A83E54ADBBDA7C9F4851103A0C6AB7F6448A3343D4EA5B7620452FA08416ECD",
+        "bytes":  202
+    },
+    {
+        "path":  "ProjectSettings/UnityConnectSettings.asset",
+        "sha256":  "98F142992D8A623501C99648E1B7363ADCA08B67BB50390B566DF368D00BC9A0",
+        "bytes":  1063
+    },
+    {
+        "path":  "ProjectSettings/URPProjectSettings.asset",
+        "sha256":  "C317FE22B9488785C0611F0642429922E5D324430D929BFFB41648130F30C218",
+        "bytes":  461
+    },
+    {
+        "path":  "ProjectSettings/VersionControlSettings.asset",
+        "sha256":  "E7BDA45BF7A394745FEE1316E6C71FA676004D591AD1F3AA247FD3E4CEB86071",
+        "bytes":  188
+    },
+    {
+        "path":  "ProjectSettings/VFXManager.asset",
+        "sha256":  "F066C6483919961332415EE64204F74FE52F38C02E82892EB02B7A5B2E381F0E",
+        "bytes":  308
+    },
+    {
+        "path":  "ProjectSettings/XRSettings.asset",
+        "sha256":  "EDD2BEB4A2E388312B4B7DA241AA51070434005D82C59363F1237DD2E567585F",
+        "bytes":  158
+    }
+]

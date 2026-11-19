@@ -1,0 +1,90 @@
+ M Assets/Game/Prefabs/Characters/Player.prefab
+ M Assets/Game/Prefabs/Characters/TrainingDummy.prefab
+ M Assets/InputSystem_Actions.inputactions
+ M Assets/Scenes/CombatDemo.unity
+ M Assets/ScriptObjects/Characters/PlayerCharacterAsset.asset
+ M Assets/ScriptObjects/Characters/TrainingDummy.asset
+ M Assets/ScriptObjects/Presentation/ChargeGlow.asset
+ M Assets/ScriptObjects/Presentation/HitSpark.asset
+ M Assets/Scripts/Camera/PlayerCameraTarget.cs
+ D Assets/Scripts/Character/CharacterAsset.cs
+ D Assets/Scripts/Character/CharacterAsset.cs.meta
+ M Assets/Scripts/Character/Combatant.cs
+ M Assets/Scripts/Character/Movement/CharacterMotor.cs
+ M Assets/Scripts/Character/Movement/LocomotionStateMachine.cs
+ M Assets/Scripts/Character/PlayerController.cs
+ M Assets/Scripts/Character/Stat/CharacterHealth.cs
+ M Assets/Scripts/Character/Stat/CharacterStats.cs
+ M Assets/Scripts/Character/Stat/Stat.cs
+ M Assets/Scripts/Input/GameInputManager.cs
+ M Assets/Scripts/Input/Generated/EndfieldInputActions.cs
+ D Assets/Scripts/Presentation/Audio/AudioAsset.cs
+ D Assets/Scripts/Presentation/Audio/AudioAsset.cs.meta
+ M Assets/Scripts/Presentation/CombatFeedbackPlayer.cs
+ D Assets/Scripts/Presentation/Effects/ParticleEffectAsset.cs
+ D Assets/Scripts/Presentation/Effects/ParticleEffectAsset.cs.meta
+ M Assets/Scripts/Presentation/Effects/PooledParticleEffect.cs
+ M Assets/Scripts/UI/CharacterStatsPanelUI.cs
+ M Assets/Scripts/UI/GameUIController.cs
+ M Assets/Settings/DefaultVolumeProfile.asset
+ M Assets/Settings/PC_RPAsset.asset
+ M Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
+ M Docs/TODO.md
+ D "Docs/\346\210\230\346\226\227\347\263\273\347\273\237\351\230\266\346\256\265\346\200\247\345\256\236\346\226\275\350\247\204\345\210\222.md"
+ M ProjectSettings/DynamicsManager.asset
+ M ProjectSettings/ProjectSettings.asset
+ M ProjectSettings/TagManager.asset
+ M ProjectSettings/UnityConnectSettings.asset
+?? AGENTS.md
+?? Assets/Editor.meta
+?? Assets/Editor/
+?? Assets/Game/Combat.meta
+?? Assets/Game/Combat/
+?? Assets/Game/Prefabs/Characters/EliteEnemy.prefab
+?? Assets/Game/Prefabs/Characters/EliteEnemy.prefab.meta
+?? Assets/Game/Prefabs/Characters/MeleeEnemy.prefab
+?? Assets/Game/Prefabs/Characters/MeleeEnemy.prefab.meta
+?? Assets/Game/Prefabs/Characters/MemberB.prefab
+?? Assets/Game/Prefabs/Characters/MemberB.prefab.meta
+?? Assets/Game/Prefabs/Characters/MemberC.prefab
+?? Assets/Game/Prefabs/Characters/MemberC.prefab.meta
+?? Assets/Game/Prefabs/Characters/MemberD.prefab
+?? Assets/Game/Prefabs/Characters/MemberD.prefab.meta
+?? Assets/Game/Prefabs/Characters/RangedEnemy.prefab
+?? Assets/Game/Prefabs/Characters/RangedEnemy.prefab.meta
+?? Assets/ScriptObjects/Characters/EliteEnemyCharacter.asset
+?? Assets/ScriptObjects/Characters/EliteEnemyCharacter.asset.meta
+?? Assets/ScriptObjects/Characters/MeleeEnemyCharacter.asset
+?? Assets/ScriptObjects/Characters/MeleeEnemyCharacter.asset.meta
+?? Assets/ScriptObjects/Characters/MemberBCharacter.asset
+?? Assets/ScriptObjects/Characters/MemberBCharacter.asset.meta
+?? Assets/ScriptObjects/Characters/MemberCCharacter.asset
+?? Assets/ScriptObjects/Characters/MemberCCharacter.asset.meta
+?? Assets/ScriptObjects/Characters/MemberDCharacter.asset
+?? Assets/ScriptObjects/Characters/MemberDCharacter.asset.meta
+?? Assets/ScriptObjects/Characters/RangedEnemyCharacter.asset
+?? Assets/ScriptObjects/Characters/RangedEnemyCharacter.asset.meta
+?? Assets/Scripts/AI.meta
+?? Assets/Scripts/AI/
+?? Assets/Scripts/Character/CharacterDefinition.cs
+?? Assets/Scripts/Character/CharacterDefinition.cs.meta
+?? Assets/Scripts/Character/Stat/CharacterStatRules.cs
+?? Assets/Scripts/Character/Stat/CharacterStatRules.cs.meta
+?? Assets/Scripts/Combat.meta
+?? Assets/Scripts/Combat/
+?? Assets/Scripts/Presentation/Audio/AudioDefinition.cs
+?? Assets/Scripts/Presentation/Audio/AudioDefinition.cs.meta
+?? Assets/Scripts/Presentation/CombatPresentation.cs
+?? Assets/Scripts/Presentation/CombatPresentation.cs.meta
+?? Assets/Scripts/Presentation/Effects/ParticleEffectDefinition.cs
+?? Assets/Scripts/Presentation/Effects/ParticleEffectDefinition.cs.meta
+?? Assets/Scripts/Presentation/PooledDamageNumber.cs
+?? Assets/Scripts/Presentation/PooledDamageNumber.cs.meta
+?? Assets/Scripts/UI/CombatHUD.cs
+?? Assets/Scripts/UI/CombatHUD.cs.meta
+?? Assets/Tests.meta
+?? Assets/Tests/
+?? Backups/
+?? "Docs/\344\273\277\347\273\210\346\234\253\345\234\260\345\256\214\346\225\264\345\256\236\347\216\260\346\226\271\346\241\210.md"
+?? "Docs/\346\210\230\346\226\227\347\263\273\347\273\237\345\256\214\346\225\264\345\256\236\347\216\260\346\226\207\346\241\243.md"
+?? "Docs/\351\241\271\347\233\256\351\230\205\350\257\273\350\257\264\346\230\216.md"

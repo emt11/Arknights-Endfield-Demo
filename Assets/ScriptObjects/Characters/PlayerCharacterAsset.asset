@@ -11,8 +11,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1633079b8d9ec6940baccf486bb8b8d8, type: 3}
   m_Name: PlayerCharacterAsset
-  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Character.CharacterAsset
-  displayName: "\u83F2\u6BD4"
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Character.CharacterDefinition
+  displayName: "\u73A9\u5BB6"
   attack: 100
   maxHP: 1000
   defense: 20
+  basicAttacks:
+  - {fileID: 11400000, guid: 48a3267078952444ab5005349a12dca6, type: 2}
+  - {fileID: 11400000, guid: b9e31828ed809a043a7fe5e1d6152ba8, type: 2}
+  - {fileID: 11400000, guid: 26145b8005d4558468722900c1597373, type: 2}

@@ -11,6 +11,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fabf15692758cda43b3356c54bca8907, type: 3}
   m_Name: HitSpark
-  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Presentation.ParticleEffectAsset
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Presentation.ParticleEffectDefinition
   prefab: {fileID: 7872608020876040438, guid: 5106f0eac42d3cc458b4cd94bc761c02, type: 3}
   scale: 1
