@@ -1,0 +1,7 @@
+{
+    "name": "Endfield.Stats.EditModeTests",
+    "rootNamespace": "Endfield.Stats.Tests",
+    "references": ["Endfield.Stats"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"]
+}
