@@ -1,405 +1,467 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.TestTools;
+using static Endfield.Stats.ModifierOperation;
 
 namespace Endfield.Stats.Tests
 {
     public sealed class StatSystemTests
     {
         private static readonly SourceID Weapon = new SourceID("Equipment", 17);
-        private static readonly SourceID OtherWeapon = new SourceID("Equipment", 18);
-        private static readonly SourceID Effect = new SourceID("Effect", 42);
-        private const ModifierOperation Flat = ModifierOperation.Flat;
-        private const ModifierOperation Override = ModifierOperation.Override;
-        private const double Tolerance = 1e-6;
+        private static readonly SourceID Buff = new SourceID("Effect", 42);
+        private static readonly SourceID OtherBuff = new SourceID("Effect", 43);
 
-        private static Dictionary<string, double> CharacterValues() => new Dictionary<string, double>
+        private static Dictionary<StatId, double> InitialValues()
         {
-            ["STR"] = 10, ["AGI"] = 10, ["INT"] = 100, ["WIL"] = 50,
-            ["BaseHP"] = 100, ["BaseDEF"] = 35, ["BaseATK"] = 100, ["FixedATK"] = 50
-        };
-
-        private static StatSet Character(string main = "INT") => StatSet.Create(
-            StatCatalog.CreateCombatDefinitions(), CharacterValues(), new AttributeBinding(main, "WIL"));
-
-        private static StatModifier Mod(SourceID source, ulong entry, string stat, double value,
-            ModifierOperation operation = Flat, int priority = 0, UnitType? unit = null) =>
-            new StatModifier(new ModifierKey(source, entry), stat, operation, value, priority, unit);
-
-        private static StatCommandResult Ok(StatCommitResult commit)
-        {
-            Assert.That(commit.Success, Is.True, commit.Error);
-            return commit.Results[commit.Results.Count - 1];
+            return new Dictionary<StatId, double>
+            {
+                { StatId.STR, 10 }, { StatId.AGI, 0 }, { StatId.INT, 100 }, { StatId.WIL, 50 },
+                { StatId.BaseATK, 100 }, { StatId.BaseDEF, 100 }, { StatId.BaseHP, 100 }
+            };
         }
 
-        private static void Rejected(StatCommitResult commit, params string[] details)
+        private static StatSet Character()
         {
-            Assert.That(commit.Success, Is.False);
-            Assert.That(commit.Results, Is.Empty);
-            foreach (string detail in details) StringAssert.Contains(detail, commit.Error);
+            return StatSet.Create(InitialValues(), StatId.INT, StatId.WIL);
         }
 
-        private static void Equip(StatSet set)
+        private static void Success(StatWriteResult result)
         {
-            Ok(set.ReplaceSource(Weapon, Mod(Weapon, 1, "WeaponATK", 200), Mod(Weapon, 2, "ATKPercentBonus", 0.30)));
+            Assert.That(result.Success, Is.True, result.Error);
         }
 
-        private static StatDefinition Derived(string id, params string[] dependencies)
+        private static void Removed(StatWriteResult result, int count)
         {
-            var slots = dependencies.Select(d => new FormulaInput(d, d, UnitType.Point)).ToArray();
-            return new StatDefinition(id, UnitType.Point, formula: new FormulaDefinition(id, id,
-                FormulaKind.WeightedSum, slots, dependencies.Select(_ => 1d).ToArray()));
+            Success(result);
+            Assert.That(result.RemovedEntryCount, Is.EqualTo(count));
+        }
+
+        private static void HasValue(IReadOnlyStatSet stats, StatId id, double expected)
+        {
+            Assert.That(stats.GetValue(id), Is.EqualTo(expected).Within(0.000001), id.ToString());
         }
 
         [Test]
-        public void T01_SharedCatalogCreatesIsolatedCharacterInstances()
+        public void AttackKeepsFlatAttackBetweenPercentageAndAttributeBonus()
         {
+            var stats = Character();
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.WeaponATK, Flat, 200),
+                new StatModifier(StatId.FixedATK, Flat, 50), new StatModifier(StatId.ATKPercentBonus, Flat, 0.3)));
+            HasValue(stats, StatId.ATK, 704);
+
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.ATKPercentBonus, Flat, 0.2)));
+            HasValue(stats, StatId.ATK, 800);
+            HasValue(stats, StatId.FixedATK, 50);
+            Removed(stats.RemoveSource(Buff), 1);
+            HasValue(stats, StatId.ATK, 704);
+            HasValue(stats, StatId.FixedATK, 50);
+        }
+
+        [Test]
+        public void CharactersCopyInitialValuesAndUseTheirOwnPrimaryAttributesAndCoefficients()
+        {
+            var initial = InitialValues();
             var catalog = ScriptableObject.CreateInstance<StatCatalog>();
-            var restoredCatalog = ScriptableObject.CreateInstance<StatCatalog>();
             try
             {
-                using var a = catalog.CreateSet(CharacterValues(), new AttributeBinding("INT", "WIL"));
-                using var b = catalog.CreateSet(CharacterValues(), new AttributeBinding("INT", "WIL"));
-                Ok(a.AddModifier(Mod(Effect, 0, "STR", 2)));
-                Assert.That(a.GetValue("MaxHP"), Is.EqualTo(160));
-                Assert.That(b.GetValue("MaxHP"), Is.EqualTo(150));
-                Assert.That(b.Revision, Is.Zero);
-                Assert.That(b.GetModifiers("STR"), Is.Empty);
+                var first = catalog.CreateSet(initial, StatId.INT, StatId.WIL);
+                var second = catalog.CreateSet(initial, StatId.STR, StatId.WIL);
+                initial[StatId.INT] = 1;
+                var secondPanel = Enum.GetValues(typeof(StatId)).Cast<StatId>().Select(second.GetValue).ToArray();
 
-                // Exercise the same serialized formula fields an author edits in the Inspector.
-                using var serialized = new SerializedObject(catalog);
-                var definitions = serialized.FindProperty("definitions");
-                var maxHp = Enumerable.Range(0, definitions.arraySize).Select(definitions.GetArrayElementAtIndex)
-                    .Single(property => property.FindPropertyRelative("id").stringValue == "MaxHP");
-                var weights = maxHp.FindPropertyRelative("formula").FindPropertyRelative("coefficients");
-                weights.GetArrayElementAtIndex(1).doubleValue = 6;
-                serialized.ApplyModifiedPropertiesWithoutUndo();
-                EditorJsonUtility.FromJsonOverwrite(EditorJsonUtility.ToJson(catalog), restoredCatalog);
-                using var restored = restoredCatalog.CreateSet(CharacterValues(), new AttributeBinding("INT", "WIL"));
-                Assert.That(restored.GetValue("MaxHP"), Is.EqualTo(160));
-                Ok(b.SetBase("STR", 11));
-                Assert.That(b.GetValue("MaxHP"), Is.EqualTo(155));
+                using var settings = new SerializedObject(catalog);
+                settings.FindProperty("mainBonus").doubleValue = 0.01;
+                settings.FindProperty("healthPerStrength").doubleValue = 6;
+                settings.ApplyModifiedPropertiesWithoutUndo();
+                Success(first.SetBase(StatId.INT, 110));
+                HasValue(first, StatId.AttributeATKBonus, 0.65);
+                HasValue(first, StatId.ATK, 165);
+                HasValue(first, StatId.MaxHP, 150);
+                HasValue(second, StatId.AttributeATKBonus, 0.15);
+                CollectionAssert.AreEqual(secondPanel, Enum.GetValues(typeof(StatId)).Cast<StatId>().Select(second.GetValue));
+
+                var third = catalog.CreateSet(initial, StatId.INT, StatId.WIL);
+                HasValue(third, StatId.AttributeATKBonus, 0.11);
+                HasValue(third, StatId.MaxHP, 160);
+                Assert.Throws<ArgumentException>(() => catalog.CreateSet(initial, StatId.INT, StatId.INT));
+                Assert.Throws<ArgumentException>(() => catalog.CreateSet(initial, StatId.BaseHP, StatId.STR));
+                initial.Remove(StatId.STR);
+                Assert.Throws<ArgumentException>(() => catalog.CreateSet(initial, StatId.INT, StatId.WIL));
             }
             finally
             {
                 UnityEngine.Object.DestroyImmediate(catalog);
-                UnityEngine.Object.DestroyImmediate(restoredCatalog);
             }
         }
 
         [Test]
-        public void T02_ModifierStagesAreStableAndRespectUnits()
+        public void RemovingOneBuffPreservesOtherInstancesAndCanBeRetried()
         {
-            var modifiers = new[]
+            var stats = Character();
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.STR, Flat, 2)));
+            Success(stats.ReplaceSource(OtherBuff, new StatModifier(StatId.STR, Flat, 3)));
+            HasValue(stats, StatId.STR, 15);
+            Removed(stats.RemoveSource(Buff), 1);
+            HasValue(stats, StatId.STR, 13);
+            HasValue(stats, StatId.MaxHP, 165);
+            Removed(stats.RemoveSource(Buff), 0);
+            Success(stats.ReplaceSource(OtherBuff));
+            HasValue(stats, StatId.STR, 10);
+        }
+
+        [Test]
+        public void RefreshReplacesOneWholeSourceAndRejectsConflictsAndOverflow()
+        {
+            var stats = Character();
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.DEF, Override, 150, 5)));
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.STR, Flat, 2),
+                new StatModifier(StatId.BaseHP, Flat, 25)));
+            var events = new List<IReadOnlyList<StatChange>>();
+            using var subscription = stats.Subscribe(events.Add);
+
+            var replacement = new[] { new StatModifier(StatId.STR, Flat, 4) };
+            Success(stats.ReplaceSource(Buff, replacement));
+            Success(stats.ReplaceSource(Buff, replacement));
+            replacement[0] = new StatModifier(StatId.STR, Flat, 100);
+            Assert.That(events.Count, Is.EqualTo(1));
+            HasValue(stats, StatId.STR, 14);
+            HasValue(stats, StatId.MaxHP, 170);
+            HasValue(stats, StatId.BaseHP, 100);
+
+            var conflict = stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Override, 120, 5),
+                new StatModifier(StatId.DEF, Override, 170, 8));
+            Assert.That(conflict.Success, Is.False);
+            StringAssert.Contains("DEF", conflict.Error);
+            StringAssert.Contains("5", conflict.Error);
+
+            Assert.That(stats.ReplaceSource(Buff, new StatModifier(StatId.BaseHP, Multiplicative, double.MaxValue)).Success, Is.False);
+            Assert.That(stats.SetBase(StatId.ATK, 5).Success, Is.False);
+            Assert.That(stats.SetBase(StatId.STR, double.NaN).Success, Is.False);
+            Assert.That(stats.SetBase((StatId)999, 9).Success, Is.False);
+            Assert.That(stats.ReplaceSource(Buff, new StatModifier(StatId.ATKPercentBonus, (ModifierOperation)3, 0.1)).Success, Is.False);
+            Assert.That(stats.ReplaceSource(Buff, new StatModifier((StatId)99, Flat, 0.1)).Success, Is.False);
+            Assert.That(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Multiplicative, -1)).Success, Is.False);
+            Assert.That(events.Count, Is.EqualTo(1));
+
+            Success(stats.SetBase(StatId.STR, 11));
+            HasValue(stats, StatId.STR, 15);
+            HasValue(stats, StatId.DEF, 150);
+            Removed(stats.RemoveSource(Buff), 1);
+            HasValue(stats, StatId.STR, 11);
+        }
+
+        [Test]
+        public void ModifierOrderOverridesAndClampsMatchPanelValues()
+        {
+            var stats = Character();
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.DEF, Multiplicative, 0.75),
+                new StatModifier(StatId.DEF, AdditivePercent, 0.20), new StatModifier(StatId.DEF, Flat, 20)));
+            HasValue(stats, StatId.DEF, 108);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Override, 150, 1)));
+            Success(stats.ReplaceSource(OtherBuff, new StatModifier(StatId.DEF, Override, 190, 2)));
+            HasValue(stats, StatId.DEF, 190);
+            stats.RemoveSource(OtherBuff);
+            HasValue(stats, StatId.DEF, 150);
+            stats.RemoveSource(Buff);
+            HasValue(stats, StatId.DEF, 108);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Multiplicative, 0)));
+            HasValue(stats, StatId.DEF, 0);
+            stats.RemoveSource(Buff);
+            HasValue(stats, StatId.DEF, 108);
+
+            Success(stats.SetBase(StatId.CritRate, 0.20));
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.CritRate, Flat, 0.10)));
+            HasValue(stats, StatId.CritRate, 0.30);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.CritRate, Multiplicative, 1.10)));
+            HasValue(stats, StatId.CritRate, 0.22);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.CritRate, Override, 1.20)));
+            HasValue(stats, StatId.CritRate, 1);
+            int notifications = 0;
+            using var subscription = stats.Subscribe(_ => notifications++);
+            Success(stats.ReplaceSource(OtherBuff, new StatModifier(StatId.CritRate, Flat, 0.05)));
+            Assert.That(notifications, Is.Zero);
+            stats.RemoveSource(Buff);
+            HasValue(stats, StatId.CritRate, 0.25);
+            Assert.That(notifications, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void CritDamageUsesAnOptionalTotalMultiplierAndRestoresItOnRemoval()
+        {
+            var stats = Character();
+            Success(stats.SetBase(StatId.CritRate, 0.2));
+            double attack = stats.GetValue(StatId.ATK);
+            HasValue(stats, StatId.CritDamage, 1.5);
+
+            var notifications = new List<IReadOnlyList<StatChange>>();
+            using var subscription = stats.Subscribe(notifications.Add);
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.CritDamage, Flat, 0.2)));
+            HasValue(stats, StatId.CritDamage, 1.7);
+            Assert.That(notifications.Single().Single().StatId, Is.EqualTo(StatId.CritDamage));
+            HasValue(stats, StatId.CritRate, 0.2);
+            HasValue(stats, StatId.ATK, attack);
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.CritDamage, AdditivePercent, 0.2)));
+            HasValue(stats, StatId.CritDamage, 1.8);
+            Removed(stats.RemoveSource(Weapon), 1);
+            HasValue(stats, StatId.CritDamage, 1.5);
+
+            var initial = InitialValues();
+            initial[StatId.CritDamage] = 0;
+            var configured = StatSet.Create(initial, StatId.INT, StatId.WIL);
+            HasValue(configured, StatId.CritDamage, 0);
+            Success(configured.SetBase(StatId.CritDamage, 1.75));
+            HasValue(configured, StatId.CritDamage, 1.75);
+            Success(configured.ReplaceSource(Buff, new StatModifier(StatId.CritDamage, Flat, -2)));
+            HasValue(configured, StatId.CritDamage, 0);
+        }
+
+        [Test]
+        public void GroupsCoverEveryDefinitionInIdOrder()
+        {
+            var ids = new List<StatId>();
+            foreach (var group in StatCatalog.Groups)
             {
-                Mod(Effect, 1, "Test", 20), Mod(Effect, 2, "Test", 0.25, ModifierOperation.AdditivePercent),
-                Mod(Effect, 3, "Test", -0.05, ModifierOperation.AdditivePercent),
-                Mod(Effect, 4, "Test", 1.5, ModifierOperation.Multiplicative),
-                Mod(Effect, 5, "Test", 0.5, ModifierOperation.Multiplicative)
-            };
-            foreach (var entries in new[] { modifiers, modifiers.Reverse().ToArray() })
-            {
-                using var set = StatSet.Create(new[]
+                var definitions = StatCatalog.GetByGroup(group).ToArray();
+                CollectionAssert.IsOrdered(definitions.Select(item => (int)item.Id).ToArray());
+                foreach (var definition in definitions)
                 {
-                    new StatDefinition("Test", UnitType.Point, defaultValue: 100, maximum: 120),
-                    new StatDefinition("CritRate", UnitType.Ratio, defaultValue: 0.2)
-                });
-                Ok(set.ReplaceSource(Effect, entries));
-                Assert.That(set.GetValue("Test"), Is.EqualTo(108).Within(Tolerance));
-                var key = Ok(set.AddModifier(Mod(Weapon, 1, "Test", 150, Override))).Key.Value;
-                Assert.That(set.GetValue("Test"), Is.EqualTo(120));
-                Ok(set.RemoveModifier(key));
-                Assert.That(set.GetValue("Test"), Is.EqualTo(108).Within(Tolerance));
-                Ok(set.ReplaceSource(Weapon, Mod(Weapon, 2, "CritRate", 0.1)));
-                Assert.That(set.GetValue("CritRate"), Is.EqualTo(0.30).Within(Tolerance));
-                Ok(set.ReplaceSource(Weapon, Mod(Weapon, 2, "CritRate", 1.1, ModifierOperation.Multiplicative)));
-                Assert.That(set.GetValue("CritRate"), Is.EqualTo(0.22).Within(Tolerance));
+                    Assert.That(definition.Group, Is.EqualTo(group));
+                    Assert.That(definition.DisplayName, Is.Not.Empty);
+                    Assert.That(StatCatalog.Get(definition.Id), Is.SameAs(definition));
+                    ids.Add(definition.Id);
+                }
             }
-        }
-
-        [Test]
-        public void T03_FinalOverrideSetControlsConflictAndSwap()
-        {
-            using var set = Character();
-            var a = Mod(Weapon, 1, "ATK", 80, Override, 10);
-            var b = Mod(OtherWeapon, 2, "ATK", 90, Override, 10);
-            Ok(set.AddModifier(a));
-            var events = new List<StatChangeSet>();
-            using var sub = set.Subscribe(events.Add);
-            Rejected(set.AddModifier(b), "ATK", "10", a.Key.ToString(), b.Key.ToString());
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(80));
-            Assert.That(set.GetModifiers("ATK").Single().Key, Is.EqualTo(a.Key));
-            Assert.That(set.Revision, Is.EqualTo(1));
-            Assert.That(events, Is.Empty);
-            Ok(set.ApplyBatch(StatCommand.AddModifier(b), StatCommand.RemoveSource(Weapon)));
-            var change = events.Single().Changes.Single();
-            Assert.That(change.OldValue, Is.EqualTo(80));
-            Assert.That(change.NewValue, Is.EqualTo(90));
-            Ok(set.AddModifier(Mod(Effect, 1, "ATK", 70, Override, 20)));
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(70));
-            Rejected(set.AddModifier(a), a.Key.ToString(), b.Key.ToString());
-            Ok(set.RemoveSource(Effect));
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(90));
-        }
-
-        [Test]
-        public void T04_AttackGoldenValuesFollowSourceLifetime()
-        {
-            using var set = Character();
-            Equip(set);
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(704).Within(Tolerance));
-            Ok(set.AddModifier(Mod(Effect, 1, "ATKPercentBonus", 0.2)));
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(800).Within(Tolerance));
-            Assert.That(Ok(set.RemoveSource(Effect)).Count, Is.EqualTo(1));
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(704).Within(Tolerance));
-            Assert.That(set.GetValue("FixedATK"), Is.EqualTo(50));
-        }
-
-        [Test]
-        public void T05_RemoveSourceAffectsOnlyThatInstanceAndIsIdempotent()
-        {
-            using var set = Character();
-            Ok(set.ReplaceSource(Weapon, Mod(Weapon, 1, "STR", 2), Mod(Weapon, 2, "BaseHP", 10)));
-            Ok(set.AddModifier(Mod(OtherWeapon, 1, "STR", 3)));
-            Assert.That(Ok(set.RemoveSource(Weapon)).Count, Is.EqualTo(2));
-            Assert.That(set.GetValue("STR"), Is.EqualTo(13));
-            Assert.That(set.GetValue("MaxHP"), Is.EqualTo(165));
-            long revision = set.Revision;
-            Assert.That(Ok(set.RemoveSource(Weapon)).Count, Is.Zero);
-            Assert.That(Ok(set.RemoveModifier(new ModifierKey(Weapon, 1))).Count, Is.Zero);
-            Assert.That(set.Revision, Is.EqualTo(revision));
-        }
-
-        [Test]
-        public void T06_ReplaceSourceIsAtomicAndReplayIsANoOp()
-        {
-            using var set = Character();
-            Equip(set);
-            var flat = Mod(Weapon, 2, "STR", 2);
-            Ok(set.ReplaceSource(Weapon, flat));
-            long revision = set.Revision;
-            Assert.That(set.GetModifiers("WeaponATK"), Is.Empty);
-            Assert.That(set.GetValue("ATKPercentBonus"), Is.Zero);
-            Assert.That(set.GetValue("STR"), Is.EqualTo(12));
-            Ok(set.ReplaceSource(Weapon, flat));
-            Rejected(set.ReplaceSource(Weapon, flat, Mod(Weapon, 2, "BaseHP", 10)), "Duplicate");
-            Assert.That(set.Revision, Is.EqualTo(revision));
-            Assert.That(set.GetModifiers("STR").Single().Key, Is.EqualTo(flat.Key));
-            Assert.That(Ok(set.RemoveSource(Weapon)).Count, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void T07_DiamondIsEvaluatedOnceAndCacheReadsAreFree()
-        {
-            using var set = StatSet.Create(new[] { new StatDefinition("A", UnitType.Point), Derived("B", "A"),
-                Derived("C", "A"), Derived("D", "B", "C"), new StatDefinition("E", UnitType.Point) });
-            var events = new List<StatChangeSet>();
-            using var sub = set.Subscribe(events.Add);
-            Ok(set.ApplyBatch(StatCommand.SetBase("A", 1), StatCommand.SetBase("A", 3)));
-            for (int i = 0; i < 100; i++) Assert.That(set.GetValue("D"), Is.EqualTo(6));
-            CollectionAssert.AreEqual(new[] { "A", "B", "C", "D" }, events.Single().Changes.Select(c => c.StatId));
-            foreach (string id in new[] { "A", "B", "C", "D" }) Assert.That(set.EvaluationCount(id), Is.EqualTo(2), id);
-            Assert.That(set.EvaluationCount("E"), Is.EqualTo(1));
-        }
-
-        [Test]
-        public void T08_FormulaBindingAndInvalidGraphs()
-        {
-            using var intellect = Character();
-            using var strength = Character("STR");
-            var oldAttack = strength.GetValue("ATK");
-            int before = strength.EvaluationCount("ATK");
-            Ok(intellect.SetBase("INT", 120));
-            Ok(strength.SetBase("INT", 120));
-            Assert.That(intellect.GetValue("AttributeATKBonus"), Is.EqualTo(0.7).Within(Tolerance));
-            Assert.That(intellect.GetValue("ATK"), Is.EqualTo(255).Within(Tolerance));
-            Assert.That(strength.GetValue("ATK"), Is.EqualTo(oldAttack));
-            Assert.That(strength.EvaluationCount("ATK"), Is.EqualTo(before));
-
-            Assert.Throws<ArgumentException>(() => Character("WIL"));
-            var missing = Assert.Throws<ArgumentException>(() => StatSet.Create(new[] { Derived("A", "Missing") }));
-            StringAssert.Contains("Missing", missing.Message);
-            StringAssert.Contains("A -> A", Assert.Throws<ArgumentException>(() => StatSet.Create(new[] { Derived("A", "A") })).Message);
-            StringAssert.Contains("A -> B -> C -> A", Assert.Throws<ArgumentException>(() =>
-                StatSet.Create(new[] { Derived("A", "B"), Derived("B", "C"), Derived("C", "A") })).Message);
-            var input = new[] { new FormulaInput("Value", "A", UnitType.Point) };
-            var invalid = new[]
+            CollectionAssert.AreEquivalent(Enum.GetValues(typeof(StatId)), ids);
+            Assert.That(StatCatalog.GetByGroup(StatGroup.DamageBonus), Is.Empty);
+            var survivalStats = new[] { StatId.PhysicalResistance, StatId.ArtsResistance, StatId.HealingReceivedBonus };
+            var stats = Character();
+            foreach (var id in survivalStats)
             {
-                new FormulaDefinition("F", "B", FormulaKind.WeightedSum, input),
-                new FormulaDefinition("F", "B", (FormulaKind)99, input, 1),
-                new FormulaDefinition("F", "B", FormulaKind.WeightedSum, new[] { new FormulaInput("", "A", UnitType.Point) }, 1)
-            };
-            foreach (var formula in invalid)
-                StringAssert.Contains("F", Assert.Throws<ArgumentException>(() => StatSet.Create(new[] {
-                    new StatDefinition("A", UnitType.Point), new StatDefinition("B", UnitType.Point, formula: formula) })).Message);
-        }
-
-        [Test]
-        public void T09_ListenerErrorsAreIsolatedAndReentrantWritesAreRejected()
-        {
-            using var set = Character();
-            var seen = new List<StatChangeSet>();
-            StatCommitResult nested = null;
-            double observed = 0;
-            long observedRevision = -1;
-            var first = set.Subscribe(change =>
-            {
-                observed = set.GetValue("MaxHP");
-                observedRevision = set.Snapshot("MaxHP").Revision;
-                nested = set.SetBase("STR", 30);
-                throw new InvalidOperationException("listener-test");
-            });
-            var second = set.Subscribe(seen.Add);
-            LogAssert.Expect(LogType.Error, new Regex($"StatSet {set.Id} revision 1:.*listener-test"));
-            Ok(set.ApplyBatch(StatCommand.SetBase("STR", 12), StatCommand.SetBase("BaseHP", 120)));
-            var hp = seen.Single().Changes.Single(c => c.StatId == "MaxHP");
-            Assert.That(hp.OldValue, Is.EqualTo(150));
-            Assert.That(hp.NewValue, Is.EqualTo(180));
-            Assert.That(observed, Is.EqualTo(180));
-            Assert.That(observedRevision, Is.EqualTo(1));
-            Rejected(nested, "notification");
-            Assert.That(set.Revision, Is.EqualTo(1));
-            first.Dispose();
-            second.Dispose();
-            Ok(set.SetBase("STR", 14));
-            Assert.That(seen.Count, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void T10_ClampedUnchangedValueAdvancesRevisionWithoutNotification()
-        {
-            using var set = Character();
-            Ok(set.SetBase("CritRate", 0.8));
-            Ok(set.AddModifier(Mod(Weapon, 1, "CritRate", 0.25)));
-            var seen = new List<StatChangeSet>();
-            using var sub = set.Subscribe(seen.Add);
-            Ok(set.AddModifier(Mod(Effect, 1, "CritRate", 0.1)));
-            Assert.That(seen, Is.Empty);
-            Assert.That(set.GetModifiers("CritRate").Count, Is.EqualTo(2));
-            var snapshot = set.Snapshot("CritRate", "CritRate");
-            Assert.That(snapshot.Revision, Is.EqualTo(3));
-            Assert.That(snapshot.Values.Count, Is.EqualTo(1));
-            Ok(set.ApplyBatch(StatCommand.RemoveSource(Effect), StatCommand.RemoveSource(Weapon)));
-            Assert.That(seen.Single().Changes.Single().NewValue, Is.EqualTo(0.8).Within(Tolerance));
-            Assert.That(snapshot.Values["CritRate"], Is.EqualTo(1));
-        }
-
-        [Test]
-        public void T11_InvalidBatchRollsBackValuesEntriesAndRevision()
-        {
-            using var set = StatSet.Create(StatCatalog.CreateCombatDefinitions().Concat(new[] {
-                new StatDefinition("Armor", UnitType.ResistancePoint) }), CharacterValues(), new AttributeBinding("INT", "WIL"));
-            var original = Mod(Weapon, 1, "BaseHP", 1);
-            Ok(set.AddModifier(original));
-            var invalid = new[]
-            {
-                StatCommand.SetBase("Missing", 1), StatCommand.SetBase("ATK", 1),
-                StatCommand.AddModifier(Mod(Effect, 1, "ATK", 10)), StatCommand.AddModifier(original),
-                StatCommand.SetBase("BaseATK", double.NaN),
-                StatCommand.AddModifier(Mod(Effect, 1, "BaseHP", double.MaxValue, ModifierOperation.Multiplicative)),
-                StatCommand.AddModifier(Mod(Effect, 1, "Armor", 0.2, unit: UnitType.Ratio))
-            };
-            int calls = 0;
-            using var sub = set.Subscribe(_ => calls++);
-            foreach (var command in invalid)
-            {
-                var result = set.ApplyBatch(StatCommand.SetBase("BaseHP", 150), command);
-                Rejected(result);
-                Assert.That(set.GetValue("BaseHP"), Is.EqualTo(101));
-                Assert.That(set.GetValue("MaxHP"), Is.EqualTo(151));
-                Assert.That(set.Revision, Is.EqualTo(1));
-                Assert.That(set.GetModifiers("BaseHP").Single().Key, Is.EqualTo(original.Key));
+                var definition = StatCatalog.Get(id);
+                Assert.That(definition.Derived, Is.True);
+                Assert.That(definition.Required, Is.False);
+                Assert.That(stats.SetBase(id, 10).Success, Is.False);
             }
-            Rejected(set.ApplyBatch(invalid.Last()), "ResistancePoint", "Ratio");
-            Assert.That(calls, Is.Zero);
+            Assert.That(StatCatalog.Get(StatId.CritRate).Derived, Is.False);
+            Assert.That(StatCatalog.Get(StatId.ATK).Derived, Is.True);
         }
 
         [Test]
-        public void T12_ZeroMultiplierNegativesAndIndependentRounding()
+        public void InnateBenefitsApplyRegardlessOfMainAndSecondaryAttributes()
         {
-            using var set = StatSet.Create(new[] { new StatDefinition("A", UnitType.Point, defaultValue: 10.75, minimum: 0),
-                new StatDefinition("B", UnitType.Point, defaultValue: 10.75, roundDown: true) });
-            Ok(set.AddModifier(Mod(Weapon, 1, "A", 0, ModifierOperation.Multiplicative)));
-            Assert.That(set.GetValue("A"), Is.Zero);
-            Ok(set.RemoveSource(Weapon));
-            Assert.That(set.GetValue("A"), Is.EqualTo(10.75));
-            Ok(set.AddModifier(Mod(Weapon, 1, "A", -1.5, ModifierOperation.AdditivePercent)));
-            Assert.That(set.GetValue("A"), Is.Zero);
-            Assert.That(set.GetValue("B"), Is.EqualTo(10));
-            Rejected(set.AddModifier(Mod(Effect, 1, "A", -1, ModifierOperation.Multiplicative)));
-        }
-
-        [Test]
-        public void T13_ReadOnlyResourceBoundaryAndSnapshotValidation()
-        {
-            using var set = Character();
-            IReadOnlyStatSet reader = set;
-            Ok(set.SetBase("BaseHP", 950));
-            var snapshot = reader.Snapshot("ATK", "MaxHP");
-            Assert.That(snapshot.Values["MaxHP"], Is.EqualTo(1000));
-            Assert.That(snapshot.Revision, Is.EqualTo(reader.Revision));
-            Assert.Throws<ArgumentException>(() => reader.Snapshot("ATK", "CurrentHP"));
-            Assert.That(reader.TryGetValue("CurrentHP", out _), Is.False);
-            Rejected(set.SetBase("CurrentHP", 800));
-            var seen = new List<StatChangeSet>();
-            using var sub = reader.Subscribe(seen.Add);
-            Ok(set.SetBase("BaseHP", 1150));
-            var hp = seen.Single().Changes.Single(c => c.StatId == "MaxHP");
-            Assert.That(hp.OldValue, Is.EqualTo(1000));
-            Assert.That(hp.NewValue, Is.EqualTo(1200));
-            CollectionAssert.AreEquivalent(new[] { "BaseHP", "MaxHP" }, seen[0].Changes.Select(c => c.StatId));
-        }
-
-        [Test]
-        public void T14_SnapshotsOutliveTheSetAndWorkersCannotAccessLiveState()
-        {
-            using var set = Character();
-            Equip(set);
-            var snapshot = set.Snapshot("ATK");
-            Ok(set.AddModifier(Mod(Effect, 1, "ATKPercentBonus", 0.20)));
-            Assert.That(set.GetValue("ATK"), Is.EqualTo(800).Within(Tolerance));
-            Task.Run(() =>
+            var initial = InitialValues();
+            initial[StatId.AGI] = 100;
+            initial[StatId.INT] = 200;
+            initial[StatId.WIL] = 100;
+            var first = StatSet.Create(initial, StatId.AGI, StatId.STR);
+            var second = StatSet.Create(initial, StatId.INT, StatId.WIL);
+            foreach (var stats in new[] { first, second })
             {
-                Assert.Throws<InvalidOperationException>(() => Character());
-                Assert.Throws<InvalidOperationException>(() => set.GetValue("ATK"));
-                Assert.Throws<InvalidOperationException>(() => set.Snapshot("ATK"));
-                Assert.Throws<InvalidOperationException>(() => set.SetBase("BaseATK", 5));
-                Assert.That(snapshot.Values["ATK"], Is.EqualTo(704).Within(Tolerance));
-            }).GetAwaiter().GetResult();
-            Assert.That(set.Revision, Is.EqualTo(2));
-            set.Dispose();
-            Assert.Throws<ObjectDisposedException>(() => set.GetValue("ATK"));
-            Assert.That(Task.Run(() => snapshot.Values["ATK"]).Result, Is.EqualTo(704).Within(Tolerance));
-            Assert.That(snapshot.Revision, Is.EqualTo(1));
+                HasValue(stats, StatId.MaxHP, 150);
+                HasValue(stats, StatId.PhysicalResistance, 9.090909091);
+                HasValue(stats, StatId.ArtsResistance, 16.666666667);
+                HasValue(stats, StatId.HealingReceivedBonus, 0.10);
+            }
+            HasValue(first, StatId.AttributeATKBonus, 0.52);
+            HasValue(second, StatId.AttributeATKBonus, 1.20);
+
+            Success(first.ReplaceSource(Buff, new StatModifier(StatId.AGI, Flat, 10)));
+            HasValue(first, StatId.PhysicalResistance, 9.909909910);
+            HasValue(first, StatId.AttributeATKBonus, 0.57);
+            Success(first.ReplaceSource(Buff, new StatModifier(StatId.STR, Flat, 10)));
+            HasValue(first, StatId.MaxHP, 200);
+            HasValue(first, StatId.AttributeATKBonus, 0.54);
+            Success(first.ReplaceSource(Buff, new StatModifier(StatId.WIL, Flat, 10)));
+            HasValue(first, StatId.HealingReceivedBonus, 0.11);
+            HasValue(first, StatId.AttributeATKBonus, 0.52);
+            Success(first.ReplaceSource(Buff, new StatModifier(StatId.HealingReceivedBonus, Flat, 0.02)));
+            HasValue(first, StatId.HealingReceivedBonus, 0.12);
+            HasValue(second, StatId.HealingReceivedBonus, 0.10);
+            Removed(first.RemoveSource(Buff), 1);
+            HasValue(first, StatId.HealingReceivedBonus, 0.10);
         }
 
         [Test]
-        public void T15_BreakdownExplainsUpstreamSourcesAndKeepsItsRevision()
+        public void AbilityFormulasReadWholePointsAfterModifiersAndKeepFractionalPanelValues()
         {
-            using var set = Character();
-            Equip(set);
-            var first = set.GetBreakdown("ATK");
-            Assert.That(first.Inputs["ATKPercentBonus"].Modifiers.Single().Key, Is.EqualTo(new ModifierKey(Weapon, 2)));
-            var expected = new[] { 300d, 390d, 440d, 704d };
-            for (int i = 0; i < expected.Length; i++)
-                Assert.That(first.Steps[i].Value, Is.EqualTo(expected[i]).Within(Tolerance));
-            Assert.That(first.Value, Is.EqualTo(set.GetValue("ATK")));
-            var key = Ok(set.AddModifier(Mod(Effect, 1, "ATK", 99, Override))).Key;
-            int calls = 0;
-            using var sub = set.Subscribe(_ => calls++);
-            var second = set.GetBreakdown("ATK");
-            Assert.That(second.WinningOverride, Is.EqualTo(key));
-            Assert.That(second.Value, Is.EqualTo(99));
-            Assert.That(first.Value, Is.EqualTo(704).Within(Tolerance));
-            Assert.That(first.Revision, Is.EqualTo(1));
-            Assert.That(second.Revision, Is.EqualTo(set.Revision));
-            Assert.That(calls, Is.Zero);
+            var initial = InitialValues();
+            initial[StatId.STR] = initial[StatId.INT] = initial[StatId.WIL] = 0;
+            var stats = StatSet.Create(initial, StatId.AGI, StatId.STR);
+            HasValue(stats, StatId.MaxHP, 100);
+            HasValue(stats, StatId.AttributeATKBonus, 0);
+            HasValue(stats, StatId.PhysicalResistance, 0);
+            HasValue(stats, StatId.ArtsResistance, 0);
+            HasValue(stats, StatId.HealingReceivedBonus, 0);
+
+            Success(stats.SetBase(StatId.AGI, 100));
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.STR, Flat, 10.9),
+                new StatModifier(StatId.INT, Flat, 200.9), new StatModifier(StatId.WIL, Flat, 100.9)));
+            HasValue(stats, StatId.STR, 10.9);
+            HasValue(stats, StatId.MaxHP, 150);
+            HasValue(stats, StatId.ArtsResistance, 16.666666667);
+            HasValue(stats, StatId.HealingReceivedBonus, 0.10);
+            var events = new List<IReadOnlyList<StatChange>>();
+            using var subscription = stats.Subscribe(events.Add);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.AGI, Flat, 0.9)));
+            Assert.That(events.Single().Single().StatId, Is.EqualTo(StatId.AGI));
+            HasValue(stats, StatId.AGI, 100.9);
+            HasValue(stats, StatId.PhysicalResistance, 9.090909091);
+            HasValue(stats, StatId.AttributeATKBonus, 0.52);
+
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.AGI, Flat, 1)));
+            HasValue(stats, StatId.PhysicalResistance, 9.173478656);
+            HasValue(stats, StatId.AttributeATKBonus, 0.525);
+        }
+
+        [Test]
+        public void OneEquipmentSourceUpdatesAbilityAndResistanceInOneNotification()
+        {
+            var initial = InitialValues();
+            initial[StatId.AGI] = 100;
+            var stats = StatSet.Create(initial, StatId.AGI, StatId.STR);
+            var panels = new List<(double resistance, double attackBonus)>();
+            using var subscription = stats.Subscribe(_ => panels.Add((
+                stats.GetValue(StatId.PhysicalResistance), stats.GetValue(StatId.AttributeATKBonus))));
+            Success(stats.ReplaceSource(Weapon, new StatModifier(StatId.PhysicalResistance, Flat, 5),
+                new StatModifier(StatId.AGI, Flat, 100)));
+            Removed(stats.RemoveSource(Weapon), 2);
+            Assert.That(panels.Count, Is.EqualTo(2));
+            Assert.That(panels[0].resistance, Is.EqualTo(21.666666667).Within(0.000001));
+            Assert.That(panels[0].attackBonus, Is.EqualTo(1.02).Within(0.000001));
+            Assert.That(panels[1].resistance, Is.EqualTo(9.090909091).Within(0.000001));
+            Assert.That(panels[1].attackBonus, Is.EqualTo(0.52).Within(0.000001));
+
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.PhysicalResistance, Flat, -20)));
+            HasValue(stats, StatId.PhysicalResistance, -10.909090909);
+        }
+
+        [Test]
+        public void PercentagesAndDerivedModifiersApplyAtTheirOwnStage()
+        {
+            var stats = Character();
+            Success(stats.SetBase(StatId.ATKPercentBonus, 0.3));
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.ATKPercentBonus, Flat, 0.2)));
+            HasValue(stats, StatId.ATKPercentBonus, 0.5);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.ATKPercentBonus, AdditivePercent, 0.2)));
+            HasValue(stats, StatId.ATKPercentBonus, 0.36);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, AdditivePercent, 0.2),
+                new StatModifier(StatId.DEF, AdditivePercent, 0.3)));
+            HasValue(stats, StatId.DEF, 150);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Multiplicative, 1.2),
+                new StatModifier(StatId.DEF, Multiplicative, 1.3)));
+            HasValue(stats, StatId.DEF, 156);
+            Success(stats.SetBase(StatId.WeaponATK, 200));
+            Success(stats.SetBase(StatId.FixedATK, 50));
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.AttributeATKBonus, Flat, 0.10)));
+            HasValue(stats, StatId.AttributeATKBonus, 0.70);
+            HasValue(stats, StatId.ATK, 748);
+            Success(stats.ReplaceSource(OtherBuff, new StatModifier(StatId.ATK, Flat, 10)));
+            HasValue(stats, StatId.ATK, 758);
+            Removed(stats.RemoveSource(OtherBuff), 1);
+            HasValue(stats, StatId.ATK, 748);
+            Removed(stats.RemoveSource(Buff), 1);
+            HasValue(stats, StatId.ATK, 704);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ZeroMultiplierAllowsExpiryAndCannotMaskOverflow(bool useEmptyReplacement)
+        {
+            var stats = Character();
+            StatWriteResult Expire() => useEmptyReplacement ? stats.ReplaceSource(Buff) : stats.RemoveSource(Buff);
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Multiplicative, 0)));
+            HasValue(stats, StatId.DEF, 0);
+            int notifications = 0;
+            using var subscription = stats.Subscribe(_ => notifications++);
+            var excessive = new StatModifier(StatId.DEF, Multiplicative, double.MaxValue);
+            void Reject(params StatModifier[] entries)
+            {
+                var failure = stats.ReplaceSource(OtherBuff, entries);
+                Assert.That(failure.Success, Is.False);
+                Assert.That(failure.RemovedEntryCount, Is.Zero);
+                Assert.That(failure.Error, Is.Not.Empty);
+            }
+
+            Reject(excessive);
+            Removed(stats.RemoveSource(OtherBuff), 0);
+            var large = new StatModifier(StatId.DEF, Multiplicative, 1e200);
+            Reject(large, large);
+            Assert.That(notifications, Is.Zero);
+            Removed(Expire(), 1);
+            HasValue(stats, StatId.DEF, 100);
+
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.DEF, Multiplicative, 0)));
+            Success(stats.ReplaceSource(OtherBuff, new StatModifier(StatId.DEF, Multiplicative, 2)));
+            Reject(excessive);
+            Assert.That(stats.SetBase(StatId.BaseDEF, double.MaxValue).Success, Is.False);
+            HasValue(stats, StatId.DEF, 0);
+            Assert.That(notifications, Is.EqualTo(2));
+            Removed(Expire(), 1);
+            HasValue(stats, StatId.DEF, 200);
+            Removed(Expire(), 0);
+            Assert.That(notifications, Is.EqualTo(3));
+
+            Success(stats.ReplaceSource(Buff, new StatModifier(StatId.STR, Multiplicative, 0)));
+            var upstream = stats.ReplaceSource(OtherBuff, new StatModifier(StatId.STR, Multiplicative, double.MaxValue / 20));
+            Assert.That(upstream.Success, Is.False);
+            StringAssert.Contains("MaxHP", upstream.Error);
+            HasValue(stats, StatId.MaxHP, 100);
+            Removed(Expire(), 1);
+            HasValue(stats, StatId.STR, 10);
+            HasValue(stats, StatId.MaxHP, 150);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void WoodenSwordUpdatesOneCharacterAndPublishesOncePerWrite(bool useEmptyReplacement)
+        {
+            var first = Character();
+            var second = Character();
+            Success(first.SetBase(StatId.WeaponATK, 200));
+            Success(first.SetBase(StatId.FixedATK, 50));
+            Success(first.ReplaceSource(Buff, new StatModifier(StatId.ATKPercentBonus, Flat, 0.30)));
+            var panels = new List<(double attack, double hp)>();
+            using var subscription = first.Subscribe(_ => panels.Add((first.GetValue(StatId.ATK), first.GetValue(StatId.MaxHP))));
+            var added = first.ReplaceSource(Weapon, new StatModifier(StatId.STR, Flat, 3),
+                new StatModifier(StatId.WeaponATK, Flat, 3));
+            Removed(added, 0);
+            Removed(useEmptyReplacement ? first.ReplaceSource(Weapon) : first.RemoveSource(Weapon), 2);
+            Assert.That(panels.Count, Is.EqualTo(2));
+            Assert.That(panels[0].attack, Is.EqualTo(710.24).Within(0.000001));
+            Assert.That(panels[0].hp, Is.EqualTo(165));
+            Assert.That(panels[1].attack, Is.EqualTo(704).Within(0.000001));
+            Assert.That(panels[1].hp, Is.EqualTo(150));
+            HasValue(second, StatId.ATK, 160);
+            HasValue(second, StatId.MaxHP, 150);
+        }
+
+        [Test]
+        public void HealthChangePublishesTheNewValueAndRepeatedReadsDoNotNotify()
+        {
+            var stats = Character();
+            IReadOnlyStatSet reader = stats;
+            var events = new List<IReadOnlyList<StatChange>>();
+            double healthInCallback = 0;
+            using (reader.Subscribe(changes =>
+            {
+                events.Add(changes);
+                healthInCallback = reader.GetValue(StatId.MaxHP);
+            }))
+            {
+                Success(stats.SetBase(StatId.STR, 12));
+                Assert.That(healthInCallback, Is.EqualTo(160));
+                var change = events.Single().Single(entry => entry.StatId == StatId.MaxHP);
+                Assert.That(change.OldValue, Is.EqualTo(150));
+                Assert.That(change.NewValue, Is.EqualTo(160));
+                for (int read = 0; read < 100; read++) HasValue(reader, StatId.MaxHP, 160);
+                Assert.That(events.Count, Is.EqualTo(1));
+            }
+
+            Success(stats.SetBase(StatId.STR, 10));
+            Assert.That(events.Count, Is.EqualTo(1));
         }
     }
 }

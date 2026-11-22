@@ -29,50 +29,34 @@ namespace Endfield.Stats
         public override string ToString() => $"{Domain}/{Instance}";
     }
 
-    public readonly struct ModifierKey : IComparable<ModifierKey>, IEquatable<ModifierKey>
+    public enum ModifierOperation
     {
-        public SourceID Source { get; }
-        public ulong Entry { get; }
-
-        public ModifierKey(SourceID source, ulong entry)
-        {
-            Source = source;
-            Entry = entry;
-        }
-
-        public int CompareTo(ModifierKey other)
-        {
-            int sourceOrder = Source.CompareTo(other.Source);
-            return sourceOrder != 0 ? sourceOrder : Entry.CompareTo(other.Entry);
-        }
-
-        public bool Equals(ModifierKey other) => Source.Equals(other.Source) && Entry == other.Entry;
-
-        public override bool Equals(object obj) => obj is ModifierKey other && Equals(other);
-
-        public override int GetHashCode() => HashCode.Combine(Source, Entry);
-
-        public override string ToString() => $"{Source}#{Entry}";
+        Flat = 1, AdditivePercent = 2, Multiplicative = 4, Override = 8
     }
 
     public readonly struct StatModifier
     {
-        public ModifierKey Key { get; }
-        public string StatId { get; }
+        public StatId StatId { get; }
         public ModifierOperation Operation { get; }
         public double Value { get; }
         public int Priority { get; }
-        public UnitType? Unit { get; }
 
-        public StatModifier(ModifierKey key, string statId, ModifierOperation operation, double value,
-            int priority = 0, UnitType? unit = null)
+        public StatModifier(StatId statId, ModifierOperation operation, double value, int priority = 0)
         {
-            Key = key;
             StatId = statId;
             Operation = operation;
             Value = value;
             Priority = priority;
-            Unit = unit;
+        }
+
+        internal void Validate()
+        {
+            StatCatalog.Get(StatId);
+            if (Operation != ModifierOperation.Flat && Operation != ModifierOperation.AdditivePercent &&
+                Operation != ModifierOperation.Multiplicative && Operation != ModifierOperation.Override)
+                throw new ArgumentException($"Invalid modifier operation: {Operation}");
+            if (!double.IsFinite(Value) || (Operation == ModifierOperation.Multiplicative && Value < 0))
+                throw new ArgumentException($"Invalid {Operation} value for {StatId}: {Value}");
         }
     }
 }
