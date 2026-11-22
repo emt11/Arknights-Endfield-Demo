@@ -1,8 +1,10 @@
 + [x] 第三人称控制器
 + [x] 简单的 FSM （Idle、Walk、Run）
 + [x] 对象池（代码、SO、示例配置与受控 Play Mode 检查完成，正式音频素材待配置）
-+ [x] 属性系统（攻击、生命、防御及 Modifier）
-+ [x] 简单的 UI（展示血量、角色属性；[详细手动实施方案](简单UI系统设计与实现方案.md)与效果图已完成，代码、预制体、Unity 编译与场景验收待手动实施）
++ [x] M1.1 Stats 阶段收尾。19 项属性、固定派生公式、来源词条与变化通知已交付。[技术设计与验收](./M1.1%20StatSystem%20详细技术设计.md#阶段验收)
++ [x] 角色属性面板。[CombatDemo](../Assets/Scenes/CombatDemo.unity) 展示 7 项图标摘要和 12 项文字详单，[StatsDemo](../Assets/Scenes/StatsDemo.unity) 演示木剑穿脱与角色切换
++ [ ] 血量 HUD 接入 Resources 的当前生命，与 Stats 的 MaxHP 联动
+
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 + [ ] 核心战斗系统
