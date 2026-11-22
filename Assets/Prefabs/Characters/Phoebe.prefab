@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4120391731186533799}
   - component: {fileID: 2610081924937764763}
+  - component: {fileID: 7291943004192136901}
   m_Layer: 0
   m_Name: Phoebe
   m_TagString: Untagged
@@ -46,6 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Endfield.Stats::Endfield.Stats.CharacterStats
   profile: {fileID: 11400000, guid: 8f91bc7e689c33e40a4fb91f69dccd20, type: 2}
+--- !u!114 &7291943004192136901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737129955480987453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc77cd3571e8133a75bb2e54f4bcea8, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Endfield.Resources::Endfield.Resources.CharacterResources
+  profile: {fileID: 11400000, guid: 9131497d86cfabfbfb728aaa33f76684, type: 2}
 --- !u!1001 &9193807057156696332
 PrefabInstance:
   m_ObjectHideFlags: 0
