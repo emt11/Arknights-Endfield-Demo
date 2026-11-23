@@ -1,4 +1,5 @@
 using System;
+using Endfield.Common;
 
 namespace Endfield.Stats
 {
@@ -55,7 +56,10 @@ namespace Endfield.Stats
             if (Operation != ModifierOperation.Flat && Operation != ModifierOperation.AdditivePercent &&
                 Operation != ModifierOperation.Multiplicative && Operation != ModifierOperation.Override)
                 throw new ArgumentException($"Invalid modifier operation: {Operation}");
-            if (!double.IsFinite(Value) || (Operation == ModifierOperation.Multiplicative && Value < 0))
+            bool validValue = Operation == ModifierOperation.Multiplicative
+                ? NumericValidation.IsFiniteInRange(Value, 0, double.MaxValue)
+                : double.IsFinite(Value);
+            if (!validValue)
                 throw new ArgumentException($"Invalid {Operation} value for {StatId}: {Value}");
         }
     }

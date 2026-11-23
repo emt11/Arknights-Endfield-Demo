@@ -1,7 +1,0 @@
-{
-    "name": "Endfield.Resources.EditModeTests",
-    "rootNamespace": "Endfield.Resources.Tests",
-    "references": ["Endfield.Resources", "Endfield.Stats", "UnityEngine.UI", "Unity.TextMeshPro"],
-    "includePlatforms": ["Editor"],
-    "optionalUnityReferences": ["TestAssemblies"]
-}

@@ -11,7 +11,7 @@ namespace Endfield.Resources
     {
         [SerializeField] private CharacterResourceProfile profile;
 
-        public ResourceContainer Container { get; private set; }
+        public CharacterResourceContainer Container { get; private set; }
 
         private void Awake()
         {

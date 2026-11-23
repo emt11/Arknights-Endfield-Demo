@@ -1,5 +1,0 @@
-{
-    "name": "Endfield.Resources",
-    "rootNamespace": "Endfield.Resources",
-    "references": ["Endfield.Stats"]
-}

@@ -4,11 +4,11 @@ namespace Endfield.Resources
 {
     public interface IReadOnlyCharacterResources
     {
-        ResourceSnapshot Snapshot { get; }
-        IDisposable Subscribe(Action<ResourceSnapshot, ResourceSnapshot> listener);
+        CharacterResourceSnapshot Snapshot { get; }
+        IDisposable Subscribe(Action<CharacterResourceSnapshot, CharacterResourceSnapshot> listener);
     }
 
-    public readonly struct ResourceSnapshot
+    public readonly struct CharacterResourceSnapshot
     {
         public double CurrentHP { get; }
         public double MaxHP { get; }
@@ -17,7 +17,7 @@ namespace Endfield.Resources
         public double Stagger { get; }
         public double StaggerThreshold { get; }
 
-        internal ResourceSnapshot(double currentHP, double maxHP, double ultimateEnergy, double maxUltimateEnergy,
+        internal CharacterResourceSnapshot(double currentHP, double maxHP, double ultimateEnergy, double maxUltimateEnergy,
             double stagger, double staggerThreshold)
         {
             CurrentHP = currentHP;
@@ -29,12 +29,12 @@ namespace Endfield.Resources
         }
     }
 
-    public readonly struct ResourceDamageResult
+    public readonly struct HealthLossResult
     {
         public double HPLost { get; }
         public double Overkill { get; }
 
-        internal ResourceDamageResult(double hpLost, double overkill)
+        internal HealthLossResult(double hpLost, double overkill)
         {
             HPLost = hpLost;
             Overkill = overkill;

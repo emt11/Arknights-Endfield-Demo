@@ -10,9 +10,9 @@ namespace Endfield.Resources
         [SerializeField] private double initialUltimateEnergy;
         [SerializeField] private double staggerThreshold;
 
-        public ResourceContainer CreateContainer(IReadOnlyStatSet stats)
+        public CharacterResourceContainer CreateContainer(IReadOnlyStatSet stats)
         {
-            return new ResourceContainer(stats, maxUltimateEnergy, initialUltimateEnergy, staggerThreshold);
+            return new CharacterResourceContainer(stats, maxUltimateEnergy, initialUltimateEnergy, staggerThreshold);
         }
     }
 }

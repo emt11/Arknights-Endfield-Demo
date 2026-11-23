@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: beedca52159048c6ac924f30c80cb4b1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Endfield.Stats::Endfield.Stats.CharacterStats
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Stats.CharacterStats
   profile: {fileID: 11400000, guid: 34097c35a83c1ef4f9e345d56297c4f4, type: 2}
 --- !u!114 &7291943004192136902
 MonoBehaviour:
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bc77cd3571e8133a75bb2e54f4bcea8, type: 3}
   m_Name:
-  m_EditorClassIdentifier: Endfield.Resources::Endfield.Resources.CharacterResources
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Resources.CharacterResources
   profile: {fileID: 11400000, guid: f8dbbd5fd5f8d455e489c83ead4a277a, type: 2}
 --- !u!1001 &9117429077600036810
 PrefabInstance:

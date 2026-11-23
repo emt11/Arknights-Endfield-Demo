@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfd75756f51f4a2c91b3cc7889cbad4d, type: 3}
   m_Name: Si
-  m_EditorClassIdentifier: Endfield.Stats::Endfield.Stats.CharacterStatProfile
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Stats.CharacterStatProfile
   displayName: 祀
   catalog: {fileID: 11400000, guid: af44c90f4e2d79542a07b3ef934be157, type: 2}
   main: 0

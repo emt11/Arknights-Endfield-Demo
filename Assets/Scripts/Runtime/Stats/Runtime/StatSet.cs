@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Endfield.Common;
 
 namespace Endfield.Stats
 {
@@ -11,9 +11,9 @@ namespace Endfield.Stats
         private readonly StatId secondary;
         private readonly StatCoefficients coefficients;
         private double[] bases; // 计算输入
-        private double[] panel; // 计算结果
+        private double[] panel; // 最终面板展示
         private SortedDictionary<SourceID, StatModifier[]> sources = new SortedDictionary<SourceID, StatModifier[]>();
-        private event Action<IReadOnlyList<StatChange>> changed;
+        private readonly ChangeNotifier<IReadOnlyList<StatChange>> changes = new();
         private bool notifying;
 
         public static StatSet Create(IReadOnlyDictionary<StatId, double> initialValues, StatId main, StatId secondary,
@@ -123,31 +123,26 @@ namespace Endfield.Stats
             bases = nextBases;
             sources = nextSources;
             panel = nextPanel;
-            if (changed != null) NotifyChanges(previousPanel);
+            if (changes.HasSubscribers) NotifyChanges(previousPanel);
             return default;
         }
 
         private void NotifyChanges(double[] previousPanel)
         {
-            var changes = new List<StatChange>();
+            var batch = new List<StatChange>();
             foreach (var definition in StatCatalog.Definitions)
             {
                 var id = definition.Id;
                 int index = (int)id;
                 if (previousPanel[index] != panel[index])
-                    changes.Add(new StatChange(id, previousPanel[index], panel[index]));
+                    batch.Add(new StatChange(id, previousPanel[index], panel[index]));
             }
-            if (changes.Count == 0) return;
+            if (batch.Count == 0) return;
 
-            var readOnlyChanges = changes.AsReadOnly();
             notifying = true;
             try
             {
-                foreach (Action<IReadOnlyList<StatChange>> listener in changed.GetInvocationList())
-                {
-                    try { listener(readOnlyChanges); }
-                    catch (Exception error) { Debug.LogException(error); }
-                }
+                changes.Publish(batch.AsReadOnly());
             }
             finally
             {
@@ -155,28 +150,6 @@ namespace Endfield.Stats
             }
         }
 
-        public IDisposable Subscribe(Action<IReadOnlyList<StatChange>> listener)
-        {
-            if (listener == null) throw new ArgumentNullException(nameof(listener));
-            changed += listener;
-            return new Subscription(() => changed -= listener);
-        }
-
-        // TODO 提取到公共模块中
-        private sealed class Subscription : IDisposable
-        {
-            private Action unsubscribe;
-
-            internal Subscription(Action unsubscribe)
-            {
-                this.unsubscribe = unsubscribe;
-            }
-
-            public void Dispose()
-            {
-                unsubscribe?.Invoke();
-                unsubscribe = null;
-            }
-        }
+        public IDisposable Subscribe(Action<IReadOnlyList<StatChange>> listener) => changes.Subscribe(listener);
     }
 }

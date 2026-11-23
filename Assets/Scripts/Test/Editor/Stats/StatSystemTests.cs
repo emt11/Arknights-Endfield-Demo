@@ -445,14 +445,18 @@ namespace Endfield.Stats.Tests
             IReadOnlyStatSet reader = stats;
             var events = new List<IReadOnlyList<StatChange>>();
             double healthInCallback = 0;
+            bool? callbackWriteSucceeded = null;
             using (reader.Subscribe(changes =>
             {
                 events.Add(changes);
                 healthInCallback = reader.GetValue(StatId.MaxHP);
+                callbackWriteSucceeded = stats.SetBase(StatId.BaseDEF, 200).Success;
             }))
             {
                 Success(stats.SetBase(StatId.STR, 12));
                 Assert.That(healthInCallback, Is.EqualTo(160));
+                Assert.That(callbackWriteSucceeded, Is.False);
+                HasValue(reader, StatId.BaseDEF, 100);
                 var change = events.Single().Single(entry => entry.StatId == StatId.MaxHP);
                 Assert.That(change.OldValue, Is.EqualTo(150));
                 Assert.That(change.NewValue, Is.EqualTo(160));

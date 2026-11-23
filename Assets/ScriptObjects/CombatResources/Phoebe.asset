@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 292eee3995c1c1c11e2326a5d473625f, type: 3}
   m_Name: Phoebe
-  m_EditorClassIdentifier: Endfield.Resources::Endfield.Resources.CharacterResourceProfile
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Resources.CharacterResourceProfile
   maxUltimateEnergy: 100
   initialUltimateEnergy: 90
   staggerThreshold: 100

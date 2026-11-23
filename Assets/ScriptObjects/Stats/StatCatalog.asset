@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41ab59f0984fdbb4d945d49bc82d45fe, type: 3}
   m_Name: StatCatalog
-  m_EditorClassIdentifier: Endfield.Stats::Endfield.Stats.StatCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Stats.StatCatalog
   mainBonus: 0.005
   secondaryBonus: 0.002
   healthPerStrength: 5

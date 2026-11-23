@@ -34,13 +34,13 @@ namespace Endfield.UI
             subscription = resources.Subscribe(OnResourcesChanged);
         }
 
-        private void OnResourcesChanged(ResourceSnapshot previous, ResourceSnapshot current)
+        private void OnResourcesChanged(CharacterResourceSnapshot previous, CharacterResourceSnapshot current)
         {
             if (previous.CurrentHP != current.CurrentHP || previous.MaxHP != current.MaxHP)
                 Display(current);
         }
 
-        private void Display(ResourceSnapshot snapshot)
+        private void Display(CharacterResourceSnapshot snapshot)
         {
             hpText.text = $"{snapshot.CurrentHP:0.##} / {snapshot.MaxHP:0.##}";
             fill.fillAmount = snapshot.MaxHP > 0 ? (float)(snapshot.CurrentHP / snapshot.MaxHP) : 0;

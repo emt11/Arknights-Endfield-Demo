@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Endfield.Stats;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Endfield.Resources.Tests
 {
@@ -17,7 +19,7 @@ namespace Endfield.Resources.Tests
         public void HealthTracksMaxHPWithoutHealingOnEquipmentChanges()
         {
             var stats = Character();
-            using var resources = new ResourceContainer(stats, 100, 90, 100);
+            using var resources = new CharacterResourceContainer(stats, 100, 90, 100);
             var observed = new List<(double, double, double, double)>();
             using var subscription = resources.Subscribe((previous, current) =>
                 observed.Add((previous.CurrentHP, previous.MaxHP, resources.Snapshot.CurrentHP, current.MaxHP)));
@@ -44,7 +46,7 @@ namespace Endfield.Resources.Tests
         [Test]
         public void DamageReportsHealthLostAndOverkill()
         {
-            using var resources = new ResourceContainer(Character(), 0, 0, 0);
+            using var resources = new CharacterResourceContainer(Character(), 0, 0, 0);
             resources.ApplyDamage(60);
             var hpChanges = new List<(double, double)>();
             using var subscription = resources.Subscribe((before, after) => hpChanges.Add((before.CurrentHP, after.CurrentHP)));
@@ -74,8 +76,12 @@ namespace Endfield.Resources.Tests
             Assert.That(balances, Is.EqualTo(new[] { (60d, 20d), (20d, 100d) }));
             Assert.That(view.Snapshot.MaxSP, Is.EqualTo(100));
 
-            using var phoebe = new ResourceContainer(Character(), 100, 90, 0);
-            using var si = new ResourceContainer(Character(), 80, 30, 0);
+            var largePool = new SkillPointPool(double.MaxValue, double.MaxValue / 2);
+            Assert.That(largePool.Restore(double.MaxValue), Is.EqualTo(double.MaxValue / 2));
+            Assert.That(largePool.Snapshot.CurrentSP, Is.EqualTo(double.MaxValue));
+
+            using var phoebe = new CharacterResourceContainer(Character(), 100, 90, 0);
+            using var si = new CharacterResourceContainer(Character(), 80, 30, 0);
             var energy = new List<double>();
             using var energySubscription = phoebe.Subscribe((_, current) => energy.Add(current.UltimateEnergy));
             Assert.That(phoebe.RestoreUltimate(25), Is.EqualTo(10));
@@ -87,10 +93,34 @@ namespace Endfield.Resources.Tests
         }
 
         [Test]
+        public void ThrowingListenerDoesNotInterruptSpendingOrOtherSubscriptions()
+        {
+            var team = new SkillPointPool(20, 20);
+            var calls = new List<string>();
+            Action<SkillPointSnapshot, SkillPointSnapshot> record = (_, current) => calls.Add($"余额 {current.CurrentSP}");
+            Action<SkillPointSnapshot, SkillPointSnapshot> group = (_, _) => throw new InvalidOperationException("测试监听器异常");
+            group += (before, after) => calls.Add($"扣费 {before.CurrentSP - after.CurrentSP}");
+
+            using var first = team.Subscribe(record);
+            using var middle = team.Subscribe(group);
+            using var last = team.Subscribe(record);
+            first.Dispose();
+            first.Dispose();
+
+            LogAssert.Expect(LogType.Exception, "InvalidOperationException: 测试监听器异常");
+            Assert.That(team.TryConsume(3), Is.True);
+            Assert.That(calls, Is.EqualTo(new[] { "扣费 3", "余额 17" }));
+
+            middle.Dispose();
+            Assert.That(team.Restore(1), Is.EqualTo(1));
+            Assert.That(calls, Is.EqualTo(new[] { "扣费 3", "余额 17", "余额 18" }));
+        }
+
+        [Test]
         public void StaggerOnlyTriggersWhenFillingAndInvalidPointsPreserveState()
         {
             var stats = Character();
-            using var resources = new ResourceContainer(stats, 100, 0, 100);
+            using var resources = new CharacterResourceContainer(stats, 100, 0, 100);
             var changes = new List<double>();
             using var subscription = resources.Subscribe((_, next) => changes.Add(next.Stagger));
             Assert.That(resources.AddStagger(80), Is.False);
@@ -104,10 +134,12 @@ namespace Endfield.Resources.Tests
             Assert.That(resources.Snapshot.CurrentHP, Is.EqualTo(150));
             Assert.That(changes, Is.EqualTo(new[] { 80d, 100d, 0d, 100d }));
 
-            using var disabled = new ResourceContainer(stats, 0, 0, 0);
+            using var disabled = new CharacterResourceContainer(stats, 0, 0, 0);
             Assert.That(disabled.AddStagger(100), Is.False);
             Assert.That(disabled.Snapshot.Stagger, Is.Zero);
-            Assert.Throws<ArgumentOutOfRangeException>(() => new ResourceContainer(stats, 80, 81, 0));
+            var error = Assert.Throws<ArgumentOutOfRangeException>(() => new CharacterResourceContainer(stats, 80, 81, 0));
+            Assert.That(error.ParamName, Is.EqualTo("initialUltimateEnergy"));
+            Assert.That(error.ActualValue, Is.EqualTo(81d));
             Assert.Throws<ArgumentOutOfRangeException>(() => new SkillPointPool(double.NaN, 0));
         }
     }
