@@ -1,5 +1,6 @@
 using System;
 using Endfield.Common;
+using UnityEngine;
 
 namespace Endfield.Stats
 {
@@ -35,19 +36,25 @@ namespace Endfield.Stats
         Flat = 1, AdditivePercent = 2, Multiplicative = 4, Override = 8
     }
 
-    public readonly struct StatModifier
+    [Serializable]
+    public struct StatModifier
     {
-        public StatId StatId { get; }
-        public ModifierOperation Operation { get; }
-        public double Value { get; }
-        public int Priority { get; }
+        [SerializeField] private StatId statId;
+        [SerializeField] private ModifierOperation operation;
+        [SerializeField] private double value;
+        [SerializeField] private int priority;
+
+        public StatId StatId => statId;
+        public ModifierOperation Operation => operation;
+        public double Value => value;
+        public int Priority => priority;
 
         public StatModifier(StatId statId, ModifierOperation operation, double value, int priority = 0)
         {
-            StatId = statId;
-            Operation = operation;
-            Value = value;
-            Priority = priority;
+            this.statId = statId;
+            this.operation = operation;
+            this.value = value;
+            this.priority = priority;
         }
 
         internal void Validate()

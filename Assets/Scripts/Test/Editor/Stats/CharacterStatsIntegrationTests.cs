@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Linq;
+using Endfield.CharacterBuild;
+using Endfield.UI;
 using NUnit.Framework;
 using TMPro;
 using UnityEditor;
@@ -73,7 +75,7 @@ namespace Endfield.Stats.Tests
         {
             yield return new EnterPlayMode();
             const string path = "Assets/Scenes/CombatDemo.unity";
-            yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Additive));
+            yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Single));
             var scene = SceneManager.GetSceneByPath(path);
             var ui = scene.GetRootGameObjects().Single(obj => obj.name == "GameUI").transform;
             var panel = ui.Find("CharacterPanelRoot/Panel");
@@ -144,7 +146,6 @@ namespace Endfield.Stats.Tests
             Assert.That(panel.gameObject.activeInHierarchy, Is.True);
             Assert.That(hp.text, Is.EqualTo(stats.GetValue(StatId.MaxHP).ToString("0.##")));
 
-            yield return SceneManager.UnloadSceneAsync(scene);
             yield return new ExitPlayMode();
         }
 
@@ -152,21 +153,39 @@ namespace Endfield.Stats.Tests
         public IEnumerator StatsPageReadsFinalValuesAcrossEquipSwitchAndReopen()
         {
             yield return new EnterPlayMode();
-            const string path = "Assets/Scenes/StatsDemo.unity";
-            yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Additive));
-            var scene = SceneManager.GetSceneByPath(path);
-            var ui = scene.GetRootGameObjects().Single(obj => obj.name == "Stats UI");
-            var buttons = ui.GetComponentsInChildren<Button>(true).ToDictionary(button => button.name);
-            var actors = scene.GetRootGameObjects().Single(obj => obj.name == "Characters").transform;
-            var character = actors.Find("Phoebe").GetComponent<CharacterStats>();
-            var other = actors.Find("Si").GetComponent<CharacterStats>();
+            const string path = "Assets/Scenes/CombatDemo.unity";
+            yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Single));
+            var ui = GameObject.Find("GameUI").transform;
+            var controller = ui.GetComponent<CharacterStatsPanel>();
+            var panel = ui.Find("CharacterPanelRoot/Panel");
+            var groups = panel.Find("Viewport/Groups");
+            var open = ui.Find("Open").GetComponent<Button>();
+            var close = panel.Find("CloseBTN").GetComponent<Button>();
+            var character = GameObject.Find("Characters/PlayerRoot").GetComponent<CharacterStats>();
+            var siPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Characters/Si.prefab");
+            var other = Object.Instantiate(siPrefab, character.transform.parent).GetComponent<CharacterStats>();
 
-            Assert.That(buttons["Open"].GetComponentInChildren<TMP_Text>().text, Is.EqualTo("角色属性"));
-            buttons["Wooden Sword"].onClick.Invoke();
-            Assert.That(buttons["Wooden Sword"].GetComponentInChildren<TMP_Text>().text, Is.EqualTo(character.DisplayName + " · 取下木剑"));
-            buttons["Open"].onClick.Invoke();
-            var groups = ui.transform.Find("Panel/Viewport/Groups");
-            Assert.That(groups.childCount, Is.EqualTo(StatCatalog.Groups.Count(group => StatCatalog.GetByGroup(group).Any())));
+            // 场景默认只展示玩家，本用例临时配置第二名角色和切换按钮
+            close.onClick.Invoke();
+            controller.enabled = false;
+            open.onClick.Invoke();
+            Assert.That(panel.gameObject.activeInHierarchy, Is.False, "禁用属性页后，打开按钮应停止响应");
+            var switchButton = new GameObject("切换角色", typeof(RectTransform), typeof(Button)).GetComponent<Button>();
+            switchButton.transform.SetParent(ui, false);
+            using (var config = new SerializedObject(controller))
+            {
+                var characters = config.FindProperty("characters");
+                characters.arraySize = 2;
+                characters.GetArrayElementAtIndex(1).objectReferenceValue = other;
+                config.FindProperty("switchButton").objectReferenceValue = switchButton;
+                config.ApplyModifiedPropertiesWithoutUndo();
+            }
+
+            var build = character.GetComponent<CharacterBuildComponent>().State;
+            var sword = AssetDatabase.LoadAssetAtPath<BuildModifierProfile>("Assets/ScriptObjects/CharacterBuild/WoodenSword.asset");
+            Assert.That(build.TryEquip(BuildSlot.Weapon, sword, out var error), Is.True, error);
+            controller.enabled = true;
+            open.onClick.Invoke();
             TMP_Text Row(string name) => groups.Find(name).GetComponent<TMP_Text>();
             string Display(TMP_Text row)
             {
@@ -175,17 +194,16 @@ namespace Endfield.Stats.Tests
                 return row.GetParsedText();
             }
 
-            var nameLabel = ui.transform.Find("Panel/Character").GetComponent<TMP_Text>();
+            var nameLabel = panel.Find("CharacterName").GetComponent<TMP_Text>();
             Assert.That(Display(nameLabel), Is.EqualTo(character.DisplayName));
-            Assert.That(Display(Row("PrimaryAttributes/Group Name")), Is.EqualTo("基础属性"));
-            var strength = Row("PrimaryAttributes/STR");
+            var strength = panel.Find("PrimaryAttributes/STR/Value").GetComponent<TMP_Text>();
             var attack = Row("BaseCombat/WeaponATK");
-            var maxHP = Row("DerivedCombat/MaxHP");
+            var maxHP = panel.Find("BaseStats/MaxHPUnit/Value").GetComponent<TMP_Text>();
             var crit = Row("DerivedCombat/CritRate");
             var critDamage = Row("DerivedCombat/CritDamage");
-            Assert.That(Display(strength), Is.EqualTo("力量13"));
+            Assert.That(Display(strength), Is.EqualTo("13"));
             Assert.That(Display(attack), Is.EqualTo("武器攻击203"));
-            Assert.That(Display(maxHP), Is.EqualTo("最大生命165"));
+            Assert.That(Display(maxHP), Is.EqualTo("165"));
             string expectedCrit = "暴击率" + character.Stats.GetValue(StatId.CritRate).ToString("0.##%");
             Assert.That(Display(crit), Is.EqualTo(expectedCrit));
             Assert.That(Display(critDamage), Is.EqualTo("暴击伤害150%"));
@@ -203,12 +221,12 @@ namespace Endfield.Stats.Tests
             Assert.That(Display(healing), Is.EqualTo("受治疗效率5%"));
             Assert.That(character.Stats.SetBase(StatId.WIL, 60).Success, Is.True);
             Assert.That(Display(healing), Is.EqualTo("受治疗效率6%"));
-            buttons["Wooden Sword"].onClick.Invoke();
-            Assert.That(Display(strength), Is.EqualTo("力量10"));
+            Assert.That(build.TryEquip(BuildSlot.Weapon, null, out error), Is.True, error);
+            Assert.That(Display(strength), Is.EqualTo("10"));
             Assert.That(Display(attack), Is.EqualTo("武器攻击200"));
-            Assert.That(Display(maxHP), Is.EqualTo("最大生命150"));
+            Assert.That(Display(maxHP), Is.EqualTo("150"));
 
-            buttons["Switch"].onClick.Invoke();
+            switchButton.onClick.Invoke();
             Assert.That(Display(nameLabel), Is.EqualTo(other.DisplayName));
             Assert.That(nameLabel.font.HasCharacters(other.DisplayName), Is.True);
             Assert.That(Display(critDamage), Is.EqualTo("暴击伤害150%"));
@@ -216,18 +234,23 @@ namespace Endfield.Stats.Tests
             Assert.That(Display(arts), Is.EqualTo("法术抗性0.99"));
             Assert.That(Display(healing), Is.EqualTo("受治疗效率1.2%"));
             string otherDisplay = Display(strength);
-            Assert.That(otherDisplay, Is.EqualTo("力量" + other.Stats.GetValue(StatId.STR)));
+            Assert.That(otherDisplay, Is.EqualTo(other.Stats.GetValue(StatId.STR).ToString("0.##")));
             Assert.That(character.Stats.SetBase(StatId.STR, 12).Success, Is.True);
             Assert.That(Display(strength), Is.EqualTo(otherDisplay));
-            buttons["Close"].onClick.Invoke();
+            controller.enabled = false;
+            close.onClick.Invoke();
+            switchButton.onClick.Invoke();
+            Assert.That(panel.gameObject.activeInHierarchy, Is.True);
+            Assert.That(Display(nameLabel), Is.EqualTo(other.DisplayName));
+            controller.enabled = true;
+            close.onClick.Invoke();
             Assert.That(groups.gameObject.activeInHierarchy, Is.False);
             string closed = strength.text;
             Assert.That(other.Stats.SetBase(StatId.STR, 25).Success, Is.True);
             Assert.That(strength.text, Is.EqualTo(closed));
-            buttons["Open"].onClick.Invoke();
-            Assert.That(Display(strength), Is.EqualTo("力量25"));
+            open.onClick.Invoke();
+            Assert.That(Display(strength), Is.EqualTo("25"));
 
-            yield return SceneManager.UnloadSceneAsync(scene);
             yield return new ExitPlayMode();
         }
     }

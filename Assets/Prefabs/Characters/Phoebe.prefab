@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 4120391731186533799}
   - component: {fileID: 2610081924937764763}
   - component: {fileID: 7291943004192136901}
+  - component: {fileID: 5088176528136574011}
+  - component: {fileID: 6073148259204412001}
+  - component: {fileID: 6073148259204412002}
   m_Layer: 0
   m_Name: Phoebe
   m_TagString: Untagged
@@ -60,6 +63,44 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Resources.CharacterResources
   profile: {fileID: 11400000, guid: 9131497d86cfabfbfb728aaa33f76684, type: 2}
+--- !u!114 &5088176528136574011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737129955480987453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c372d6cacf00450ea3d255954288043e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.CharacterBuild.CharacterBuildComponent
+  profile: {fileID: 11400000, guid: e251ce70baaf43afb59af2384c15f9bd, type: 2}
+--- !u!114 &6073148259204412001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737129955480987453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c1b44488083524ea9f9127478d61ad, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Effects.CharacterEffects
+--- !u!114 &6073148259204412002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737129955480987453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de30c0b35943f941b8e686eacf6c71c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Status.CharacterStatus
+  rules: {fileID: 11400000, guid: 941c19111fb01e8468a5fb5ddff45054, type: 2}
 --- !u!1001 &9193807057156696332
 PrefabInstance:
   m_ObjectHideFlags: 0

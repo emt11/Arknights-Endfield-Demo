@@ -56,6 +56,7 @@ namespace Endfield.Timing
             return found;
         }
 
+        // 给指定角色请求一段顿帧
         public bool TryRequestHitStop(ActorId actor, double seconds)
         {
             NumericValidation.RequireFiniteInRange(seconds, 0, double.MaxValue, nameof(seconds));
@@ -66,6 +67,7 @@ namespace Endfield.Timing
 
         public IDisposable SubscribeBattleStep(Action<TimeStep> listener) => battleSteps.Subscribe(listener);
 
+        // 推进战斗时钟
         public void Advance(double realDelta)
         {
             NumericValidation.RequireFiniteInRange(realDelta, 0, double.MaxValue, nameof(realDelta));

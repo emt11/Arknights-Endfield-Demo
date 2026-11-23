@@ -62,9 +62,6 @@ namespace Endfield.UI
                 }
             }
 
-            openButton.onClick.AddListener(Open);
-            closeButton.onClick.AddListener(Close);
-            if (characters.Length > 1) switchButton.onClick.AddListener(NextCharacter);
             openButton.gameObject.SetActive(!panel.activeSelf);
         }
 
@@ -118,6 +115,10 @@ namespace Endfield.UI
 
         private void OnEnable()
         {
+            openButton.onClick.AddListener(Open);
+            closeButton.onClick.AddListener(Close);
+            if (characters.Length > 1) switchButton.onClick.AddListener(NextCharacter);
+
             if (panel.activeSelf) BindCharacter();
             if (toggleAction)
             {
@@ -128,6 +129,10 @@ namespace Endfield.UI
 
         private void OnDisable()
         {
+            openButton.onClick.RemoveListener(Open);
+            closeButton.onClick.RemoveListener(Close);
+            if (characters.Length > 1) switchButton.onClick.RemoveListener(NextCharacter);
+
             if (toggleAction)
             {
                 toggleAction.action.performed -= TogglePanel;
