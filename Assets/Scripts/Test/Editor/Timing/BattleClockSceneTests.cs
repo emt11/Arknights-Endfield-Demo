@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Endfield.Actors;
 using Endfield.CombatContracts;
 using Endfield.Effects;
 using Endfield.Resources;
@@ -39,63 +40,56 @@ namespace Endfield.Timing.Tests
             var driver = GameObject.Find("Combat Session").GetComponent<BattleTimeDriver>();
             var clock = driver.Clock;
             float timeScale = Time.timeScale;
-            var actor = new ActorId(1);
-            clock.RegisterActor(actor);
+            yield return null;
+            var player = GameObject.Find("Characters/PlayerRoot");
+            var actor = player.GetComponent<Combatant>().Runtime.Id;
+            var si = GameObject.Find("Characters/SiRoot");
             double sampled = 0;
             using var sample = clock.SubscribeBattleStep(step => sampled = Time.unscaledDeltaTime);
-            var si = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Characters/Si.prefab"));
-            try
-            {
-                yield return null;
-                Assert.That(sampled, Is.Positive);
-                Assert.That(clock.Real.Delta, Is.EqualTo(sampled));
-                clock.SetPaused(true);
-                yield return null;
-                Assert.That(clock.Real.Delta, Is.Positive);
-                Assert.That(clock.Battle.Delta, Is.Zero);
-                clock.TryGetActionTime(actor, out var paused);
-                Assert.That(paused.Delta, Is.Zero);
-                Assert.That(Time.timeScale, Is.EqualTo(timeScale));
-                clock.SetPaused(false);
-                yield return null;
-                Assert.That(clock.Battle.Delta, Is.Positive);
+            yield return null;
+            Assert.That(sampled, Is.Positive);
+            Assert.That(clock.Real.Delta, Is.EqualTo(sampled));
+            clock.SetPaused(true);
+            yield return null;
+            Assert.That(clock.Real.Delta, Is.Positive);
+            Assert.That(clock.Battle.Delta, Is.Zero);
+            clock.TryGetActionTime(actor, out var paused);
+            Assert.That(paused.Delta, Is.Zero);
+            Assert.That(Time.timeScale, Is.EqualTo(timeScale));
+            clock.SetPaused(false);
+            yield return null;
+            Assert.That(clock.Battle.Delta, Is.Positive);
 
-                // 保留场景订阅关系，用确定的步长验收角色切换、周期回能与冻结
-                driver.enabled = false;
-                var effects = si.GetComponent<CharacterEffects>().Controller;
-                var stats = si.GetComponent<CharacterStats>().Stats;
-                var resources = si.GetComponent<CharacterResources>().Container;
-                var player = GameObject.Find("Characters/PlayerRoot");
-                var status = player.GetComponent<CharacterStatus>().Controller;
-                status.ApplyAttachment(AttachmentElement.Heat, 1);
-                status.ApplyAttachment(AttachmentElement.Cryo, 1);
-                var observed = new List<double>();
-                using var resourceChanges = resources.Subscribe((_, next) => observed.Add(next.UltimateEnergy));
-                int endings = 0;
-                using var ended = effects.SubscribeEnded(_ => endings++);
-                var regen = AssetDatabase.LoadAssetAtPath<EffectProfile>("Assets/ScriptObjects/Effects/UltimateRegen.asset");
-                Assert.That(effects.TryApply(regen, stats, out var handle, out var error), Is.True, error);
-                Assert.That(resources.Snapshot.UltimateEnergy, Is.EqualTo(30));
-                si.SetActive(false);
-                clock.Advance(.5);
-                clock.SetPaused(true);
-                clock.Advance(8);
-                Assert.That(status.IsActive(StatusType.Frozen), Is.True);
-                Assert.That(resources.Snapshot.UltimateEnergy, Is.EqualTo(30));
-                clock.SetPaused(false);
-                clock.SetBattleRate(.5);
-                clock.Advance(5);
-                si.SetActive(true);
-                clock.Advance(2);
-                Assert.That(observed, Is.EqualTo(new[] { 35d, 40d, 45d }));
-                Assert.That(status.IsActive(StatusType.Frozen), Is.False);
-                Assert.That(effects.IsActive(handle), Is.False);
-                Assert.That(endings, Is.EqualTo(1));
-            }
-            finally
-            {
-                Object.Destroy(si);
-            }
+            // 保留场景订阅关系，用确定的步长验收角色切换、周期回能与冻结
+            driver.enabled = false;
+            var effects = si.GetComponent<CharacterEffects>().Controller;
+            var stats = si.GetComponent<CharacterStats>().Stats;
+            var resources = si.GetComponent<CharacterResources>().Container;
+            var status = player.GetComponent<CharacterStatus>().Controller;
+            status.ApplyAttachment(AttachmentElement.Heat, 1);
+            status.ApplyAttachment(AttachmentElement.Cryo, 1);
+            var observed = new List<double>();
+            using var resourceChanges = resources.Subscribe((_, next) => observed.Add(next.UltimateEnergy));
+            int endings = 0;
+            using var ended = effects.SubscribeEnded(_ => endings++);
+            var regen = AssetDatabase.LoadAssetAtPath<EffectProfile>("Assets/ScriptObjects/Effects/UltimateRegen.asset");
+            Assert.That(effects.TryApply(regen, stats, out var handle, out var error), Is.True, error);
+            Assert.That(resources.Snapshot.UltimateEnergy, Is.EqualTo(30));
+            si.SetActive(false);
+            clock.Advance(.5);
+            clock.SetPaused(true);
+            clock.Advance(8);
+            Assert.That(status.IsActive(StatusType.Frozen), Is.True);
+            Assert.That(resources.Snapshot.UltimateEnergy, Is.EqualTo(30));
+            clock.SetPaused(false);
+            clock.SetBattleRate(.5);
+            clock.Advance(5);
+            si.SetActive(true);
+            clock.Advance(2);
+            Assert.That(observed, Is.EqualTo(new[] { 35d, 40d, 45d }));
+            Assert.That(status.IsActive(StatusType.Frozen), Is.False);
+            Assert.That(effects.IsActive(handle), Is.False);
+            Assert.That(endings, Is.EqualTo(1));
         }
 
         [UnityTest]

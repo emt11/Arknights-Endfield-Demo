@@ -14,13 +14,10 @@ namespace Endfield.Stats
             public double value;
         }
 
-        [SerializeField] private string displayName;
         [SerializeField] private StatCatalog catalog;
         [SerializeField] private StatId main = StatId.STR;
         [SerializeField] private StatId secondary = StatId.AGI;
         [SerializeField] private InitialStat[] initialValues = Array.Empty<InitialStat>();
-
-        public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
 
         public StatSet CreateSet()
         {

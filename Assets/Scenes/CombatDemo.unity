@@ -573,6 +573,7 @@ GameObject:
   - component: {fileID: 205638451}
   - component: {fileID: 205638452}
   - component: {fileID: 205638453}
+  - component: {fileID: 205638454}
   m_Layer: 0
   m_Name: Combat Session
   m_TagString: Untagged
@@ -621,6 +622,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56edfd31d0b71f741a5c59ddd81effbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Timing.BattleTimeDriver
+--- !u!114 &205638454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205638449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec3122499e5b164ab9bb91aa690a3cf, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.SceneActors
+  initialActors:
+  - {fileID: 4622293956043792227}
+  - {fileID: 1767170183}
 --- !u!1 &208022713
 GameObject:
   m_ObjectHideFlags: 0
@@ -3962,6 +3978,7 @@ Transform:
   - {fileID: 1983960956}
   - {fileID: 528759014}
   - {fileID: 543450651722106525}
+  - {fileID: 1767170184}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947142940
@@ -5639,6 +5656,79 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1001 &1767170182
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 939595563}
+    m_Modifications:
+    - target: {fileID: 2264339005956099051, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_Name
+      value: SiRoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+--- !u!114 &1767170183 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8570939059129779630, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+  m_PrefabInstance: {fileID: 1767170182}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ebcb5b0f0f2ee4198b3383d069c896, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.Combatant
+--- !u!4 &1767170184 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+  m_PrefabInstance: {fileID: 1767170182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1769490182
 GameObject:
   m_ObjectHideFlags: 0
@@ -19804,6 +19894,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc77cd3571e8133a75bb2e54f4bcea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Resources.CharacterResources
+--- !u!114 &4622293956043792227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3889761283920742499, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+  m_PrefabInstance: {fileID: 4622293956043792224}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270261854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ebcb5b0f0f2ee4198b3383d069c896, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.Combatant
 --- !u!1 &4622636727756690321
 GameObject:
   m_ObjectHideFlags: 0

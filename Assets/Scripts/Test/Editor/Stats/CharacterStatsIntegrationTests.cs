@@ -36,8 +36,6 @@ namespace Endfield.Stats.Tests
                 var before = copy.CreateSet();
                 double otherHP = other.CreateSet().GetValue(StatId.MaxHP);
                 using var settings = new SerializedObject(copy);
-                var displayName = settings.FindProperty("displayName");
-                displayName.stringValue = "测试干员";
                 var values = settings.FindProperty("initialValues");
                 var strength = Enumerable.Range(0, values.arraySize).Select(values.GetArrayElementAtIndex)
                     .Single(entry => entry.FindPropertyRelative("id").intValue == (int)StatId.STR);
@@ -52,10 +50,6 @@ namespace Endfield.Stats.Tests
                 }
                 critDamage.FindPropertyRelative("value").doubleValue = 1.75;
                 settings.ApplyModifiedPropertiesWithoutUndo();
-                Assert.That(copy.DisplayName, Is.EqualTo("测试干员"));
-                displayName.stringValue = "";
-                settings.ApplyModifiedPropertiesWithoutUndo();
-                Assert.That(copy.DisplayName, Is.EqualTo(copy.name));
                 var updated = copy.CreateSet();
                 Assert.That(updated.GetValue(StatId.MaxHP), Is.EqualTo(160));
                 Assert.That(updated.GetValue(StatId.CritDamage), Is.EqualTo(1.75));
@@ -93,7 +87,7 @@ namespace Endfield.Stats.Tests
             Canvas.ForceUpdateCanvases();
             var playerName = panel.Find("CharacterName").GetComponent<TMP_Text>();
             playerName.ForceMeshUpdate();
-            Assert.That(playerName.GetParsedText(), Is.EqualTo(player.GetComponent<CharacterStats>().DisplayName));
+            Assert.That(playerName.GetParsedText(), Is.EqualTo("菲比"));
             Assert.That(playerName.font.HasCharacters(playerName.text), Is.True);
             foreach (var (id, cellPath) in summary)
             {
@@ -162,8 +156,7 @@ namespace Endfield.Stats.Tests
             var open = ui.Find("Open").GetComponent<Button>();
             var close = panel.Find("CloseBTN").GetComponent<Button>();
             var character = GameObject.Find("Characters/PlayerRoot").GetComponent<CharacterStats>();
-            var siPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Characters/Si.prefab");
-            var other = Object.Instantiate(siPrefab, character.transform.parent).GetComponent<CharacterStats>();
+            var other = GameObject.Find("Characters/SiRoot").GetComponent<CharacterStats>();
 
             // 场景默认只展示玩家，本用例临时配置第二名角色和切换按钮
             close.onClick.Invoke();
@@ -195,7 +188,7 @@ namespace Endfield.Stats.Tests
             }
 
             var nameLabel = panel.Find("CharacterName").GetComponent<TMP_Text>();
-            Assert.That(Display(nameLabel), Is.EqualTo(character.DisplayName));
+            Assert.That(Display(nameLabel), Is.EqualTo("菲比"));
             var strength = panel.Find("PrimaryAttributes/STR/Value").GetComponent<TMP_Text>();
             var attack = Row("BaseCombat/WeaponATK");
             var maxHP = panel.Find("BaseStats/MaxHPUnit/Value").GetComponent<TMP_Text>();
@@ -227,8 +220,8 @@ namespace Endfield.Stats.Tests
             Assert.That(Display(maxHP), Is.EqualTo("150"));
 
             switchButton.onClick.Invoke();
-            Assert.That(Display(nameLabel), Is.EqualTo(other.DisplayName));
-            Assert.That(nameLabel.font.HasCharacters(other.DisplayName), Is.True);
+            Assert.That(Display(nameLabel), Is.EqualTo("祀"));
+            Assert.That(nameLabel.font.HasCharacters("祀"), Is.True);
             Assert.That(Display(critDamage), Is.EqualTo("暴击伤害150%"));
             Assert.That(Display(physical), Is.EqualTo("物理抗性1.96"));
             Assert.That(Display(arts), Is.EqualTo("法术抗性0.99"));
@@ -241,7 +234,7 @@ namespace Endfield.Stats.Tests
             close.onClick.Invoke();
             switchButton.onClick.Invoke();
             Assert.That(panel.gameObject.activeInHierarchy, Is.True);
-            Assert.That(Display(nameLabel), Is.EqualTo(other.DisplayName));
+            Assert.That(Display(nameLabel), Is.EqualTo("祀"));
             controller.enabled = true;
             close.onClick.Invoke();
             Assert.That(groups.gameObject.activeInHierarchy, Is.False);

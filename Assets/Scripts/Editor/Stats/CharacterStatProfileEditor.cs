@@ -20,7 +20,6 @@ public sealed class CharacterStatProfileEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("displayName"), new GUIContent("角色显示名", "用于角色属性面板和装备按钮，留空时显示配置资产名"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("catalog"), new GUIContent("属性目录"));
         DrawPrimary("main", "主属性");
         DrawPrimary("secondary", "副属性");

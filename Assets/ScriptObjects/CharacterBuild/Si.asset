@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Si
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.CharacterBuild.CharacterBuildProfile
   initialLevel: 1
-  maxLevel: 3
+  maxLevel: 90
   growthPerLevel:
   - statId: 0
     perLevel: 2

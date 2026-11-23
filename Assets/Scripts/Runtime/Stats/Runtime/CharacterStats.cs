@@ -10,7 +10,6 @@ namespace Endfield.Stats
         [SerializeField] private CharacterStatProfile profile;
 
         public StatSet Stats { get; private set; }
-        public string DisplayName => profile.DisplayName;
 
         private void Awake()
         {

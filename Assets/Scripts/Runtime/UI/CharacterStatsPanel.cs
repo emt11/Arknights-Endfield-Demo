@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Endfield.Actors;
 using Endfield.Stats;
 using TMPro;
 using UnityEngine;
@@ -90,7 +91,7 @@ namespace Endfield.UI
         {
             subscription?.Dispose();
             var character = characters[selected];
-            characterName.text = character.DisplayName;
+            characterName.text = character.GetComponent<Combatant>().DisplayName;
             var stats = character.Stats;
             foreach (var item in summaryStats)
                 if (item.mainAttributeHighlight) item.mainAttributeHighlight.SetActive(item.id == stats.MainAttribute);

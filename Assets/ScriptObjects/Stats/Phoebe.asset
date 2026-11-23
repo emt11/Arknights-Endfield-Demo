@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd75756f51f4a2c91b3cc7889cbad4d, type: 3}
   m_Name: Phoebe
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Stats.CharacterStatProfile
-  displayName: 菲比
   catalog: {fileID: 11400000, guid: af44c90f4e2d79542a07b3ef934be157, type: 2}
   main: 2
   secondary: 3

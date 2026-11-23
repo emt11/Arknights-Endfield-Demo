@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5088176528136574012}
   - component: {fileID: 6073148259204412011}
   - component: {fileID: 6073148259204412012}
+  - component: {fileID: 8570939059129779630}
   m_Layer: 0
   m_Name: Si
   m_TagString: Untagged
@@ -101,6 +102,21 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Status.CharacterStatus
   rules: {fileID: 11400000, guid: 941c19111fb01e8468a5fb5ddff45054, type: 2}
+--- !u!114 &8570939059129779630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264339005956099051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ebcb5b0f0f2ee4198b3383d069c896, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.Combatant
+  displayName: "\u7940"
+  faction: 0
+  modelAnimator: {fileID: 3453426218989935195}
 --- !u!1001 &9117429077600036810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158,6 +174,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dad3ec6081c4c664ab16a6a149e8501a, type: 3}
+--- !u!95 &3453426218989935195 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: dad3ec6081c4c664ab16a6a149e8501a, type: 3}
+  m_PrefabInstance: {fileID: 9117429077600036810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8722667695391604769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dad3ec6081c4c664ab16a6a149e8501a, type: 3}
