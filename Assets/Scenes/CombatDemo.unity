@@ -572,6 +572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 205638451}
   - component: {fileID: 205638452}
+  - component: {fileID: 205638453}
   m_Layer: 0
   m_Name: Combat Session
   m_TagString: Untagged
@@ -608,6 +609,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Resources.TeamSkillPoints
   maxSP: 100
   initialSP: 60
+--- !u!114 &205638453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205638449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56edfd31d0b71f741a5c59ddd81effbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Timing.BattleTimeDriver
 --- !u!1 &208022713
 GameObject:
   m_ObjectHideFlags: 0
