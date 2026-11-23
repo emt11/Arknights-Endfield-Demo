@@ -3,7 +3,7 @@
 + [x] 对象池（代码、SO、示例配置与受控 Play Mode 检查完成，正式音频素材待配置）
 + [x] M1.1 Stats 阶段收尾。19 项属性、固定派生公式、来源词条与变化通知已交付。[技术设计与验收](./M1.1%20StatSystem%20详细技术设计.md#阶段验收)
 + [x] 角色属性面板。[CombatDemo](../Assets/Scenes/CombatDemo.unity) 展示 7 项图标摘要和 12 项文字详单，[StatsDemo](../Assets/Scenes/StatsDemo.unity) 演示木剑穿脱与角色切换
-+ [x] M1.2 Resources 与血量 HUD，已验证当前生命、MaxHP 联动、队伍 SP、角色终结技能量及失衡槽 · [阶段验收记录](./M1.2%20Resources%20详细技术设计.md#阶段验收记录)
++ [x] M1.2 Resources 已阶段收尾（`284a900`），当前生命与 MaxHP 联动、队伍 SP、角色终结技能量、失衡槽及血量 HUD 已交付，5 项数值用例与 2 项 CombatDemo 场景用例全部通过 · [阶段验收记录](./M1.2%20Resources%20详细技术设计.md#阶段验收记录)
 
 ![alt text](image-1.png)
 ![alt text](image-2.png)
