@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dec3122499e5b164ab9bb91aa690a3cf, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.SceneActors
   initialActors:
   - {fileID: 4622293956043792227}
@@ -1260,9 +1260,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08d13d0ada624ed49b2c1263ff1ae692, type: 3}
+  m_Script: {fileID: 11500000, guid: e26f56879c27c8a4cb6220ebceeae123, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Controller.CustomThirdPersonCamera
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Controller.ThirdPersonCamera
+  height: 1.5
+  sensitivity: 0.1
+  minPitch: -50
+  maxPitch: 70
+  initialPitch: 15
+  distance: 4
+  collisionRadius: 0.2
+  collisionPadding: 0.03
+  recoverySpeed: 4
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &370845479
 GameObject:
   m_ObjectHideFlags: 0
@@ -5668,6 +5680,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SiRoot
       objectReference: {fileID: 0}
+    - target: {fileID: 3453426218989935195, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453426218989935195, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453426218989935195, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      propertyPath: m_KeepAnimatorStateOnDisable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -5711,24 +5735,48 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2264339005956099051, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1767170186}
   m_SourcePrefab: {fileID: 100100000, guid: c33129975fd079c428486134f89f0bdc, type: 3}
 --- !u!114 &1767170183 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8570939059129779630, guid: c33129975fd079c428486134f89f0bdc, type: 3}
   m_PrefabInstance: {fileID: 1767170182}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1767170185}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ebcb5b0f0f2ee4198b3383d069c896, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.Combatant
 --- !u!4 &1767170184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9078037495436687419, guid: c33129975fd079c428486134f89f0bdc, type: 3}
   m_PrefabInstance: {fileID: 1767170182}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1767170185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2264339005956099051, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+  m_PrefabInstance: {fileID: 1767170182}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1767170186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767170185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a49506e2247d640bb60bd5f9b56c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.CombatSession.ActorAnimationBinding
+  timeDriver: {fileID: 205638453}
+  locomotionController: {fileID: 22100000, guid: 206f1f6c4af9713418f0ffc61bf63fc3, type: 2}
+  walkReferenceSpeed: 1.54665
+  runReferenceSpeed: 6.82405
 --- !u!1 &1769490182
 GameObject:
   m_ObjectHideFlags: 0
@@ -19815,7 +19863,19 @@ PrefabInstance:
     - target: {fileID: 3385690315058664605, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c02fad22f5c59204285f16a0368a46e9, type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385690315058664605, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385690315058664605, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385690315058664605, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+      propertyPath: m_KeepAnimatorStateOnDisable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3983053219313005008, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -19871,6 +19931,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1737129955480987453, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1270261855}
+    - targetCorrespondingSourceObject: {fileID: 1737129955480987453, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4622293956043792230}
+    - targetCorrespondingSourceObject: {fileID: 1737129955480987453, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4622293956043792229}
+    - targetCorrespondingSourceObject: {fileID: 1737129955480987453, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4622293956043792228}
   m_SourcePrefab: {fileID: 100100000, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
 --- !u!114 &4622293956043792225 stripped
 MonoBehaviour:
@@ -19903,8 +19972,57 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ebcb5b0f0f2ee4198b3383d069c896, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.Actors.Combatant
+--- !u!114 &4622293956043792228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270261854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb5728c3f962ac46a7c40ef5b766f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Controller.ThirdPersonController
+  actions: {fileID: -944628639613478452, guid: facac5b6e4c3d2949a527bb44ca08b1f, type: 3}
+  view: {fileID: 330585549}
+  attackClip: {fileID: -2343325215556362360, guid: 2ec8982f730dab742a947c11645d2a7c, type: 3}
+  heavyAttackClip: {fileID: -3019395765924791900, guid: 0584e721a49ba8a4bbb55c8ce5ecee67, type: 3}
+  walkSpeed: 1.43936
+  runSpeed: 4.91111
+  turnSpeed: 720
+  dodgeDistance: 2
+  dodgeTravelTime: 0.2
+--- !u!114 &4622293956043792229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270261854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a7496ce680ea54186e19eef86898a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.CharacterMotion.CharacterMotor
+--- !u!114 &4622293956043792230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270261854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a49506e2247d640bb60bd5f9b56c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.CombatSession.ActorAnimationBinding
+  timeDriver: {fileID: 205638453}
+  locomotionController: {fileID: 9100000, guid: c02fad22f5c59204285f16a0368a46e9, type: 2}
+  walkReferenceSpeed: 1.43936
+  runReferenceSpeed: 4.91111
 --- !u!1 &4622636727756690321
 GameObject:
   m_ObjectHideFlags: 0
