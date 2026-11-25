@@ -13,7 +13,7 @@
 | `Combat Session` 已挂 `BattleTimeDriver` 和 `TeamSkillPoints`。现有时钟能按 `ActorId` 注册、读时、局部顿帧和注销。场景时间用例读取菲比的正式 ID | M3 在同一节点放置本场单位登记组件，由它分配 ID 并向同一时钟登记。队伍 SP 仍由场景持有。[战斗时钟](../../Assets/Scripts/Runtime/Timing/BattleClock.cs) · [场景时间用例](../../Assets/Scripts/Test/Editor/Timing/BattleClockSceneTests.cs) |
 | M2 收尾记录已验收效果、状态及两者与战斗时间的联动。`CharacterEffects.Start` 订阅场景时钟的战斗步，订阅持续到销毁 | Actors 登记的是每个角色的**动作时钟**。效果计时沿用现有订阅，避免一次战斗步被推进两次。[M2 验收记录](../M2%20Runtime%20Foundation/M2%20Runtime%20Foundation%20开发设计.md) · [CharacterEffects](../../Assets/Scripts/Runtime/Effects/CharacterEffects.cs) |
 
-总方案已确定角色身份由 Actors 分配，当前 HP 由 Resources 持有，动画、最终位移、攻击命中、伤害、操控权分别在 M4、M5、M6、M7、M8 接入。角色定义由各自的角色 Prefab 承担。根组件 `Combatant` 提供 Unity 接线和 Inspector 配置；每次入场创建一份独立的普通 C# 对象 `ActorRuntime`，向战斗调用方提供身份与模块引用。M3 的目标查询只回答两名已知单位能否互为攻击双方，距离、视野、锁定优先级和友方技能选人留给各自的调用方。
+总方案已确定角色身份由 Actors 分配，当前 HP 由 Resources 持有，第三人称操控与平地位移在 M4 接入，动画与根运动在 M5 接入，攻击命中、伤害和队伍操控权切换分别由 M6、M7、M8 接入。角色定义由各自的角色 Prefab 承担。根组件 `Combatant` 提供 Unity 接线和 Inspector 配置；每次入场创建一份独立的普通 C# 对象 `ActorRuntime`，向战斗调用方提供身份与模块引用。M3 的目标查询只回答两名已知单位能否互为攻击双方，距离、视野、锁定优先级和友方技能选人留给各自的调用方。
 
 ## 2. 实施文件
 
@@ -99,7 +99,7 @@ M6 可从碰撞体向上取得 `Combatant`，取 Runtime.Id，再用本场的 Ca
 ## 5. Unity 装配与开发顺序
 
 1. **配置两份角色 Prefab。** 在 Prefab Mode 选中最外层逻辑根，添加 Combatant。菲比的 Display Name 填「菲比」，祀填「祀」，Faction 都选 Player。在 Model Animator 中拖入各自模型子节点的 Animator，保存 Prefab。
-2. **接入属性页。** GameUI 的 CharacterStatsPanel 保留场景中已有的 CharacterStats 引用。BindCharacter 从同根 Combatant 读取名字，再从 CharacterStats 读取属性及其变化。即使面板在开场时已展开，也可在 SceneActors.Start 之前显示正确的名字。
+2. **接入属性页。** `GameUI/CharacterPanelRoot` 上的 CharacterStatsPanel 保留场景中已有的 CharacterStats 引用。BindCharacter 从同根 Combatant 读取名字，再从 CharacterStats 读取属性及其变化。即使面板在开场时已展开，也可在 SceneActors.Start 之前显示正确的名字。
 3. **绑定场景。** 实现 SceneActors。在 `Combat Session` 上挂一份，在 `Characters` 下拖入完整的 `Si.prefab`，改名 `SiRoot` 并启用，放在菲比旁可辨认的位置。保留原有禁用模型 `Characters/Si`。将 Initial Actors 的第 0 项设为 `Characters/PlayerRoot`，第 1 项设为 `Characters/SiRoot`，均拖逻辑根。现有 HealthHUD 与属性页继续绑定菲比。
 4. **交接场景测试。** 现有时间场景用例加载场景后先等一帧，再取 PlayerRoot 的 Runtime.Id，替换手写的 `new ActorId(1)` 和手工注册。周期回能用例直接使用已登记的 SiRoot，测试内关闭、重开该角色，退出 Play Mode 时随场景清理。角色动画图原型使用自建的 BattleClock，与场景登记独立。
 
@@ -132,8 +132,8 @@ Unity 6000.3.28f1 在当前工程完成脚本编译。通过 EditMode Test Runne
 
 开发期间首轮有一项用例在测试夹具加载阶段失败，改用协程场景用例后全组通过。将 `Faction` 归入 `Combatant.cs` 后，阶段收尾再次在当前工程执行上表全部 11 项，结果为 **11 通过、0 失败、0 跳过**。Windows Player 构建列入 M10 集成验收。
 
-## 7. 交给 M4 的接口
+## 7. 交给 M4 与 M5 的接口
 
-M4 Animation 在角色登记后，从 `Combatant.ModelAnimator` 取得模型的 Animator，从 `Combatant.Runtime.Id` 取得本次入场的身份。在本场 `BattleTimeDriver.Clock` 上调用 `TryGetActionTime(id, out var step)`，成功时使用 `step.Delta` 推进该角色的动画图。角色临时禁用时保留同一 ID；销毁后旧 ID 查询返回 false。两人的动作时间独立，菲比的局部顿帧不会扣减祀的动作时间。[动作时钟](../../Assets/Scripts/Runtime/Timing/BattleClock.cs) · [双角色场景验收](../../Assets/Scripts/Test/Editor/Actors/ActorSceneTests.cs)
+M4 在角色登记后从 `Combatant.Runtime.Id` 取得身份，调用本场 `BattleTimeDriver.Clock.TryGetActionTime(id, out var step)`，按 `step.Delta` 推进该角色的移动 FSM。M5 通过 `Combatant.ModelAnimator` 取得模型 Animator，在同一角色步内用相同增量推进动画图。角色临时禁用时保留同一 ID；销毁后旧 ID 查询返回 false。两人的动作时间独立，菲比的局部顿帧不会扣减祀的动作时间。[动作时钟](../../Assets/Scripts/Runtime/Timing/BattleClock.cs) · [双角色场景验收](../../Assets/Scripts/Test/Editor/Actors/ActorSceneTests.cs)
 
 M3 的交付接口以当前实现为准。生命周期通过 `ActorRuntime.Life` 提供，Resources 持有 HP，`ActorLifecycle` 负责死亡通知、普通治疗准入和离场状态。后续若调整这条接口，按总方案的冻结规则核对调用方并回归相应用例。

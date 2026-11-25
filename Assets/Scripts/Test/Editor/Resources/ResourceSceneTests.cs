@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Endfield.Stats;
+using Endfield.UI;
 using NUnit.Framework;
 using TMPro;
 using UnityEditor;
@@ -45,6 +46,8 @@ namespace Endfield.Resources.Tests
         [UnityTest]
         public IEnumerator CombatHudTracksDamageEquipmentAndHealingWhileHidden()
         {
+            var panelRoot = hud.transform.parent.Find("CharacterPanelRoot");
+            panelRoot.GetComponent<CharacterStatsPanel>().Open();
             var team = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<TeamSkillPoints>(true)).Single();
             Assert.That((team.Pool.Snapshot.CurrentSP, team.Pool.Snapshot.MaxSP), Is.EqualTo((60d, 100d)));
             CheckHud("150 / 150", 1);
@@ -55,7 +58,7 @@ namespace Endfield.Resources.Tests
                 new StatModifier(StatId.STR, ModifierOperation.Flat, 3),
                 new StatModifier(StatId.WeaponATK, ModifierOperation.Flat, 3)).Success, Is.True);
             CheckHud("110 / 165", 110f / 165);
-            var panelValue = hud.transform.parent.Find("CharacterPanelRoot/Panel/BaseStats/MaxHPUnit/Value");
+            var panelValue = panelRoot.Find("PanelView/Panel/BaseStats/MaxHPUnit/Value");
             Assert.That(panelValue.GetComponent<TMP_Text>().text, Is.EqualTo("165"));
 
             hud.SetActive(false);

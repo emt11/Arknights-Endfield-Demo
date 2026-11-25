@@ -1,5 +1,6 @@
 using System.Collections;
 using Endfield.Resources;
+using Endfield.UI;
 using NUnit.Framework;
 using TMPro;
 using UnityEditor;
@@ -77,9 +78,11 @@ namespace Endfield.CharacterBuild.Tests
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Single));
             var player = GameObject.Find("Characters/PlayerRoot");
             var ui = GameObject.Find("GameUI").transform;
+            var panelRoot = ui.Find("CharacterPanelRoot");
+            panelRoot.GetComponent<CharacterStatsPanel>().Open();
             var healthText = ui.Find("HealthHUD/HPText").GetComponent<TMP_Text>();
             var fill = ui.Find("HealthHUD/Track/Fill").GetComponent<Image>();
-            var panel = ui.Find("CharacterPanelRoot/Panel/BaseStats");
+            var panel = panelRoot.Find("PanelView/Panel/BaseStats");
             var build = player.GetComponent<CharacterBuildComponent>().State;
             Assert.That(healthText.text, Is.EqualTo("150 / 150"));
             player.GetComponent<CharacterResources>().Container.ApplyDamage(40);

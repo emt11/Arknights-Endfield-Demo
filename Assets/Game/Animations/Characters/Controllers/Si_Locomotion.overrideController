@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Si_Locomotion
+  m_Controller: {fileID: 9100000, guid: c02fad22f5c59204285f16a0368a46e9, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -6031670180563005523, guid: db3da461203fb44449d60c4f39f891be, type: 3}
+    m_OverrideClip: {fileID: -758773432007257090, guid: 28342bee3be359e4cab1a39fb510ad5c, type: 3}
+  - m_OriginalClip: {fileID: 5208136182296288238, guid: 09c2025313e2f104f8c1603b15c50d50, type: 3}
+    m_OverrideClip: {fileID: 894610511429429795, guid: 29bd27fb3d2b1ed49a891677cc4f09fc, type: 3}
+  - m_OriginalClip: {fileID: 6194158384660084513, guid: e7199b7115929bd47a0474c16d986e6e, type: 3}
+    m_OverrideClip: {fileID: 517701381763789767, guid: a0fc584b982a0c046ab531b2a4d4e128, type: 3}
+  - m_OriginalClip: {fileID: -5508180505211138908, guid: 3d1c152daa46fdf499ba6a9eefcb86ad, type: 3}
+    m_OverrideClip: {fileID: 4382787069131625619, guid: 89a354a1c2eba274ca59da8cf2199374, type: 3}

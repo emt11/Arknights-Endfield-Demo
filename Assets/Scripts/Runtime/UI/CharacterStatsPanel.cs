@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Endfield.Actors;
+using Endfield.Input;
 using Endfield.Stats;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Endfield.UI
@@ -19,12 +19,11 @@ namespace Endfield.UI
             public GameObject mainAttributeHighlight;
         }
 
+        [SerializeField] private GameInputManager inputManager;
         [SerializeField] private CharacterStats[] characters;
         [SerializeField] private GameObject panel;
-        [SerializeField] private Button openButton;
         [SerializeField] private Button closeButton;
         [SerializeField] private Button switchButton;
-        [SerializeField] private InputActionReference toggleAction;
         [SerializeField] private TMP_Text characterName;
         [SerializeField] private RectTransform content;
         [SerializeField] private RectTransform groupTemplate;
@@ -34,6 +33,8 @@ namespace Endfield.UI
         private readonly Dictionary<StatId, (TMP_Text label, bool showName)> rows = new();
         private int selected;
         private IDisposable subscription;
+
+        public bool IsOpen => panel.activeInHierarchy;
 
         private void Awake()
         {
@@ -62,23 +63,30 @@ namespace Endfield.UI
                     rows.Add(definition.Id, (row, true));
                 }
             }
-
-            openButton.gameObject.SetActive(!panel.activeSelf);
         }
 
         public void Open()
         {
+            if (panel.activeSelf || !isActiveAndEnabled) return;
             panel.SetActive(true);
-            openButton.gameObject.SetActive(false);
             BindCharacter();
+            inputManager.SetPanelOpen(true);
         }
 
         public void Close()
         {
+            if (!panel.activeSelf) return;
             subscription?.Dispose();
             subscription = null;
             panel.SetActive(false);
-            openButton.gameObject.SetActive(true);
+            if (inputManager) inputManager.SetPanelOpen(false);
+        }
+
+        public void Toggle()
+        {
+            if (!isActiveAndEnabled) return;
+            if (IsOpen) Close();
+            else Open();
         }
 
         private void NextCharacter()
@@ -116,37 +124,23 @@ namespace Endfield.UI
 
         private void OnEnable()
         {
-            openButton.onClick.AddListener(Open);
+            inputManager.PanelToggleRequested += Toggle;
+            inputManager.PanelCloseRequested += Close;
             closeButton.onClick.AddListener(Close);
             if (characters.Length > 1) switchButton.onClick.AddListener(NextCharacter);
 
-            if (panel.activeSelf) BindCharacter();
-            if (toggleAction)
-            {
-                toggleAction.action.performed += TogglePanel;
-                toggleAction.action.Enable();
-            }
+            if (IsOpen) BindCharacter();
+            inputManager.SetPanelOpen(IsOpen);
         }
 
         private void OnDisable()
         {
-            openButton.onClick.RemoveListener(Open);
+            inputManager.PanelToggleRequested -= Toggle;
+            inputManager.PanelCloseRequested -= Close;
             closeButton.onClick.RemoveListener(Close);
             if (characters.Length > 1) switchButton.onClick.RemoveListener(NextCharacter);
 
-            if (toggleAction)
-            {
-                toggleAction.action.performed -= TogglePanel;
-                toggleAction.action.Disable();
-            }
-            subscription?.Dispose();
-            subscription = null;
-        }
-
-        private void TogglePanel(InputAction.CallbackContext context)
-        {
-            if (panel.activeSelf) Close();
-            else Open();
+            if (panel) Close();
         }
     }
 }

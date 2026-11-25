@@ -72,7 +72,9 @@ namespace Endfield.Stats.Tests
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Single));
             var scene = SceneManager.GetSceneByPath(path);
             var ui = scene.GetRootGameObjects().Single(obj => obj.name == "GameUI").transform;
-            var panel = ui.Find("CharacterPanelRoot/Panel");
+            var controller = ui.Find("CharacterPanelRoot").GetComponent<CharacterStatsPanel>();
+            controller.Open();
+            var panel = controller.transform.Find("PanelView/Panel");
             var player = scene.GetRootGameObjects().Single(obj => obj.name == "Characters").transform.Find("PlayerRoot");
             var stats = player.GetComponent<CharacterStats>().Stats;
             var summary = new[]
@@ -136,7 +138,7 @@ namespace Endfield.Stats.Tests
             panel.Find("CloseBTN").GetComponent<Button>().onClick.Invoke();
             Assert.That(panel.gameObject.activeInHierarchy, Is.False);
             Assert.That(stats.SetBase(StatId.STR, strength).Success, Is.True);
-            ui.Find("Open").GetComponent<Button>().onClick.Invoke();
+            controller.Toggle();
             Assert.That(panel.gameObject.activeInHierarchy, Is.True);
             Assert.That(hp.text, Is.EqualTo(stats.GetValue(StatId.MaxHP).ToString("0.##")));
 
@@ -150,19 +152,17 @@ namespace Endfield.Stats.Tests
             const string path = "Assets/Scenes/CombatDemo.unity";
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(path, new LoadSceneParameters(LoadSceneMode.Single));
             var ui = GameObject.Find("GameUI").transform;
-            var controller = ui.GetComponent<CharacterStatsPanel>();
-            var panel = ui.Find("CharacterPanelRoot/Panel");
+            var controller = ui.Find("CharacterPanelRoot").GetComponent<CharacterStatsPanel>();
+            var panel = controller.transform.Find("PanelView/Panel");
             var groups = panel.Find("Viewport/Groups");
-            var open = ui.Find("Open").GetComponent<Button>();
             var close = panel.Find("CloseBTN").GetComponent<Button>();
             var character = GameObject.Find("Characters/PlayerRoot").GetComponent<CharacterStats>();
             var other = GameObject.Find("Characters/SiRoot").GetComponent<CharacterStats>();
 
             // 场景默认只展示玩家，本用例临时配置第二名角色和切换按钮
-            close.onClick.Invoke();
             controller.enabled = false;
-            open.onClick.Invoke();
-            Assert.That(panel.gameObject.activeInHierarchy, Is.False, "禁用属性页后，打开按钮应停止响应");
+            controller.Toggle();
+            Assert.That(panel.gameObject.activeInHierarchy, Is.False, "禁用属性页后应忽略面板切换请求");
             var switchButton = new GameObject("切换角色", typeof(RectTransform), typeof(Button)).GetComponent<Button>();
             switchButton.transform.SetParent(ui, false);
             using (var config = new SerializedObject(controller))
@@ -178,7 +178,7 @@ namespace Endfield.Stats.Tests
             var sword = AssetDatabase.LoadAssetAtPath<BuildModifierProfile>("Assets/ScriptObjects/CharacterBuild/WoodenSword.asset");
             Assert.That(build.TryEquip(BuildSlot.Weapon, sword, out var error), Is.True, error);
             controller.enabled = true;
-            open.onClick.Invoke();
+            controller.Toggle();
             TMP_Text Row(string name) => groups.Find(name).GetComponent<TMP_Text>();
             string Display(TMP_Text row)
             {
@@ -241,7 +241,7 @@ namespace Endfield.Stats.Tests
             string closed = strength.text;
             Assert.That(other.Stats.SetBase(StatId.STR, 25).Success, Is.True);
             Assert.That(strength.text, Is.EqualTo(closed));
-            open.onClick.Invoke();
+            controller.Toggle();
             Assert.That(Display(strength), Is.EqualTo("25"));
 
             yield return new ExitPlayMode();
