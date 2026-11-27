@@ -13,9 +13,8 @@ namespace Endfield.CombatSession
         [SerializeField] private BattleTimeDriver timeDriver;
         private Combatant actor;
         private CharacterControl.CharacterControl control;
-        private ActorAnimationBinding animationBinding;
         private ActorId actorId;
-        private IDisposable subscription;
+        private IDisposable subscription, deathSubscription;
         private bool started;
 
         // 让本地输入丢弃目标禁用期间及重新启用前已采到的按键
@@ -25,7 +24,6 @@ namespace Endfield.CombatSession
         {
             actor = GetComponent<Combatant>();
             control = GetComponent<CharacterControl.CharacterControl>();
-            animationBinding = GetComponent<ActorAnimationBinding>();
         }
 
         private void Start()
@@ -49,8 +47,8 @@ namespace Endfield.CombatSession
         private void InitializeActor()
         {
             actorId = actor.Runtime.Id;
-            control.Initialize();
-            if (animationBinding) animationBinding.Initialize(actor.ModelAnimator);
+            control.Initialize(actorId);
+            deathSubscription = actor.Runtime.Life.SubscribeDied(_ => StopAction());
         }
 
         private void OnBattleStep(TimeStep battleStep)
@@ -63,17 +61,28 @@ namespace Endfield.CombatSession
             }
             if (!timeDriver.Clock.TryGetActionTime(actorId, out var step))
             {
+                StopAction();
                 Unsubscribe();
                 return;
             }
 
-            if (step.Delta <= 0d || actor.Runtime.Life.State != ActorLifeState.Alive)
+            if (actor.Runtime == null || actor.Runtime.Life.State != ActorLifeState.Alive)
+            {
+                StopAction();
+                return;
+            }
+            if (step.Delta <= 0d)
             {
                 control.DiscardPresses();
                 return;
             }
             control.Step(step.Delta);
-            if (animationBinding) animationBinding.Advance(control.GroundSpeed, step.Delta);
+        }
+
+        private void StopAction()
+        {
+            control.InterruptAction();
+            control.DiscardPresses();
         }
 
         private void OnDisable()
@@ -82,6 +91,8 @@ namespace Endfield.CombatSession
             control.ClearControlInput();
             ActivationChanged?.Invoke();
         }
+
+        private void OnDestroy() => deathSubscription?.Dispose();
 
         private void Unsubscribe()
         {

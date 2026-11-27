@@ -1,4 +1,6 @@
+using Endfield.Animation;
 using Endfield.CharacterControl.FSM;
+using Endfield.CombatContracts;
 using Endfield.CharacterMotion;
 using UnityEngine;
 
@@ -19,7 +21,18 @@ namespace Endfield.CharacterControl
 
         protected virtual void Awake() => Motor = GetComponent<CharacterMotor>();
 
-        public void Initialize() => Machine.Initialize(CreateInitialState());
+        public AnimationNotifyPlayer Notifications { get; } = new();
+        internal ActorId ActorId { get; private set; }
+
+        public void Initialize(ActorId actorId = default)
+        {
+            ActorId = actorId;
+            Machine.Initialize(CreateInitialState());
+        }
+
+        internal void InterruptAction() => CurrentState?.Interrupt();
+
+        protected virtual void OnDestroy() => InterruptAction();
 
         protected abstract CharacterState CreateInitialState();
 

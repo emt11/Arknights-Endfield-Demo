@@ -1,8 +1,10 @@
 # M4 第三人称控制器、相机与基础移动 FSM 详细技术设计
 
-**已收尾（Verified） · 2026-11-25**　基于 M3 Actor Foundation（`f55bf44`）交付。Unity 编辑器收尾复验 18 项全部通过。[本次验收记录](#8-实现与验收记录)
+**已收尾（Verified） · 2026-11-25**　基于 M3 Actor Foundation（`f55bf44`）交付。Unity 编辑器收尾复验 18 项全部通过。[M4 收尾验收记录](#8-实现与验收记录)
 
-在 `Assets/Scenes/CombatDemo.unity` 中，玩家用 WASD 相对镜头移动，左 Shift 奔跑，右键产生一次 Dodge 请求，正式闪避在 M5 按角色片段的根轨迹执行。菲比和祀各自持有角色行为状态机。开场只有菲比接收键鼠，祀从 Idle 开始。关闭模型 Animator 后，角色的状态转换、位移、碰撞与相机跟随仍应完整工作。[总体路线](../仿终末地战斗系统设计方案.md) · [M5 动画详设](../M5%20Animation%20Foundation/M5%20Animation%20Foundation%20详细技术设计.md)
+**2026-11-26 设计修订**　下文区分 M4 收尾实现和 M5 的闪避实现。第 8 节保留原验收日期与结果
+
+在 `Assets/Scenes/CombatDemo.unity` 中，玩家用 WASD 相对镜头移动，左 Shift 奔跑，右键产生一次 Dodge 请求，正式闪避在 M5 按角色片段的根轨迹执行。菲比和祀各自持有角色行为状态机。开场只有菲比接收键鼠，祀从 Idle 开始。走跑由 Motor 驱动，前闪取可见 Animator 的自然根运动，镜头在角色移动后跟随。[总体路线](../仿终末地战斗系统设计方案.md) · [M5 动画详设](../M5%20Animation%20Foundation/M5%20Animation%20Foundation%20详细技术设计.md)
 
 ## 1. 工程依据与交付范围
 
@@ -15,7 +17,7 @@
 
 M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并登记动作时钟。角色是否存活以 `Runtime.Life.State` 为准。M4 在角色根新增控制组件，复用这套身份和生命周期。键鼠绑定已经存在，当前 `Gameplay/Attack` 的 Interactions 为空。工作区中的菲比动画控制器已有 Locomotion、Dodge 姿态状态，基础步态由各角色的动画绑定驱动，验收覆盖角色根的实际位移和模型腿部姿态。[SceneActors](../../Assets/Scripts/Runtime/Actors/SceneActors.cs) · [ActorLifecycle](../../Assets/Scripts/Runtime/Actors/ActorLifecycle.cs) · [输入资产](../../Assets/InputSystem_Actions.inputactions) · [CombatDemo](../../Assets/Scenes/CombatDemo.unity)
 
-**交付范围。** `CombatDemo` 开场固定操控菲比。菲比和祀各有独立状态机、Motor、动作时钟和基础步态图。M4 交付镜头相对走跑、平滑转向与停步、碰撞、相机遮挡和角色面板输入。左键和右键分别提交一次 `Attack`、`Dodge`。M5 接入攻击播放与根运动闪避，M6 接管动作许可和取消窗口，M7 决定普攻连段的末段重击，M8 接入队伍切换与 AI。
+**交付范围。** `CombatDemo` 开场固定操控菲比。菲比和祀各有独立状态机、Motor、动作时钟和基础步态图。M4 交付镜头相对走跑、平滑转向与停步、碰撞、相机遮挡和角色面板输入。左键和右键分别提交一次 `Attack`、`Dodge`。Attack 在本阶段只作为输入预留。M5 扩展队员 FSM 和动画图以执行根轨迹闪避。未来 M6 Actions 管理攻击生命周期、许可与取消，M7 Combos 选段，M8 接入队伍切换与 AI
 
 ## 2. 实施文件与类型归属
 
@@ -37,8 +39,8 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 | 新增 | `Assets/Scripts/Runtime/CharacterControl/FSM/States/PartyMember/PartyMemberWalkState.cs` | 每个动作步使用本角色的 WalkSpeed 调用 StepGroundMovement |
 | 新增 | `Assets/Scripts/Runtime/CharacterControl/FSM/States/PartyMember/PartyMemberRunState.cs` | 每个动作步使用本角色的 RunSpeed 调用 StepGroundMovement |
 | 新增 | `Assets/Scripts/Runtime/CharacterMotion/CharacterMotor.cs` | 本角色最终位移出口，应用水平转向和胶囊碰撞，返回实际位移 |
-| 新增 | `Assets/Scripts/Runtime/CombatSession/ActorStepBinding.cs` | 每角色一份。按 ActorId 取动作时间，先推进角色控制，再把碰撞后的水平速度与本角色动作秒传入动画绑定 |
-| 新增 | `Assets/Scripts/Runtime/CombatSession/ActorAnimationBinding.cs` | 每个角色根持有基础步态控制器与标定，手动驱动同一角色模型的 Locomotion 混合树 |
+| 新增 | `Assets/Scripts/Runtime/CombatSession/ActorStepBinding.cs` | 每角色一份。按 ActorId 取动作时间，将本次动作秒交给角色控制，由当前状态推进移动和动画 |
+| 新增 | `Assets/Scripts/Runtime/Animation/AnimationSource.cs` | 每个可见模型持有基础步态控制器与标定，手动驱动同一角色模型的 Locomotion 混合树 |
 | 接入 | `Assets/Game/Animations/Characters/Controllers/Si_Locomotion.overrideController` | 在共用步态树上使用祀的双刀片段 |
 | 新增 | `Assets/Scripts/Runtime/Camera/ThirdPersonCamera.cs` | 环绕与跟随、输出水平朝向、近裁面遮挡检测和距离恢复 |
 | 修改 | `Assets/Scenes/CombatDemo.unity` | 装配场景输入、两名角色和现有主相机，配置引用与场景实例参数 |
@@ -56,7 +58,7 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 | 角色实例来源与图层 | `Assets/Prefabs/Characters/Phoebe.prefab`、`Assets/Prefabs/Characters/Si.prefab`、`ProjectSettings/TagManager.asset` |
 | 现有回归依据 | `Assets/Scripts/Test/Editor/Actors/ActorSceneTests.cs`、`Assets/Scripts/Test/Editor/Timing/BattleClockTests.cs`、`Assets/Scripts/Test/Editor/Timing/BattleClockSceneTests.cs` |
 
-两个角色的配置在 CombatDemo 实例上使用默认 Inspector 编辑。本阶段无需新配置资产或自定义编辑器。
+两个角色的配置在 CombatDemo 实例上使用默认 Inspector 编辑。本阶段无需新配置资产或自定义编辑器。 M5 在队员状态目录新增 `Assets/Scripts/Runtime/CharacterControl/FSM/States/PartyMember/PartyMemberDodgeState.cs`。该文件、轨迹资产与动画图均列在 M5 实施清单中
 
 ## 3. 输入与两个时间尺度
 
@@ -82,9 +84,11 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 
 ### 状态归属
 
-`PartyMemberControl` 和未来的敌人控制组件各自构造适用于本实体的状态集合。菲比和祀各有一台 StateMachine，并分别创建自己的 Idle、Walk 和 Run 状态实例。两人可以使用相同的状态类，每个实例绑定自己的角色、Motor 和配置。玩家键鼠只写入菲比，祀通过自己的控制组件接收输入。同种敌人的两个实例同样各持有自己的当前状态、目标和计时。
+每个 `CharacterControl` 实例持有一台 `StateMachine`，在初始化入口调用本角色的 `CreateInitialState()`。实际挂载的 `PartyMemberControl` 在此创建并持有自己的 `Idle / Walk / Run` 引用（类型均为 `CharacterState`），将 `this` 传给各状态。菲比和祀复用状态机机制和队员状态类，两人的状态对象、上下文及运行数据各自独立。M5 按同一方式给每人创建一个 Dodge 实例
 
-是否共用具体 State 类，看进入行为、持续行为、退出与转换条件、运行数据及其生命周期。队员 Idle 收到移动意图后选 Walk 或 Run。假如一种敌人需要在原地计时，巡逻期间遇敌可中断，它可以定义自己的状态类。若 M8 用行为树决定巡逻或追击，目标选择在树内完成，角色行为 FSM 根据传入意图执行。M6 Actions 负责攻击许可、优先级与取消窗口，M5 的动画状态负责骨骼姿态。M4 首批生产文件只创建两位队员实际使用的状态。
+具体 State 决定本状态的行为、可转往的目标及条件优先级。共用具体类须逐项核对 Enter、Tick、Exit、转换条件以及计时、目标等运行数据的含义与生命周期。未来 `EnemyControl` 可以创建 `EnemyIdleState`、`EnemyPatrolState`、`EnemyChaseState`。例如敌人 Idle 等待巡逻计时到期，队员 Idle 则读取本步移动输入。即使两个敌人使用同一个类，也分别持有各自的计时和目标。M8 的行为树可向敌人提交巡逻或追击意图
+
+`CharacterControl` 提供本角色的输入、Motor、只读 CurrentState 和更新入口。`PartyMemberControl` 另提供每人的步态参数及 `StepGroundMovement` 等队员行为接口。两个 Controller 均不使用 switch / if 集中仲裁具体状态。共享 StateMachine 只执行生命周期，业务模块不能直接写 CurrentState
 
 ### 角色状态生命周期与动作步
 
@@ -93,17 +97,24 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 | `CharacterState.Enter() / Tick(double delta) / Exit()` | 普通 C# 对象。每个 State 通过构造函数取得本角色上下文。Enter 初始化本次进入的数据，Tick 使用调用者传入的增量，Exit 完成本状态的清理 |
 | `StateMachine.Initialize(CharacterState initial)`、`CharacterState CurrentState { get; }` | `CharacterControl.Initialize()` 调用具体组件的 `CreateInitialState()` 建立其全部状态实例，并用返回的首态初始化一次。队员的首态是 Idle。CurrentState 的唯一写入者是这台状态机 |
 | `StateMachine.ChangeState(CharacterState next)` | 在 Enter/Exit 执行期间再次调用 ChangeState，抛出 InvalidOperationException，嵌套请求不执行。其余情况下，相同对象立即返回，有效切换同步执行旧状态 Exit、更新 CurrentState、新状态 Enter。初始化 Enter 同样受保护，切换标记通过 try/finally 复位 |
-| `StateMachine.Tick(double delta)` | 调用当时活动状态的 Tick 一次。Tick 尾部可以提交自然结束的转换并立即返回。新状态这时执行 Enter，下一步才取得自己的 Tick |
+| `StateMachine.Tick(double delta)`、`CharacterState.ChangeState(CharacterState next)` | 状态机调用当前对象的 Tick 一次。状态在 Tick 中达到自身退出条件时，调用受保护的 ChangeState，将本角色的目标实例交给 Machine，并立即 return。新状态同步 Enter，从下一次正常更新才可获得 Tick |
 | `CharacterState.SelectNext()` | 读取所属角色本步数据的步首选态入口，返回本实体的目标 CharacterState 实例，默认返回自身。只判条件，切换由 StateMachine 执行。状态机只调用状态的生命周期方法 |
 | `void CharacterControl.Step(double actionDelta)` | 绑定只以正动作秒调用。将待执行按下移入 StepCommands，由当前 State.SelectNext() 选态，经 ChangeState 切换后 Tick 一次。GroundSpeed 提供碰撞后的走跑速度 |
 
-**同一步内选态与移动。** Run 中松开 Shift，同时按住 W 并点击右键，步首选 Walk，Motor 从当前跑速向走速减速。该步意图携带一次 Dodge，下一步持续按住右键时该标记已清空。
+**M4 步首转换示例**　Run 中松开 Shift，保持 W 并点击右键
+
+1. `CharacterControl.Step` 取出按下标记放入 StepCommands，清空待执行值，调用当前 Run 的 `SelectNext()`
+2. Run 继承的 `PartyMemberGroundedState.SelectNext()` 看到方向非零、SprintHeld 为 false，返回本人的 Walk。M4 此时只记录 Dodge 输入
+3. Control 将 Walk 传给 `Machine.ChangeState`。Machine 调用 Run.Exit（此时 CurrentState 仍为 Run），写入 Walk，再调用 Walk.Enter（此时已能读到 Walk）。若返回的就是当前实例则跳过 Exit 和 Enter。Enter、Exit 中均禁止递归切换
+4. Control 调用一次 `Machine.Tick(actionDelta)`。Walk 在本步就以走速为目标调用 Motor，实际速度从跑速向走速下降。下一步持续按住右键不会再产生 Dodge 标记
+
+**M5 前闪转换**　队员有可用的 Controller Dodge 状态时，地面状态在步首优先响应 Dodge。入场后若读到合法片段，当步由 Dodge.Tick 消费动作秒。匹配 SO 且开启根运动时送自然位移和偏航给 Motor，关闭根运动或缺少匹配 SO 时原地播放。匹配 SO 的点通知“允许移动取消”到达时，若已有移动输入则在该帧打断；若尚无移动输入，则在之后首次有移动输入的正动作步切到 Walk 或 Run，当步恢复地面移动。到片尾或通知打断时按当前方向和 SprintHeld 选出地面态，本步余时推进步态图，下一正步恢复地面位移。若入场后 Controller 无法提供合法片段，立即切回地面态并把整步交给它
 
 ### 队员状态与移动参数
 
 | 当前状态 | 本步行为和转换 |
 | --- | --- |
-| Idle / Walk / Run | 共用 PartyMemberGroundedState 的步首优先级。先看 MoveWorld 是否为零，最后按 SprintHeld 选跑或走。状态自身只执行选定的行为 |
+| Idle / Walk / Run | 三者继承 PartyMemberGroundedState 的步首选态。M5 优先检查本步 Dodge 标记和可用的 Controller Dodge 状态，其余情况按 MoveWorld 和 SprintHeld 选 Idle、Run 或 Walk。三个子类各自实现下述移动 Tick |
 | Idle | 松键当步切入 Idle。目标速度为零，Motor 清除转向角速度，沿最后朝向减速。停稳后位移和 GroundSpeed 都为零 |
 | Walk / Run | `PartyMemberWalkState.Tick` 和 `PartyMemberRunState.Tick` 分别传入本角色的 WalkSpeed 和 RunSpeed。`PartyMemberControl.StepGroundMovement` 调用 Motor，并将碰撞后的实际水平速度写入 GroundSpeed。Motor 根据该档速度乘输入力度得到目标速度。持续 W 顶墙时仍可处于 Walk，实测速度会趋近 0 |
 
@@ -113,7 +124,7 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 | PartyMemberControl：`float walkSpeed, runSpeed, turnSpeed` | Inspector 以 m/s、°/动作秒配置，`0 < walkSpeed < runSpeed`。菲比初值 1.43936、4.91111、720。祀本阶段以 1.54665、6.82405、720 为场景初值，两份配置各自可调 |
 | CharacterMotor：`float acceleration, deceleration, turnSmoothTime` | 每个角色根的 Inspector 初值为 12、18 m/s² 和 0.12 动作秒，均为正数。运行时由该 Motor 独立保存当前走跑速度和转向角速度，禁用时清零 |
 | CharacterMotor：`float StepLocomotion(Vector3 direction, float gaitSpeed, float turnSpeed, float deltaTime)` | 输入水平意图、步态满速、转速参数和正动作秒。先用 MoveTowards 将速度推向目标，有方向时用 SmoothDampAngle 绕 Y 轴转向，再按更新后的根朝向和速度提交本步位移。返回碰撞后的实际水平距离除以本步时长，供 Idle、Walk、Run 共用 |
-| CharacterMotor：`Vector3 MovePlanar(Vector3 delta, Vector3 facing, float maxTurnDegrees)` | 输入世界水平位移（米）、期望朝向和本步最大转角。同根 CharacterController.Move 约束平移，根只绕 Y 轴转向。返回移动前后实际水平位置差。Motor 是角色根最终位移出口 |
+| CharacterMotor：`void MovePlanar(Vector3 worldDelta, Quaternion worldYaw)` | 输入世界水平位移（米）和最终水平旋转，先对齐角色根的偏航，再用同根 CharacterController.Move 约束平移。零位移时也可落实朝向 |
 
 **走跑算例。** 菲比从静止朝 +Z 起步，满幅按 W，首个 0.10 s 动作步达到 1.20 m/s 并前进 0.120 m，下一步 0.10 s 达到走速 1.43936 m/s，再前进约 0.144 m。行进中切到 D，位移沿正在转向 +X 的根朝向。满速奔跑时松键，首个 0.02 s 动作步速度降到 4.55111 m/s，继续前进约 0.091 m。动画按该步的实际速度混合。
 
@@ -121,25 +132,27 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 
 ## 5. 从渲染帧到角色动作步
 
-`ActorStepBinding` 挂在每个受控实体的根上。Inspector 的 `BattleTimeDriver timeDriver` 指向 Combat Session。绑定持有 `ActorId`、同根的控制与动画组件及战斗步订阅。每个实体用自己的动作时间推进 FSM。开场玩家只向菲比提交输入，祀按默认的零方向保持 Idle。
+`ActorStepBinding` 挂在每个受控实体的根上。Inspector 的 `BattleTimeDriver timeDriver` 指向 Combat Session。绑定持有 `ActorId`、同根的控制组件及战斗步订阅。每个实体用自己的动作时间推进 FSM。开场玩家只向菲比提交输入，祀按默认的零方向保持 Idle。
 
 1. **初始化。** 控制和 Motor 在 Awake 缓存本根依赖。`SceneActors.Start`（−10）完成开场登记后，绑定在默认顺序 Start 读取 `Combatant.Runtime.Id`，调用 `control.Initialize()`。由具体的 `PartyMemberControl` 建立本人的状态对象并进入 Idle，再向本场 `Clock.SubscribeBattleStep` 订阅一次。动态角色若在 Start 之后才 Register，绑定会在登记后的第一个战斗步初始化该角色并使用本步动作时间。
 2. **战斗步到达。** BattleClock 先更新各角色动作时钟，再广播本步的全局战斗时间。每份绑定调用 `TryGetActionTime(actorId, out step)` 取本人的 `step.Delta`。查不到 ID 时结束本次绑定并退订。[时钟实现](../../Assets/Scripts/Runtime/Timing/BattleClock.cs)
 3. **冻结或暂停。** 当 `step.Delta <= 0` 或角色已死亡，绑定清除本角色的待执行按下及 StepCommands，随后结束该角色步。State、计时、根位置和朝向保持。恢复时重新读取仍按住的移动方向，冻结步丢弃的 Dodge 和 Attack 请求均过期。其余角色照各自的 Delta 推进。
-4. **正动作步。** `control.Step(step.Delta)` 消费本步按键、选态并执行一次移动。`ActorAnimationBinding.Advance(control.GroundSpeed, step.Delta)` 随后用实际水平速度设置 `MoveAmount`，以同一角色的动作秒推进步态图。零速、参考走速、参考跑速分别映射到 0、1、2，中间速度线性混合。镜头在 LateUpdate 根据移动后的玩家根定位。
+4. **正动作步**　绑定调用 `control.Step(step.Delta)`，角色消费输入、选态并推进当前状态。地面状态先移动，再用碰撞后的水平速度和本步动作秒推进步态图，相机在 LateUpdate 根据移动后的角色根定位
 5. **禁用与销毁。** 临时禁用角色根时退订，保留该入场 ID、FSM 和状态内部计时，离开期间不补步。重新启用且原 ID 有效时恢复一次订阅。离场或场景卸载时解除绑定及输入通知、释放持有的订阅，角色实例销毁时一并释放其状态引用。重新进场的新实例从 Idle 开始。
 
 角色动作时间为 `(可用真实时长 − 本步局部顿帧) × battleRate`，全局暂停时可用时长为 0。倍率为 1 时，只给菲比 30 ms 顿帧，再连续推进两个 20 ms 步，菲比依次得到 0、10 ms，祀依次得到 20、20 ms。FSM 内部的 `Tick(double delta)` 仅使用调用方传入的时长。输入采样与相机仍能按渲染帧运行。
 
 ### M5 接入时的调用方变更
 
-M5 在队员 FSM 中加入根运动闪避并读取同一动作步的 StepCommands 和 MoveWorld。Dodge 状态按当前角色 Clip 的时间区间读取根轨迹，通过 CharacterMotor 提交碰撞位移，动画绑定按同一区间播放。截至 M4 收尾，`GS_Evade`、`DK_Evade` 按当前导入设置测得的全片水平根路程均为 0 m。M5 先取得并验证两人的有效轨迹，再接入闪避。M6 接管动作许可，M7 决定普攻连段的末段重击。[M5 接入顺序](../M5%20Animation%20Foundation/M5%20Animation%20Foundation%20详细技术设计.md#5-与-m4-共用一个动作步)
+角色控制入口为 `void Step(double actionDelta)`。步首先选态，再由选中的状态消费本角色动作钟提供的时长。闪避自然结束或被通知打断时，将本步余下时间交给基础步态图，下一正步恢复地面移动
+
+M4 收尾时测量的两份 Evade 水平根路程均为 0 m。正式 M5 前闪按角色使用 GS_Quickshift_F、DK_Quickshift_F，沿用片段原始导入设置并单独烘焙。M4 的左键仍只产生 Attack 输入，未来 Actions 管理攻击生命周期并委托 Graph 播放。[M5 接入顺序](../M5%20Animation%20Foundation/M5%20Animation%20Foundation%20详细技术设计.md#5-与-m4-共用一个动作步)
 
 ## 6. 场景装配、玩家控制与相机
 
 ### 两个角色与一个本地输入来源
 
-1. 打开 `Assets/Scenes/CombatDemo.unity`，定位 `Characters/PlayerRoot` 和 `Characters/SiRoot`。两根各挂 PartyMemberControl、CharacterMotor、ActorStepBinding，Time Driver 都指向 Combat Session。沿用 PlayerRoot 的 CharacterController。在 SiRoot 新增 CharacterController，首版以现有玩家胶囊为初值：高 1.8 m、半径 0.30 m、中心 (0, 0.9, 0)、minMoveDistance 0。分别填入第 4 节参数，在 Play Mode 检查两人的胶囊与地面接触。两根各挂 ActorAnimationBinding，菲比使用 Phoebe_Controller，祀使用 Si_Locomotion.overrideController。各自的 walkReferenceSpeed 和 runReferenceSpeed 采用第 4 节同角色的走跑初值（m/s）。两个模型 Animator 的 Controller 槽留空，关闭 Apply Root Motion，Culling Mode 设为 Always Animate。
+1. 打开 `Assets/Scenes/CombatDemo.unity`，定位 `Characters/PlayerRoot` 和 `Characters/SiRoot`。两根各挂 PartyMemberControl、CharacterMotor、ActorStepBinding，Time Driver 都指向 Combat Session。沿用 PlayerRoot 的 CharacterController。在 SiRoot 新增 CharacterController，首版以现有玩家胶囊为初值：高 1.8 m、半径 0.30 m、中心 (0, 0.9, 0)、minMoveDistance 0。分别填入第 4 节参数，在 Play Mode 检查两人的胶囊与地面接触。两个角色的可见 Animator 节点各挂 AnimationSource，菲比使用 Phoebe_Controller，祀使用 Si_Locomotion.overrideController。两个角色根上的 PartyMemberControl 各自保存闪避动画 SO，walkReferenceSpeed 和 runReferenceSpeed 采用第 4 节同角色的走跑初值（m/s）。两个模型 Animator 的 Controller 槽留空，由动画源初始化时开启 Apply Root Motion，Culling Mode 设为 Always Animate。
 2. 在 `Combat Session` 挂一份 GameInputManager 和一份 PlayerController。将控制器的 `inputManager` 和 `GameUI/CharacterPanelRoot` 上 CharacterStatsPanel 组件的 `inputManager` 都指向这份输入组件。面板脚本的 `panel` 字段指向子节点 `PanelView`，`closeButton` 指向 `PanelView/Panel/CloseBTN`。控制器的 `controlledMember` 指向 `Characters/PlayerRoot` 上的 PartyMemberControl，`view` 指向 Main Camera 上的 ThirdPersonCamera。镜头沿用该节点的 Camera、AudioListener 和已禁用的 CinemachineBrain。键位由 `InputSystem_Actions.inputactions` 配置。
 3. PlayerController 启用时让相机跟随 `controlledMember.transform`。移动、环视和一次性按键均作用于场景指定的角色。其 ActorStepBinding 禁用期间暂停提交角色输入。
 4. 测试及未来 AI 可直接调用各自角色的 `SetControlInput`。例如给祀提交世界 −X 方向，再推进 Clock，菲比和祀各自执行本人的控制输入。每个角色同一时间由一个控制方写入，后续 Party 模块负责玩家与 AI 的交接。
@@ -165,7 +178,7 @@ M5 在队员 FSM 中加入根运动闪避并读取同一动作步的 StepCommand
 
 ## 7. 验收步骤
 
-在 **Window → General → Test Runner → EditMode** 依次运行 GameInputManagerTests、StateMachineTests、ThirdPersonControlTests。前两组分别使用虚拟键鼠和普通 C# 状态夹具。第三组进入 Play Mode 加载现有 CombatDemo，等 Start 完成后停用 BattleTimeDriver 的自动 Update，使用同一个 `Clock.Advance(realDelta)` 提交动作步。默认倍率为 1、无暂停。调整场景障碍或角色位置后调用 `Physics.SyncTransforms()`。所有临时调整仅在 Play Mode 实例上进行。
+在 **Window → General → Test Runner → EditMode** 依次运行 GameInputManagerTests、StateMachineTests、ThirdPersonControlTests。前两组分别使用虚拟键鼠和普通 C# 状态夹具。第三组进入 Play Mode 加载现有 CombatDemo，等 Start 完成后停用 BattleTimeDriver 的自动 Update，使用同一个 `Clock.Advance(realDelta)` 提交动作步。默认倍率为 1、无暂停。调整场景障碍或角色位置后调用 `Physics.SyncTransforms()`。所有临时调整仅在 Play Mode 实例上进行。下表以 M4 收尾的场景配置为基准。M5 中使用缺少可用 Dodge 状态的角色回归右键请求，使用匹配 SO 且启用根运动的角色执行前闪位移用例
 
 | 验收项 | 初始条件与操作 | 可观察结果 |
 | --- | --- | --- |
@@ -185,7 +198,7 @@ M5 在队员 FSM 中加入根运动闪避并读取同一动作步的 StepCommand
 
 **历史验收。** 旧提交 `21d307c` 的联合原型在 2026-11-23 的 Unity 6000.3.28f1 定向验收中通过 17 项（失败和跳过各 0）。其中 ThirdPersonControlTests 3 项、CombatInputReaderTests 2 项，其余包含动画与既有模块回归。原型的长按用例已随输入规则变更退役，详见 M5 历史记录。[旧原型验证记录](../M5%20Animation%20Foundation/M5%20Animation%20Foundation%20详细技术设计.md#7-历史验证记录)
 
-**设计核查。** 沿 W → 角色世界方向 → Walk.Tick → Motor 实际位移 → 步态参数核对上述接线。
+**设计走查**　M4 的 W 输入经 PlayerController 换算为世界方向，地面 SelectNext 返回 Walk，Machine 完成切换后由 Walk.Tick 调用 Motor，碰撞后速度决定步态参数。M5 增加的步首抢占、Tick 内自然退出与片尾姿态验收见 M5 第 5、6 节。第 8 节所有通过数均属于原日期的实现
 
 ## 8. 实现与验收记录
 

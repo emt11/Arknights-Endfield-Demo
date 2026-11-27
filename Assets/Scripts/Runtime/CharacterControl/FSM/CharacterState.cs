@@ -12,6 +12,8 @@ namespace Endfield.CharacterControl.FSM
 
         public abstract void Tick(double delta);
 
+        public virtual void Interrupt() { }
+
         public virtual void Exit() { }
 
         protected void ChangeState(CharacterState next) => Control.Machine.ChangeState(next);

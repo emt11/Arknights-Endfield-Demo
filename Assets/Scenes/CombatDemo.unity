@@ -2230,7 +2230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5630868093254895709, guid: 1bd0ff4d3b41c3340a12b632e5db8f5f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.6
+      value: 5.2
       objectReference: {fileID: 0}
     - target: {fileID: 5630868093254895709, guid: 1bd0ff4d3b41c3340a12b632e5db8f5f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5614,7 +5614,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2264339005956099051, guid: c33129975fd079c428486134f89f0bdc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1767170188}
-    - targetCorrespondingSourceObject: {fileID: 2264339005956099051, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 8234537943153760923, guid: c33129975fd079c428486134f89f0bdc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1767170190}
   m_SourcePrefab: {fileID: 100100000, guid: c33129975fd079c428486134f89f0bdc, type: 3}
@@ -5669,6 +5669,9 @@ MonoBehaviour:
   walkSpeed: 1.54665
   runSpeed: 6.82405
   turnSpeed: 720
+  walkReferenceSpeed: 1.54665
+  runReferenceSpeed: 6.82405
+  dodgeAnimation: {fileID: 11400000, guid: 28fef5b8de9c2df41b356438270a60fa, type: 2}
 --- !u!114 &1767170188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5713,15 +5716,18 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767170185}
+  m_GameObject: {fileID: 1767180190}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70a49506e2247d640bb60bd5f9b56c46, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Endfield.CombatSession.ActorAnimationBinding
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Animation.AnimationSource
   locomotionController: {fileID: 22100000, guid: 206f1f6c4af9713418f0ffc61bf63fc3, type: 2}
-  walkReferenceSpeed: 1.54665
-  runReferenceSpeed: 6.82405
+--- !u!1 &1767180190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8234537943153760923, guid: c33129975fd079c428486134f89f0bdc, type: 3}
+  m_PrefabInstance: {fileID: 1767170182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1769490182
 GameObject:
   m_ObjectHideFlags: 0
@@ -7067,7 +7073,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1737129955480987453, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4622293956043792232}
-    - targetCorrespondingSourceObject: {fileID: 1737129955480987453, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 8311286594359317597, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4622293956043792233}
   m_SourcePrefab: {fileID: 100100000, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
@@ -7134,6 +7140,9 @@ MonoBehaviour:
   walkSpeed: 1.43936
   runSpeed: 4.91111
   turnSpeed: 720
+  walkReferenceSpeed: 1.43936
+  runReferenceSpeed: 4.91111
+  dodgeAnimation: {fileID: 11400000, guid: a00a1ca525bfe924b943bb87d0603467, type: 2}
 --- !u!114 &4622293956043792232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7153,15 +7162,18 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270261854}
+  m_GameObject: {fileID: 4622293956043802233}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70a49506e2247d640bb60bd5f9b56c46, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Endfield.CombatSession.ActorAnimationBinding
+  m_EditorClassIdentifier: Assembly-CSharp::Endfield.Animation.AnimationSource
   locomotionController: {fileID: 9100000, guid: c02fad22f5c59204285f16a0368a46e9, type: 2}
-  walkReferenceSpeed: 1.43936
-  runReferenceSpeed: 4.91111
+--- !u!1 &4622293956043802233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8311286594359317597, guid: ed0015e245fb2314bab57defc1c05091, type: 3}
+  m_PrefabInstance: {fileID: 4622293956043792224}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4972678438783689356
 MonoBehaviour:
   m_ObjectHideFlags: 0

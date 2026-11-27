@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Reflection;
 using Endfield.Actors;
 using Endfield.CharacterControl;
@@ -220,6 +221,7 @@ namespace Endfield.CharacterMotion.Tests
                     if (!output.IsPlayableOutputOfType<AnimationPlayableOutput>() ||
                         ((AnimationPlayableOutput)output).GetTarget() != model) continue;
                     var source = output.GetSourcePlayable();
+                    if (source.IsPlayableOfType<AnimationMixerPlayable>()) source = source.GetInput(0);
                     if (!source.IsPlayableOfType<AnimatorControllerPlayable>()) continue;
                     return (AnimatorControllerPlayable)source;
                 }
@@ -288,13 +290,12 @@ namespace Endfield.CharacterMotion.Tests
         }
 
         [UnityTest]
-        public IEnumerator MovementUsesThisFramesCameraYawAndWorksWithAnimatorsDisabled()
+        public IEnumerator MovementUsesThisFramesCameraYawWithAnimatorsEnabled()
         {
             foreach (var member in new[] { phoebe, si })
             {
                 var animator = member.GetComponent<Combatant>().ModelAnimator;
-                Assert.That(animator.applyRootMotion, Is.False);
-                animator.enabled = false;
+                Assert.That(animator.isActiveAndEnabled && animator.applyRootMotion, Is.True);
                 Assert.That(member.CurrentState, Is.SameAs(member.Idle));
             }
             Assert.That(phoebe.Idle, Is.Not.SameAs(si.Idle));
@@ -332,22 +333,95 @@ namespace Endfield.CharacterMotion.Tests
         [UnityTest]
         public IEnumerator DodgeInputIsReportedOnceWithoutMovingOrInterruptingWalking()
         {
+            // 用无轨迹队员验证 M4，仍经场景中的真实输入管理器采样
+            var root = new GameObject("无闪避轨迹的队员");
+            var member = root.AddComponent<PartyMemberControl>();
+            var capsule = root.GetComponent<CharacterController>();
+            capsule.height = 1.8f;
+            capsule.radius = .3f;
+            capsule.center = Vector3.up * .9f;
+            capsule.minMoveDistance = 0;
+            Place(member, new Vector3(20, 0, 20));
+            member.Initialize();
+            void Advance(MouseState buttons, params Key[] keys)
+            {
+                Sample(buttons, keys);
+                member.SetControlInput(phoebe.MoveWorld, phoebe.SprintHeld, inputManager.Frame.Pressed);
+                member.Step(.1);
+            }
             var right = new MouseState().WithButton(MouseButton.Right);
+            Vector3 start = member.transform.position;
+            Advance(right);
+            Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
+            Assert.That(member.CurrentState, Is.SameAs(member.Idle));
+            At(member, start);
+            Advance(right);
+            Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.None));
+            Advance(default, Key.W);
+            Advance(right, Key.W);
+            Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
+            Assert.That(member.CurrentState, Is.SameAs(member.Walk));
+            At(member, start + Vector3.forward * (.12f + .1f * 1.43936f));
+            member.Step(.1);
+            Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.None));
+            Object.Destroy(root);
+            yield break;
+        }
+
+        [UnityTest]
+        public IEnumerator ForwardDodgeAllowsMovementAfterTheConfiguredNotice()
+        {
+            var animation = phoebe.DodgeAnimation;
+            var cancel = animation.PointNotifies.Single(notice => notice?.Signal == "允许移动取消");
+            double cancelTime = animation.FrameTime(cancel.PointFrame);
+            const double firstStep = .1;
+            const double margin = .01;
             Vector3 start = phoebe.transform.position;
-            Step(.1, right);
-            Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
-            At(phoebe, start);
-            Step(.1, right);
-            Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
+            var right = new MouseState().WithButton(MouseButton.Right);
+            Step(firstStep, right, Key.D, Key.LeftShift);
+            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Dodge));
+            At(phoebe, start + Vector3.right * 1.1756f);
+            Assert.That(phoebe.GroundSpeed, Is.Zero);
+
+            Step(cancelTime - firstStep - margin, default, Key.W);
+            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Dodge));
+            Step(2 * margin, default, Key.W);
+            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            Assert.That(phoebe.GroundSpeed, Is.Zero);
             Step(.1, default, Key.W);
-            Step(.1, right, Key.W);
-            Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
-            At(phoebe, start + Vector3.forward * (.12f + .1f * 1.43936f));
-            clock.Advance(.1);
-            Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            Assert.That(phoebe.GroundSpeed, Is.GreaterThan(0));
+
+            Vector3 otherStart = si.transform.position;
+            si.SetControlInput(Vector3.zero, false, CharacterCommand.Dodge);
+            si.Step(1.15);
+            At(si, otherStart + Vector3.forward * 2.6045f);
+            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+
+            Place(si, otherStart);
+            si.SetControlInput(Vector3.zero, false, CharacterCommand.Dodge);
+            for (int i = 0; i < 10; i++) si.Step(.1);
+            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+            At(si, otherStart + Vector3.forward * 2.6045f);
+            yield break;
+        }
+
+        [UnityTest]
+        public IEnumerator BlockedDodgeConsumesItsTrajectoryWithoutRecoveringLostDistance()
+        {
+            var wall = GameObject.Find("Environment/Wall");
+            Bounds bounds = wall.GetComponent<Collider>().bounds;
+            Place(phoebe, new Vector3(bounds.center.x, 0, bounds.min.z - 1));
+            Step(.2, new MouseState().WithButton(MouseButton.Right));
+            float blocked = phoebe.transform.position.z;
+            Assert.That(blocked, Is.InRange(bounds.min.z - .5f, bounds.min.z - .2f));
+            wall.SetActive(false);
+            Physics.SyncTransforms();
+            var dodge = Endfield.Animation.Tests.AnimationDefinationTests.Asset("Phoebe");
+            var reference = Endfield.Editor.Animation.AnimationDefinationEditor.SampleClip(dodge.Clip, Endfield.Animation.Tests.AnimationDefinationTests.Model("Phoebe"));
+            float remaining = (reference[dodge.LastFrame].position - reference[6].position).z;
+            Step(.85, default);
+            Assert.That(phoebe.transform.position.z, Is.EqualTo(blocked + remaining).Within(.01f));
+            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
             yield break;
         }
 
@@ -474,7 +548,8 @@ namespace Endfield.CharacterMotion.Tests
             start = phoebe.transform.position;
             Step(.1, right);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
-            At(phoebe, start);
+            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Dodge));
+            Assert.That(Vector3.Distance(phoebe.transform.position, start), Is.GreaterThan(.01f));
             yield break;
         }
 

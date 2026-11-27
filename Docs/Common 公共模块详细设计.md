@@ -38,6 +38,8 @@ Common 的接口使用数值、泛型和委托，业务类型由调用方提供�
 
 **Resources** 在值确实改变后发布旧、新快照组成的元组，角色容器和队伍池在订阅入口将元组展开为两个回调参数，HUD 沿用原签名 · [公共通知器](../Assets/Scripts/Runtime/Common/ChangeNotifier.cs) · [Resources 只读接口](../Assets/Scripts/Runtime/Resources/Shared/ResourceReadModels.cs)
 
+**Animation** 的每个 `AnimationNotifyPlayer` 持有一份 `ChangeNotifier<AnimationNotice>`，动画模块决定发布的帧和阶段。闪避状态进入时订阅有通知的播放，退出时释放订阅。回调可在本次动作步内打断或替换播放，播放器在同步发布返回后检查当前播放身份 · [动画通知播放器](../Assets/Scripts/Runtime/Animation/AnimationNotifyPlayer.cs)
+
 ## 4. 迁移与验收
 
 Stats、角色资源和队伍 SP 均通过原有公开接口订阅，以下结果用于复验

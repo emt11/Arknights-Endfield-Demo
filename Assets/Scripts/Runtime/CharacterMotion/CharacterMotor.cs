@@ -44,14 +44,11 @@ namespace Endfield.CharacterMotion
             return actual.magnitude / deltaTime;
         }
 
-        // 按本步的转角上限朝目标方向转身，再通过 CharacterController 执行指定的水平位移
-        public Vector3 MovePlanar(Vector3 delta, Vector3 facing, float maxTurnDegrees)
+        // 对齐本段最终偏航，由 CharacterController 落实水平位移
+        public void MovePlanar(Vector3 worldDelta, Quaternion worldYaw)
         {
-            facing.y = 0;
-            if (facing.sqrMagnitude > 0)
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(facing), maxTurnDegrees);
-
-            return ApplyPlanarDisplacement(delta);
+            transform.rotation = worldYaw;
+            ApplyPlanarDisplacement(worldDelta);
         }
 
         private Vector3 ApplyPlanarDisplacement(Vector3 delta)
