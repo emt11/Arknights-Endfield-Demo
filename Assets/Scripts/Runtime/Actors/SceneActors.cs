@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Endfield.CombatContracts;
+using Endfield.CombatSession;
 using Endfield.Timing;
 using UnityEngine;
 
@@ -35,13 +36,16 @@ namespace Endfield.Actors
             if (!unit.isActiveAndEnabled) throw new InvalidOperationException($"{unit.name} 首次登记时需要启用");
 
             var id = new ActorId(nextId);
-            if (!clock.RegisterActor(id)) throw new InvalidOperationException($"动作时钟无法登记角色 ID {id.Value}");
+            var binding = unit.GetComponent<ActorStepBinding>();
+            if (!clock.RegisterActor(id, binding ? binding.Step : (Action<double>)null)) throw new InvalidOperationException($"动作时钟无法登记角色 ID {id.Value}");
             try
             {
                 unit.Bind(this, id);
+                if (binding) binding.Bind(unit.Runtime);
             }
             catch
             {
+                if (unit.Runtime != null) unit.Unbind();
                 clock.UnregisterActor(id);
                 throw;
             }
@@ -60,6 +64,7 @@ namespace Endfield.Actors
         internal void Unregister(Combatant unit)
         {
             var id = unit.Runtime.Id;
+            if (unit.TryGetComponent<ActorStepBinding>(out var binding)) binding.Unbind();
             actors.Remove(id);
             clock.UnregisterActor(id);
             unit.Unbind();

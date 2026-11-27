@@ -23,6 +23,7 @@ namespace Endfield.Timing
     {
         private sealed class ActorTime
         {
+            public IDisposable StepSubscription;
             public TimeStep Action; // 动作时钟
             public double RemainingHitStop; // 剩余顿帧时间
         }
@@ -30,6 +31,7 @@ namespace Endfield.Timing
         // 按角色 ID 保存已注册角色的动作时钟和剩余顿帧时间
         private readonly Dictionary<ActorId, ActorTime> actors = new();
         private readonly ChangeNotifier<TimeStep> battleSteps = new();
+        private readonly ChangeNotifier<TimeStep> actorSteps = new();
         private bool paused;
         private double battleRate = 1;
 
@@ -45,9 +47,25 @@ namespace Endfield.Timing
             battleRate = rate;
         }
 
-        public bool RegisterActor(ActorId actor) => actor.Value != 0 && actors.TryAdd(actor, new ActorTime());
+        public bool RegisterActor(ActorId actor, Action<double> onActionStep = null)
+        {
+            var time = new ActorTime();
+            if (actor.Value == 0 || !actors.TryAdd(actor, time)) return false;
+            if (onActionStep != null)
+                time.StepSubscription = actorSteps.Subscribe(_ =>
+                {
+                    if (time.StepSubscription != null) onActionStep(time.Action.Delta);
+                });
+            return true;
+        }
 
-        public bool UnregisterActor(ActorId actor) => actors.Remove(actor);
+        public bool UnregisterActor(ActorId actor)
+        {
+            if (!actors.Remove(actor, out var time)) return false;
+            time.StepSubscription?.Dispose();
+            time.StepSubscription = null;
+            return true;
+        }
 
         public bool TryGetActionTime(ActorId actor, out TimeStep step)
         {
@@ -83,6 +101,7 @@ namespace Endfield.Timing
                 time.Action = time.Action.Advance((available - frozen) * battleRate);
             }
             battleSteps.Publish(Battle);
+            actorSteps.Publish(Battle);
         }
     }
 }

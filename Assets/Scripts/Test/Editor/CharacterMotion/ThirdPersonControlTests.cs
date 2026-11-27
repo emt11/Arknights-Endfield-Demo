@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Endfield.Actors;
 using Endfield.CharacterControl;
+using Endfield.CharacterControl.FSM;
 using Endfield.Controller;
 using Endfield.Input;
 using Endfield.Input.Tests;
@@ -35,6 +36,12 @@ namespace Endfield.CharacterMotion.Tests
         private Mouse mouse;
         private Keyboard keyboard;
         private GameViewInputScope inputScope;
+
+        private static void AssertGroundGait(PartyMemberControl member, GroundGait gait, string message = null)
+        {
+            Assert.That(member.CurrentState, Is.SameAs(member.Grounded), message);
+            Assert.That(member.Grounded.Gait, Is.EqualTo(gait), message);
+        }
 
         [UnitySetUp]
         public IEnumerator Load()
@@ -109,7 +116,7 @@ namespace Endfield.CharacterMotion.Tests
             Assert.That(panel.IsOpen, Is.False);
             Assert.That(Cursor.lockState, Is.EqualTo(CursorLockMode.Locked));
             Step(.1, default, Key.W);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Vector3 start = phoebe.transform.position;
             Quaternion yaw = view.PlanarRotation;
             var both = new MouseState { delta = new Vector2(600, 0) }
@@ -120,7 +127,7 @@ namespace Endfield.CharacterMotion.Tests
             Assert.That(Cursor.lockState, Is.EqualTo(CursorLockMode.None));
             Step(.1, default);
             Step(.1, both, Key.W, Key.LeftShift);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
             At(phoebe, start);
             Assert.That(Quaternion.Angle(yaw, view.PlanarRotation), Is.LessThan(.01f));
@@ -128,12 +135,12 @@ namespace Endfield.CharacterMotion.Tests
             local.enabled = false;
             local.enabled = true;
             Step(.1, both, Key.W);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
             Step(.1, both, Key.Escape, Key.W);
             Assert.That(panel.IsOpen || Cursor.visible, Is.False);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
             Step(.1, both, Key.W, Key.LeftShift);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Run));
+            AssertGroundGait(phoebe, GroundGait.Run);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
             Step(.1, default);
             Step(.1, default, Key.C);
@@ -149,7 +156,7 @@ namespace Endfield.CharacterMotion.Tests
             panel.Open();
             clock.Advance(.1);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle), "采样后从 UI 打开面板应立即撤回已提交的角色输入");
+            AssertGroundGait(phoebe, GroundGait.Idle, "采样后从 UI 打开面板应立即撤回已提交的角色输入");
             yield break;
         }
 
@@ -259,7 +266,7 @@ namespace Endfield.CharacterMotion.Tests
                 Vector3 releasePosition = member.transform.position;
                 float releaseSpeed = member.GroundSpeed;
                 Move(.02, Vector3.zero);
-                Assert.That(member.CurrentState, Is.SameAs(member.Idle));
+                AssertGroundGait(member, GroundGait.Idle);
                 Assert.That(member.GroundSpeed, Is.EqualTo(releaseSpeed - .36f).Within(.005f));
                 Assert.That(member.transform.position.z, Is.GreaterThan(releasePosition.z));
                 float brakingAmount = LocomotionFor(model).GetFloat("MoveAmount");
@@ -296,17 +303,17 @@ namespace Endfield.CharacterMotion.Tests
             {
                 var animator = member.GetComponent<Combatant>().ModelAnimator;
                 Assert.That(animator.isActiveAndEnabled && animator.applyRootMotion, Is.True);
-                Assert.That(member.CurrentState, Is.SameAs(member.Idle));
+                AssertGroundGait(member, GroundGait.Idle);
             }
-            Assert.That(phoebe.Idle, Is.Not.SameAs(si.Idle));
-            Assert.That(phoebe.Walk, Is.Not.SameAs(phoebe.Run));
+            Assert.That(phoebe.Grounded, Is.Not.SameAs(si.Grounded));
+            Assert.That(phoebe.Dodge, Is.Not.SameAs(si.Dodge));
             Vector3 start = phoebe.transform.position;
             Step(.2, new MouseState { delta = new Vector2(450, 0) });
             At(phoebe, start);
             Assert.That(Quaternion.Angle(phoebe.transform.rotation, Quaternion.identity), Is.LessThan(.01f));
 
             Step(.02, new MouseState { delta = new Vector2(450, 0) }, Key.W);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Assert.That(Vector3.Angle(phoebe.MoveWorld, Vector3.right), Is.LessThan(.05f));
             Vector3 firstStep = Vector3.ProjectOnPlane(phoebe.transform.position - start, Vector3.up);
             Assert.That(phoebe.transform.eulerAngles.y, Is.InRange(.1f, 15f));
@@ -316,17 +323,17 @@ namespace Endfield.CharacterMotion.Tests
             Step(.4, default, Key.W, Key.LeftShift);
             start = phoebe.transform.position;
             Step(.2, default, Key.W, Key.LeftShift);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Run));
+            AssertGroundGait(phoebe, GroundGait.Run);
             At(phoebe, start + Vector3.right * .982222f);
             Assert.That(phoebe.GroundSpeed, Is.EqualTo(4.91111).Within(.01));
             start = phoebe.transform.position;
             Step(.2, default, Key.W, Key.D);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Assert.That(Vector3.Distance(start, phoebe.transform.position), Is.EqualTo(.287872).Within(.01));
             Step(.2, default);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
             Assert.That(phoebe.GroundSpeed, Is.Zero);
-            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+            AssertGroundGait(si, GroundGait.Idle);
             yield break;
         }
 
@@ -353,14 +360,14 @@ namespace Endfield.CharacterMotion.Tests
             Vector3 start = member.transform.position;
             Advance(right);
             Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
-            Assert.That(member.CurrentState, Is.SameAs(member.Idle));
+            AssertGroundGait(member, GroundGait.Idle);
             At(member, start);
             Advance(right);
             Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.None));
             Advance(default, Key.W);
             Advance(right, Key.W);
             Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.Dodge));
-            Assert.That(member.CurrentState, Is.SameAs(member.Walk));
+            AssertGroundGait(member, GroundGait.Walk);
             At(member, start + Vector3.forward * (.12f + .1f * 1.43936f));
             member.Step(.1);
             Assert.That(member.StepCommands, Is.EqualTo(CharacterCommand.None));
@@ -386,7 +393,7 @@ namespace Endfield.CharacterMotion.Tests
             Step(cancelTime - firstStep - margin, default, Key.W);
             Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Dodge));
             Step(2 * margin, default, Key.W);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Assert.That(phoebe.GroundSpeed, Is.Zero);
             Step(.1, default, Key.W);
             Assert.That(phoebe.GroundSpeed, Is.GreaterThan(0));
@@ -395,12 +402,12 @@ namespace Endfield.CharacterMotion.Tests
             si.SetControlInput(Vector3.zero, false, CharacterCommand.Dodge);
             si.Step(1.15);
             At(si, otherStart + Vector3.forward * 2.6045f);
-            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+            AssertGroundGait(si, GroundGait.Idle);
 
             Place(si, otherStart);
             si.SetControlInput(Vector3.zero, false, CharacterCommand.Dodge);
             for (int i = 0; i < 10; i++) si.Step(.1);
-            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+            AssertGroundGait(si, GroundGait.Idle);
             At(si, otherStart + Vector3.forward * 2.6045f);
             yield break;
         }
@@ -421,7 +428,7 @@ namespace Endfield.CharacterMotion.Tests
             float remaining = (reference[dodge.LastFrame].position - reference[6].position).z;
             Step(.85, default);
             Assert.That(phoebe.transform.position.z, Is.EqualTo(blocked + remaining).Within(.01f));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
             yield break;
         }
 
@@ -435,7 +442,7 @@ namespace Endfield.CharacterMotion.Tests
             Step(.2, default, Key.W);
             Vector3 start = phoebe.transform.position;
             Step(.2, default, Key.W);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Assert.That(Vector3.Distance(start, phoebe.transform.position), Is.LessThan(.015f));
             Assert.That(phoebe.GroundSpeed, Is.LessThan(.075f));
             AssertGait(phoebe.GetComponent<Combatant>().ModelAnimator, "GS_Idle");
@@ -481,8 +488,8 @@ namespace Endfield.CharacterMotion.Tests
             clock.SetPaused(false);
             clock.Advance(.1);
             Assert.That(phoebe.StepCommands | si.StepCommands, Is.EqualTo(CharacterCommand.None));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
-            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
+            AssertGroundGait(si, GroundGait.Idle);
             At(phoebe, startA);
             At(si, startB);
             yield break;
@@ -494,9 +501,9 @@ namespace Endfield.CharacterMotion.Tests
             var left = new MouseState().WithButton(MouseButton.Left);
             Step(.1, left, Key.W);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.Attack));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Assert.That(si.StepCommands, Is.EqualTo(CharacterCommand.None));
-            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
+            AssertGroundGait(si, GroundGait.Idle);
             Sample(default);
             Sample(left);
             Sample(default);
@@ -517,14 +524,14 @@ namespace Endfield.CharacterMotion.Tests
             phoebe.gameObject.SetActive(true);
             clock.Advance(.1);
             Assert.That(phoebe.StepCommands, Is.EqualTo(CharacterCommand.None));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
             At(phoebe, start);
             local.enabled = false;
             clock.Advance(2);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(phoebe, GroundGait.Idle);
             local.enabled = true;
             Step(.1, default, Key.W);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
 
             Step(.1, default);
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(ScenePath, new LoadSceneParameters(LoadSceneMode.Single));
@@ -533,8 +540,8 @@ namespace Endfield.CharacterMotion.Tests
             inputManager = local.GetComponent<GameInputManager>();
             phoebe = GameObject.Find("Characters/PlayerRoot").GetComponent<PartyMemberControl>();
             si = GameObject.Find("Characters/SiRoot").GetComponent<PartyMemberControl>();
-            Assert.That(si.CurrentState, Is.SameAs(si.Idle));
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Idle));
+            AssertGroundGait(si, GroundGait.Idle);
+            AssertGroundGait(phoebe, GroundGait.Idle);
             foreach (var member in new[] { phoebe, si })
             {
                 var capsule = member.GetComponent<CharacterController>();
@@ -564,7 +571,7 @@ namespace Endfield.CharacterMotion.Tests
             clock.TryGetActionTime(id, out var before);
             yield return null;
             clock.TryGetActionTime(id, out var after);
-            Assert.That(phoebe.CurrentState, Is.SameAs(phoebe.Walk));
+            AssertGroundGait(phoebe, GroundGait.Walk);
             Assert.That(phoebe.GroundSpeed, Is.GreaterThan(0f));
             Assert.That(phoebe.transform.position.z - start.z,
                 Is.EqualTo((after.Elapsed - before.Elapsed) * phoebe.GroundSpeed).Within(.001));

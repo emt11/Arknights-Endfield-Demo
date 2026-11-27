@@ -5684,7 +5684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857fdd75f2b04f9bb02ebf10bd12b3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.CombatSession.ActorStepBinding
-  timeDriver: {fileID: 205638453}
 --- !u!143 &1767170189
 CharacterController:
   m_ObjectHideFlags: 0
@@ -7155,7 +7154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857fdd75f2b04f9bb02ebf10bd12b3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Endfield.CombatSession.ActorStepBinding
-  timeDriver: {fileID: 205638453}
 --- !u!114 &4622293956043792233
 MonoBehaviour:
   m_ObjectHideFlags: 0

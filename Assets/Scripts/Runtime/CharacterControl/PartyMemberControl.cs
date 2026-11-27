@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Endfield.Animation;
+using Endfield.MotionWarping;
 using Endfield.Actors;
 using Endfield.CharacterControl.FSM;
 using UnityEngine;
@@ -20,14 +22,17 @@ namespace Endfield.CharacterControl
         internal bool CanDodge => AnimationSource && AnimationSource.Model.isHuman &&
             AnimationSource.HasState(PartyMemberDodgeState.StateHash);
 
+        private bool steppingAction;
+        private bool endingAction;
+
+        internal CharacterActionPlayback ActionPlayback { get; private set; }
+        internal float TurnSpeed => turnSpeed;
         internal float WalkSpeed => walkSpeed;
         internal float RunSpeed => runSpeed;
         internal AnimationSource AnimationSource { get; private set; }
 
-        public CharacterState Idle { get; protected set; }
-        public CharacterState Walk { get; protected set; }
-        public CharacterState Run { get; protected set; }
-        public CharacterState Dodge { get; private set; }
+        public PartyMemberGroundedState Grounded { get; private set; }
+        public PartyMemberDodgeState Dodge { get; private set; }
 
         protected override CharacterState CreateInitialState()
         {
@@ -36,18 +41,68 @@ namespace Endfield.CharacterControl
             {
                 AnimationSource = source;
                 source.Initialize();
+                ActionPlayback = new CharacterActionPlayback(this, source);
             }
-            Idle = new PartyMemberIdleState(this);
-            Walk = new PartyMemberWalkState(this);
-            Run = new PartyMemberRunState(this);
+            Grounded = new PartyMemberGroundedState(this);
             Dodge = new PartyMemberDodgeState(this);
-            return Idle;
+            return Grounded;
         }
 
-        internal void StepGroundMovement(float gaitSpeed, double actionDelta)
+        // 输入、状态切换和本步剩余时间均由队员统一处理
+        protected override void StepActor(double actionDelta)
         {
-            GroundSpeed = Motor.StepLocomotion(MoveWorld, gaitSpeed, turnSpeed, (float)actionDelta);
-            AdvanceLocomotion(actionDelta);
+            if (CurrentState == Dodge && Dodge.CanCancel)
+                InterruptAction();
+            else if (CurrentState == Grounded && ActionPlayback?.Active != true &&
+                     (StepCommands & CharacterCommand.Dodge) != 0 && CanDodge)
+                Machine.ChangeState(Dodge);
+
+            if (ActionPlayback?.Active != true)
+            {
+                if (CurrentState == Dodge)
+                {
+                    Machine.ChangeState(Grounded);
+                    AnimationSource.EndClip();
+                }
+                Grounded.Tick(actionDelta);
+                return;
+            }
+
+            steppingAction = true;
+            double remaining;
+            try { remaining = ActionPlayback.Advance(actionDelta); }
+            finally { steppingAction = false; }
+            if (!ActionPlayback.Active || ActionPlayback.EndReason is not NotifyEndReason reason) return;
+            EndAction(reason);
+            // 动作段末返回地面时，余量只更新姿态，下一步才恢复输入位移
+            if (remaining > 0) AdvanceLocomotion(remaining);
+        }
+
+        public bool TryPlayAction(AnimationDefination animation, float speed = 1f,
+            IReadOnlyList<WarpTarget> targets = null)
+        {
+            if (ActionPlayback == null || CurrentState != Grounded || ActionPlayback.Active || steppingAction || endingAction ||
+                !animation || animation.ConfigurationError() != null || !(speed > 0) || float.IsInfinity(speed)) return false;
+            Motor.ResetLocomotion();
+            GroundSpeed = 0;
+            AnimationSource.SetFloat(MoveAmount, 0);
+            AnimationSource.BeginPlayableClip(animation.Clip, speed);
+            ActionPlayback.Begin(animation, transform.rotation, targets);
+            return true;
+        }
+
+        internal override void InterruptAction() => EndAction(NotifyEndReason.Interrupted);
+
+        private void EndAction(NotifyEndReason reason)
+        {
+            if (endingAction || ActionPlayback?.Active != true) return;
+            endingAction = true;
+            try
+            {
+                if (CurrentState == Dodge) Machine.ChangeState(Grounded);
+                ActionPlayback.End(reason);
+            }
+            finally { endingAction = false; }
         }
 
         internal void AdvanceLocomotion(double actionSeconds)

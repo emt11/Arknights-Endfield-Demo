@@ -1,21 +1,33 @@
 namespace Endfield.CharacterControl.FSM
 {
-    public abstract class PartyMemberGroundedState : CharacterState
+    public enum GroundGait { Idle, Walk, Run }
+
+    public sealed class PartyMemberGroundedState : CharacterState
     {
-        protected PartyMemberControl Member => (PartyMemberControl)Control;
+        private readonly PartyMemberControl member;
+        public GroundGait Gait { get; private set; }
 
-        protected PartyMemberGroundedState(PartyMemberControl member) : base(member) { }
+        internal PartyMemberGroundedState(PartyMemberControl member) => this.member = member;
 
-        public override CharacterState SelectNext()
+        public override void Enter() => Gait = ReadGait();
+
+        public override void Tick(double delta)
         {
-            if ((Member.StepCommands & CharacterCommand.Dodge) != 0 && Member.CanDodge) return Member.Dodge;
-            return SelectGait(Member);
+            Gait = ReadGait();
+            float speed = Gait switch
+            {
+                GroundGait.Walk => member.WalkSpeed,
+                GroundGait.Run => member.RunSpeed,
+                _ => 0
+            };
+            member.GroundSpeed = member.Motor.StepLocomotion(member.MoveWorld, speed, member.TurnSpeed, (float)delta);
+            member.AdvanceLocomotion(delta);
         }
 
-        internal static CharacterState SelectGait(PartyMemberControl member)
+        private GroundGait ReadGait()
         {
-            if (member.MoveWorld.sqrMagnitude == 0f) return member.Idle;
-            return member.SprintHeld ? member.Run : member.Walk;
+            if (member.MoveWorld.sqrMagnitude == 0) return GroundGait.Idle;
+            return member.SprintHeld ? GroundGait.Run : GroundGait.Walk;
         }
     }
 }

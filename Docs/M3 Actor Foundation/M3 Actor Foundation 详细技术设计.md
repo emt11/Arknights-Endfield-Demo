@@ -13,7 +13,7 @@
 | `Combat Session` 已挂 `BattleTimeDriver` 和 `TeamSkillPoints`。现有时钟能按 `ActorId` 注册、读时、局部顿帧和注销。场景时间用例读取菲比的正式 ID | M3 在同一节点放置本场单位登记组件，由它分配 ID 并向同一时钟登记。队伍 SP 仍由场景持有。[战斗时钟](../../Assets/Scripts/Runtime/Timing/BattleClock.cs) · [场景时间用例](../../Assets/Scripts/Test/Editor/Timing/BattleClockSceneTests.cs) |
 | M2 收尾记录已验收效果、状态及两者与战斗时间的联动。`CharacterEffects.Start` 订阅场景时钟的战斗步，订阅持续到销毁 | Actors 登记的是每个角色的**动作时钟**。效果计时沿用现有订阅，避免一次战斗步被推进两次。[M2 验收记录](../M2%20Runtime%20Foundation/M2%20Runtime%20Foundation%20开发设计.md) · [CharacterEffects](../../Assets/Scripts/Runtime/Effects/CharacterEffects.cs) |
 
-总方案已确定角色身份由 Actors 分配，当前 HP 由 Resources 持有，第三人称操控与平地位移在 M4 接入，动画与根运动在 M5 接入，攻击命中、伤害和队伍操控权切换分别由 M6、M7、M8 接入。角色定义由各自的角色 Prefab 承担。根组件 `Combatant` 提供 Unity 接线和 Inspector 配置；每次入场创建一份独立的普通 C# 对象 `ActorRuntime`，向战斗调用方提供身份与模块引用。M3 的目标查询只回答两名已知单位能否互为攻击双方，距离、视野、锁定优先级和友方技能选人留给各自的调用方。
+总方案已确定角色身份由 Actors 分配，当前 HP 由 Resources 持有，第三人称操控与平地位移在 M4 接入，动画与根运动在 M5 接入，攻击命中与伤害统一由 M6 接入，队伍操控权切换由 M8 接入。角色定义由各自的角色 Prefab 承担。根组件 `Combatant` 提供 Unity 接线和 Inspector 配置；每次入场创建一份独立的普通 C# 对象 `ActorRuntime`，向战斗调用方提供身份与模块引用。M3 的目标查询只回答两名已知单位能否互为攻击双方，距离、视野、锁定优先级和友方技能选人留给各自的调用方。
 
 ## 2. 实施文件
 
@@ -58,7 +58,7 @@
 | `ActorLifecycle` | `ActorLifeState State` 取 Alive、Dead、Removed。构造时保存本次 ActorId、可写的 CharacterResourceContainer，读取 Snapshot.CurrentHP，并持有一份 `IDisposable` 资源订阅和一份 `ChangeNotifier<ActorId>` | 初始 HP 大于 0 为 Alive，等于 0 为 Dead。资源回调更新存活状态，离场更新为 Removed。HP 始终从 Resources 读取，单位为生命点 |
 | `SceneActors : MonoBehaviour` | 序列化 `Combatant[] initialActors`，默认空数组。运行时持有同根驱动的 `BattleClock`、初始空的 `Dictionary<ActorId, Combatant>`、初值为 1 的 `uint nextId` | Start 按 Inspector 顺序登记。之后每成功登记一个新实例使用下一个正整数；离场只移除对应项。重开场景创建新表与新时钟 |
 
-这些引用足以让后续系统按需取数。例如 M7 捕获出招面板可取 `actor.Runtime.Stats` 和 `actor.Runtime.Effects.OutgoingDamageBonus`。目标扣血仍由 Damage 向 Resources 提交，本阶段用资源接口输入已结算的数值来验收生命周期。[M7 伤害设计草案](../M2%20Runtime%20Foundation/M2.4%20Damage%20详细技术设计.md)
+这些引用足以让后续系统按需取数。例如 M6 捕获出招面板可取 `actor.Runtime.Stats` 和 `actor.Runtime.Effects.OutgoingDamageBonus`。目标扣血仍由 Damage 向 Resources 提交，本阶段用资源接口输入已结算的数值来验收生命周期。[M6 伤害公式草案](../M2%20Runtime%20Foundation/M2.4%20Damage%20详细技术设计.md)
 
 ## 4. 入场、查询与离场
 
@@ -94,7 +94,7 @@ M6 可从碰撞体向上取得 `Combatant`，取 Runtime.Id，再用本场的 Ca
 | 销毁已入场角色 | Combatant.OnDestroy 通知 owner 按本实例注销。SceneActors 从表移除它，调用 Clock.UnregisterActor，Life 置 Removed 并释放资源订阅，最后解绑 Combatant。主动销毁活单位只表示离场。已持有的旧 Life 可观察到 Removed |
 | 卸载场景 | SceneActors.OnDestroy 对表内剩余单位走相同注销流程。若角色先销毁，其记录已移除；若登记组件先销毁，它先解绑角色，随后角色销毁无需再次注销。重新加载 CombatDemo 时从 1 编号 |
 
-致命扣血的可观察顺序是 Resources 写入 HP → Life 在资源通知中标记 Dead 并通知监听者 → `ApplyDamage` 返回实际扣血和溢出 → M7 Damage 完成本次结算并发布扣血事实。死亡回调只表示已经归零；最终致命一击的扣血事实仍能通过 ID 定位单位。
+致命扣血的可观察顺序是 Resources 写入 HP → Life 在资源通知中标记 Dead 并通知监听者 → `ApplyDamage` 返回实际扣血和溢出 → M6 Damage 完成本次结算并发布扣血事实。死亡回调只表示已经归零；最终致命一击的扣血事实仍能通过 ID 定位单位。
 
 ## 5. Unity 装配与开发顺序
 

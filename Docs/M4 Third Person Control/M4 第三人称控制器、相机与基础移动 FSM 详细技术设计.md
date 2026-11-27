@@ -4,6 +4,8 @@
 
 **2026-11-26 设计修订**　下文区分 M4 收尾实现和 M5 的闪避实现。第 8 节保留原验收日期与结果
 
+**2026-11-27 实现更新**　当前 `PartyMemberControl.StepActor` 集中决定地面与闪避之间的转换。原 Idle、Walk、Run 三个文件已合并为 `PartyMemberGroundedState`，可通过 `Grounded.Gait` 查看当前步态。下文的独立状态和 SelectNext 描述对应收尾时的版本 · [当前运行流程](../项目运行流程图.md#4-从-w-到角色位移和步态动画)
+
 在 `Assets/Scenes/CombatDemo.unity` 中，玩家用 WASD 相对镜头移动，左 Shift 奔跑，右键产生一次 Dodge 请求，正式闪避在 M5 按角色片段的根轨迹执行。菲比和祀各自持有角色行为状态机。开场只有菲比接收键鼠，祀从 Idle 开始。走跑由 Motor 驱动，前闪取可见 Animator 的自然根运动，镜头在角色移动后跟随。[总体路线](../仿终末地战斗系统设计方案.md) · [M5 动画详设](../M5%20Animation%20Foundation/M5%20Animation%20Foundation%20详细技术设计.md)
 
 ## 1. 工程依据与交付范围
@@ -17,7 +19,7 @@
 
 M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并登记动作时钟。角色是否存活以 `Runtime.Life.State` 为准。M4 在角色根新增控制组件，复用这套身份和生命周期。键鼠绑定已经存在，当前 `Gameplay/Attack` 的 Interactions 为空。工作区中的菲比动画控制器已有 Locomotion、Dodge 姿态状态，基础步态由各角色的动画绑定驱动，验收覆盖角色根的实际位移和模型腿部姿态。[SceneActors](../../Assets/Scripts/Runtime/Actors/SceneActors.cs) · [ActorLifecycle](../../Assets/Scripts/Runtime/Actors/ActorLifecycle.cs) · [输入资产](../../Assets/InputSystem_Actions.inputactions) · [CombatDemo](../../Assets/Scenes/CombatDemo.unity)
 
-**交付范围。** `CombatDemo` 开场固定操控菲比。菲比和祀各有独立状态机、Motor、动作时钟和基础步态图。M4 交付镜头相对走跑、平滑转向与停步、碰撞、相机遮挡和角色面板输入。左键和右键分别提交一次 `Attack`、`Dodge`。Attack 在本阶段只作为输入预留。M5 扩展队员 FSM 和动画图以执行根轨迹闪避。未来 M6 Actions 管理攻击生命周期、许可与取消，M7 Combos 选段，M8 接入队伍切换与 AI
+**交付范围。** `CombatDemo` 开场固定操控菲比。菲比和祀各有独立状态机、Motor、动作时钟和基础步态图。M4 交付镜头相对走跑、平滑转向与停步、碰撞、相机遮挡和角色面板输入。左键和右键分别提交一次 `Attack`、`Dodge`。Attack 在本阶段只作为输入预留。M5 扩展队员 FSM 和动画图以执行根轨迹闪避。M6 同时负责连招选段与攻击生命周期、许可及取消，M8 接入队伍切换与 AI
 
 ## 2. 实施文件与类型归属
 
@@ -76,7 +78,7 @@ M3 登记时为每个 Combatant 创建一份 ActorRuntime、分配 ActorId 并�
 
 **角色属性面板。** CombatDemo 的 `GameUI/CharacterPanelRoot` 常驻启用，子节点 `PanelView` 默认关闭。`PanelView` 包含遮罩 `DimBackground` 和窗口 `Panel`，开场捕获鼠标，可直接操控菲比。`EventSystem` 上启用的 `InputSystemUIInputModule` 处理按钮点击与滚动。`CharacterStatsPanel` 启用时订阅输入管理器的切换与关闭请求，并同步 `IsOpen`。按 C 打开面板。再次按 C、按 Esc 或点击面板内的关闭按钮均可返回操控。面板打开时禁用本地 Gameplay、清空当步移动与命令、释放光标。此时 WASD、Shift、镜头移动与鼠标按键只供界面使用。关闭面板时重新捕获鼠标；下一次采样可读取持续按住的移动键，攻击和闪避需要新的按下。面板关闭时 Esc 仍可单独释放鼠标。战斗时钟继续运行，其他角色和已开始的动作照常推进。
 
-**普通攻击输入。** `Gameplay/Attack` 沿用现有 Button 和空 Interactions。达到按下阈值时只处理一次 `performed`，写入一个 `Attack` 请求。保持按住和松开均不追加请求，下一次按下才能再请求攻击。右键仍产生 `Dodge`。每套普通攻击连段的最后一击是重击。M4 传递 Attack 与 Dodge 请求，地面 FSM 只执行走跑，M7 的 Combos 根据角色的连段配置、当前节点和衔接窗口选出下一段。按键时长不参与选段。
+**普通攻击输入。** `Gameplay/Attack` 沿用现有 Button 和空 Interactions。达到按下阈值时只处理一次 `performed`，写入一个 `Attack` 请求。保持按住和松开均不追加请求，下一次按下才能再请求攻击。右键仍产生 `Dodge`。每套普通攻击连段的最后一击是重击。M4 传递 Attack 与 Dodge 请求，地面 FSM 只执行走跑，M6 的 Combos 根据角色的连段配置、当前节点和衔接窗口选出下一段。按键时长不参与选段。
 
 `GameInputManager.Update`（−300）写入 `Frame`。`PlayerController.Update`（−250）读取 `inputManager.Frame`，调用 `view.ApplyLook(frame.LookDelta)`。使用更新后的 `view.PlanarRotation × (frame.Move.x, 0, frame.Move.y)` 得出世界方向，在同一渲染帧调用 `controlledMember.SetControlInput`。`BattleTimeDriver.Update`（−200）随后调用 `Clock.Advance(Time.unscaledDeltaTime)`。正常运行一渲染帧提交一次可变时长的战斗步，菲比和祀的 FSM 各按自己的动作时间推进。[BattleTimeDriver](../../Assets/Scripts/Runtime/Timing/BattleTimeDriver.cs)
 

@@ -15,7 +15,9 @@ namespace Endfield.CharacterMotion
 
         private void Awake() => capsule = GetComponent<CharacterController>();
 
-        private void OnDisable()
+        private void OnDisable() => ResetLocomotion();
+
+        internal void ResetLocomotion()
         {
             locomotionSpeed = 0f;
             turnVelocity = 0f;

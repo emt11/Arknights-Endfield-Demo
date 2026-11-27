@@ -30,7 +30,9 @@ namespace Endfield.CharacterControl
             Machine.Initialize(CreateInitialState());
         }
 
-        internal void InterruptAction() => CurrentState?.Interrupt();
+        internal abstract void InterruptAction();
+
+        protected abstract void StepActor(double actionDelta);
 
         protected virtual void OnDestroy() => InterruptAction();
 
@@ -55,10 +57,14 @@ namespace Endfield.CharacterControl
 
         public void Step(double actionDelta)
         {
+            if (actionDelta <= 0)
+            {
+                DiscardPresses();
+                return;
+            }
             StepCommands = pendingPressed;
             pendingPressed = CharacterCommand.None;
-            Machine.ChangeState(CurrentState.SelectNext());
-            Machine.Tick(actionDelta);
+            StepActor(actionDelta);
         }
     }
 }

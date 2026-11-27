@@ -12,8 +12,6 @@ namespace Endfield.CharacterControl.Tests
             public Action Entered, Exited;
             public Action<double> Ticked;
 
-            public Probe() : base(null) { }
-
             public override void Enter() => Entered?.Invoke();
 
             public override void Tick(double delta) => Ticked?.Invoke(delta);
@@ -81,7 +79,7 @@ namespace Endfield.CharacterControl.Tests
             private readonly double wait;
             private double elapsed;
 
-            public EnemyIdle(StateMachine machine, CharacterState patrol, double wait) : base(null)
+            public EnemyIdle(StateMachine machine, CharacterState patrol, double wait)
             {
                 this.machine = machine;
                 this.patrol = patrol;

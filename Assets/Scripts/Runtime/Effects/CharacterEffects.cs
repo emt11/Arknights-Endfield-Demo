@@ -27,13 +27,7 @@ namespace Endfield.Effects
 
         private void Start()
         {
-            // 场景与角色 Prefab 独立保存，实例进入场景后只绑定本场的驱动
-            foreach (var root in gameObject.scene.GetRootGameObjects())
-            {
-                if (!root.TryGetComponent<BattleTimeDriver>(out var driver)) continue;
-                clockSubscription = driver.Clock.SubscribeBattleStep(step => Controller.Advance(step.Delta));
-                break;
-            }
+            clockSubscription = BattleTimeDriver.SubscribeBattleStep(gameObject.scene, step => Controller.Advance(step.Delta));
         }
 
         private void OnDestroy()

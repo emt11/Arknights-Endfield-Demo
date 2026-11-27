@@ -2,6 +2,7 @@ using System.Collections;
 using Endfield.Actors;
 using Endfield.MotionWarping;
 using Endfield.CharacterControl;
+using Endfield.CharacterControl.FSM;
 using Endfield.CombatSession;
 using Endfield.Timing;
 using NUnit.Framework;
@@ -17,6 +18,12 @@ namespace Endfield.Animation.Tests
 {
     public sealed class ActorAnimationSceneTests
     {
+        private static void AssertGroundGait(PartyMemberControl member, GroundGait gait, string message = null)
+        {
+            Assert.That(member.CurrentState, Is.SameAs(member.Grounded), message);
+            Assert.That(member.Grounded.Gait, Is.EqualTo(gait), message);
+        }
+
         [UnitySetUp]
         public IEnumerator Enter()
         {
@@ -101,7 +108,7 @@ namespace Endfield.Animation.Tests
                 member.Step(asset.FrameTime(6) - asset.FrameTime(3));
                 Assert.That(Vector3.Distance(root.transform.position, start), Is.LessThan(.001f));
                 member.Step(1);
-                Assert.That(member.CurrentState, Is.SameAs(member.Walk));
+                AssertGroundGait(member, GroundGait.Walk);
                 Assert.That(Vector3.Distance(root.transform.position, start), Is.LessThan(.001f));
                 Assert.That(Quaternion.Angle(root.transform.rotation, facing), Is.LessThan(.1f));
                 Assert.That(receivedFrames, Is.EqualTo(new[] { 6 }));
@@ -189,7 +196,7 @@ namespace Endfield.Animation.Tests
                     Is.EqualTo(.7 - (asset.FrameTime(6) - asset.FrameTime(4))).Within(.00001));
                 Vector3 remainingDisplacement = Vector3.ProjectOnPlane(root.transform.position - before, Vector3.up);
                 Assert.That(Vector3.Distance(remainingDisplacement, expected), Is.LessThan(.01), $"实测 {remainingDisplacement}，参考 {expected}");
-                Assert.That(member.CurrentState, Is.SameAs(member.Walk));
+                AssertGroundGait(member, GroundGait.Walk);
                 Assert.That(notice.Frame, Is.EqualTo(6));
                 Assert.That(controller.GetBool("IsDodging"), Is.False);
                 Assert.That(Vector3.Distance(model.transform.localPosition, modelPosition), Is.LessThan(.001f));
@@ -198,7 +205,7 @@ namespace Endfield.Animation.Tests
                 Vector3 interruptedPosition = root.transform.position;
                 member.SetControlInput(Vector3.zero, false, CharacterCommand.Dodge);
                 member.Step(.7);
-                Assert.That(member.CurrentState, Is.SameAs(member.Idle));
+                AssertGroundGait(member, GroundGait.Idle);
                 Assert.That(notice.Frame, Is.Zero);
                 Assert.That(root.transform.position, Is.EqualTo(interruptedPosition));
             }
@@ -225,7 +232,7 @@ namespace Endfield.Animation.Tests
             Assert.That(member.CurrentState, Is.SameAs(member.Dodge));
             driver.Clock.SetPaused(true);
             member.GetComponent<Endfield.Resources.CharacterResources>().Container.ApplyDamage(100000);
-            Assert.That(member.CurrentState, Is.SameAs(member.Idle));
+            AssertGroundGait(member, GroundGait.Idle);
             Assert.That(controller.GetBool("IsDodging"), Is.False);
             Assert.That(controller.GetNextAnimatorStateInfo(0).IsName("Base Layer.Locomotion"), Is.True);
             Assert.That(controller.GetAnimatorTransitionInfo(0).normalizedTime, Is.Zero);
@@ -259,10 +266,7 @@ namespace Endfield.Animation.Tests
             using var memberSettings = new SerializedObject(root.GetComponent<PartyMemberControl>());
             memberSettings.FindProperty("dodgeAnimation").objectReferenceValue = notifications;
             memberSettings.ApplyModifiedPropertiesWithoutUndo();
-            var step = root.AddComponent<ActorStepBinding>();
-            using var stepSettings = new SerializedObject(step);
-            stepSettings.FindProperty("timeDriver").objectReferenceValue = driver;
-            stepSettings.ApplyModifiedPropertiesWithoutUndo();
+            root.AddComponent<ActorStepBinding>();
             session.GetComponent<SceneActors>().Register(root.GetComponent<Combatant>());
         }
 
@@ -312,7 +316,7 @@ namespace Endfield.Animation.Tests
             clock.Advance(1);
             Assert.That(first.GetBool("IsDodging"), Is.False);
             Assert.That(second.GetBool("IsDodging"), Is.False);
-            Assert.That(a.CurrentState, Is.SameAs(a.Walk));
+            AssertGroundGait(a, GroundGait.Walk);
             Assert.That(a.GroundSpeed, Is.Zero);
         }
     }
